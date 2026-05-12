@@ -28,7 +28,6 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
       ).marginOnly(
         left: AppDimens.marginSmaller,
         right: AppDimens.marginSmaller,
-        top: AppDimens.marginLarger,
       );
     });
   }

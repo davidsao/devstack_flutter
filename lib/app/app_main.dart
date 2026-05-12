@@ -87,6 +87,7 @@ class _MainAppState extends State<MainApp> {
       debugShowMaterialGrid: false,
       debugShowCheckedModeBanner: false,
       theme: ThemeData.from(colorScheme: colors, useMaterial3: true).copyWith(
+        scaffoldBackgroundColor: AppColors.background,
         highlightColor: AppColors.black.shade100.withAlpha(50),
         splashColor: AppColors.black.shade100.withAlpha(50),
         brightness: MediaQuery.platformBrightnessOf(context),

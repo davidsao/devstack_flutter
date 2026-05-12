@@ -22,7 +22,6 @@ class HomePage extends BaseView<HomeController, HomeState> {
           );
         }),
       ),
-      extendBodyBehindAppBar: true,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
@@ -41,9 +40,9 @@ class HomePage extends BaseView<HomeController, HomeState> {
               duration: 800.milliseconds,
               curve: ElasticOutCurve(0.9),
               left: state.isMenuExpanded.value ? 0.0 : -224.0,
-              top: MediaQuery.paddingOf(context).top + AppDimens.marginTiny,
-              bottom:
-                  MediaQuery.paddingOf(context).bottom + AppDimens.marginTiny,
+              top: AppDimens.marginSmaller,
+              bottom: MediaQuery.paddingOf(context).bottom +
+                  AppDimens.marginSmaller,
               child: HomeSideMenu(),
             );
           }),

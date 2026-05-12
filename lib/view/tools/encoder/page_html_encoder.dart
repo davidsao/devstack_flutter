@@ -11,7 +11,7 @@ class HtmlEncoderPage
       padding: EdgeInsets.only(
         left: AppDimens.paddingMedium,
         right: AppDimens.paddingMedium,
-        top: AppDimens.paddingSmall + MediaQuery.paddingOf(context).top,
+        top: AppDimens.paddingSmall,
         bottom: AppDimens.paddingSmall + MediaQuery.paddingOf(context).bottom,
       ),
       child: Column(

@@ -9,6 +9,7 @@ class CustomTextField extends StatefulWidget {
   final bool isEditable;
   final int? maxLines;
   final ValueChanged<String>? onChanged;
+  final List<TextInputFormatter>? inputFormatters;
 
   const CustomTextField({
     super.key,
@@ -19,6 +20,7 @@ class CustomTextField extends StatefulWidget {
     this.isEditable = true,
     this.maxLines,
     this.onChanged,
+    this.inputFormatters,
   });
 
   @override
@@ -40,7 +42,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
     Clipboard.setData(ClipboardData(text: widget.controller.text));
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-          content: Text('Copied to clipboard'), duration: Duration(seconds: 1)),
+        content: Text('Copied to clipboard'),
+        duration: Duration(seconds: 1),
+      ),
     );
   }
 
@@ -139,6 +143,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               readOnly: !widget.isEditable,
               maxLines: widget.maxLines,
               expands: widget.maxLines == null,
+              inputFormatters: widget.inputFormatters,
               style: TextStyle(
                 fontFamily: widget.isMonoSpace ? 'monospace' : null,
                 fontSize: 14,
