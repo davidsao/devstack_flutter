@@ -1,0 +1,23 @@
+{
+  "lbl_app_name": "DevStack",
+  "lbl_menu_home": "Home",
+  "lbl_menu_converter": "Converters",
+  "nav_json_yaml": "JSON <> YAML",
+  "nav_number_base": "Number Base",
+  "nav_date": "Date",
+  "lbl_menu_encoder": "Encoders / Decoders",
+  "nav_html": "HTML",
+  "nav_url": "URL",
+  "nav_base64": "Base64",
+  "nav_jwt": "JWT",
+  "lbl_menu_formatter": "Formatters",
+  "nav_json": "JSON",
+  "nav_xml": "XML",
+  "nav_sql": "SQL Formatter",
+  "lbl_menu_generator": "Generators",
+  "nav_hash": "Hash",
+  "nav_uuid": "UUID",
+  "nav_lorem_ipsum": "Lorem Ipsum",
+  "nav_checksum": "Checksum",
+  "nav_qr_generator": "QR Code Gen..."
+}

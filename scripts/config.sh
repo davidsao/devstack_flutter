@@ -1,0 +1,5 @@
+#!/bin/bash
+
+GOOGLE_DRIVE_ZIP_FILE_ID="1lAEPdCjEAUAGIoHnHXZ_Ttbh06WVdepX"
+RESOURCE_PATH="assets"
+GENERATED_PATH="lib/generated"

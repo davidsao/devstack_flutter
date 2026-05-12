@@ -1,0 +1,23 @@
+{
+  "lbl_app_name": "开发栈",
+  "lbl_menu_home": "首页",
+  "lbl_menu_converter": "转换工具",
+  "nav_json_yaml": "JSON <> YAML",
+  "nav_number_base": "进制转换",
+  "nav_date": "日期",
+  "lbl_menu_encoder": "编码 / 解码工具",
+  "nav_html": "HTML",
+  "nav_url": "URL",
+  "nav_base64": "Base64",
+  "nav_jwt": "JWT",
+  "lbl_menu_formatter": "格式化工具",
+  "nav_json": "JSON",
+  "nav_xml": "XML",
+  "nav_sql": "SQL 格式化",
+  "lbl_menu_generator": "生成工具",
+  "nav_hash": "哈希",
+  "nav_uuid": "UUID",
+  "nav_lorem_ipsum": "Lorem Ipsum",
+  "nav_checksum": "校验和",
+  "nav_qr_generator": "二维码生成器"
+}

@@ -1,0 +1,54 @@
+import 'package:devtoys_flutter/index.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../generated/locale_keys.g.dart';
+
+class HomePage extends BaseView<HomeController, HomeState> {
+  const HomePage({super.key, super.viewTag});
+
+  @override
+  Widget view(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(LocaleKeys.lbl_app_name.localize()),
+        leading: Obx(() {
+          return InkWell(
+            onTap: () {
+              state.isMenuExpanded.toggle();
+            },
+            child:
+                Icon(state.isMenuExpanded.value ? Icons.menu : Icons.menu_open),
+          );
+        }),
+      ),
+      extendBodyBehindAppBar: true,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      body: Stack(
+        children: [
+          Obx(() {
+            final nav = state.currentBottomNavigation.value;
+            return AnimatedContainer(
+              duration: 500.milliseconds,
+              curve: Curves.easeOutQuint,
+              margin: EdgeInsets.only(
+                  left: state.isMenuExpanded.value ? 224.0 : 0.0),
+              child: nav.getWidget(null),
+            );
+          }),
+          Obx(() {
+            return AnimatedPositioned(
+              duration: 800.milliseconds,
+              curve: ElasticOutCurve(0.9),
+              left: state.isMenuExpanded.value ? 0.0 : -224.0,
+              top: MediaQuery.paddingOf(context).top + AppDimens.marginTiny,
+              bottom:
+                  MediaQuery.paddingOf(context).bottom + AppDimens.marginTiny,
+              child: HomeSideMenu(),
+            );
+          }),
+        ],
+      ),
+    );
+  }
+}
