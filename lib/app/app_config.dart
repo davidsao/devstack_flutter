@@ -78,6 +78,9 @@ class AppConfig extends StatefulWidget {
     Get.lazyPut(() => JsonFormatterController(), fenix: true);
     Get.lazyPut(() => SqlFormatterController(), fenix: true);
     Get.lazyPut(() => XmlFormatterController(), fenix: true);
+    Get.lazyPut(() => HashGeneratorController(), fenix: true);
+    Get.lazyPut(() => UuidGeneratorController(), fenix: true);
+    Get.lazyPut(() => LoremIpsumGeneratorController(), fenix: true);
   }
 }
 

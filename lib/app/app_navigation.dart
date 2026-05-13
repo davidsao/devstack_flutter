@@ -17,6 +17,9 @@ enum Nav {
   formatterJson,
   formatterXml,
   formatterSql,
+  generatorHash,
+  generatorLoremIpsum,
+  generatorUuid,
 }
 
 class Navigation {
@@ -61,6 +64,12 @@ extension NavigationExtension on Nav {
         return SqlFormatterPage(viewTag: viewTag);
       case Nav.formatterXml:
         return XmlFormatterPage(viewTag: viewTag);
+      case Nav.generatorHash:
+        return HashGeneratorPage(viewTag: viewTag);
+      case Nav.generatorLoremIpsum:
+        return LoremIpsumGeneratorPage(viewTag: viewTag);
+      case Nav.generatorUuid:
+        return UuidGeneratorPage(viewTag: viewTag);
       default:
         return const Center(child: Text('ComingSoonPage'));
     }
@@ -86,6 +95,9 @@ extension NavigationExtension on Nav {
       Nav.formatterJson: IconKeys.jsonFormatter,
       Nav.formatterXml: IconKeys.xmlFormatter,
       Nav.formatterSql: IconKeys.sqlFormatter,
+      Nav.generatorHash: IconKeys.jsonFormatter,
+      Nav.generatorLoremIpsum: IconKeys.xmlFormatter,
+      Nav.generatorUuid: IconKeys.sqlFormatter,
     }[this];
   }
 
@@ -101,6 +113,9 @@ extension NavigationExtension on Nav {
       Nav.formatterJson: LocaleKeys.nav_json.localize(),
       Nav.formatterXml: LocaleKeys.nav_xml.localize(),
       Nav.formatterSql: LocaleKeys.nav_sql.localize(),
+      Nav.generatorHash: LocaleKeys.nav_hash.localize(),
+      Nav.generatorLoremIpsum: LocaleKeys.nav_lorem_ipsum.localize(),
+      Nav.generatorUuid: LocaleKeys.nav_uuid.localize(),
     }[this];
   }
 }

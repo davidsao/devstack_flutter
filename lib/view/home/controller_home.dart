@@ -34,6 +34,11 @@ class HomeController extends BaseController<HomeState> {
         Nav.formatterXml,
         Nav.formatterSql,
       ],
+      LocaleKeys.lbl_menu_generator.localize(): [
+        Nav.generatorHash,
+        Nav.generatorLoremIpsum,
+        Nav.generatorUuid,
+      ],
     };
   }
 
