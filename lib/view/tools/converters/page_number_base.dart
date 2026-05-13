@@ -13,11 +13,11 @@ class NumberBasePage extends BaseView<NumberBaseController, NumberBaseState> {
       children: [
         Text(
           label,
-          style: AppTextStyles.b1.semiBold,
+          style: AppTextStyles.b2.bold,
         ),
-        kGapSmall,
+        kGapText,
         SizedBox(
-          height: 92,
+          height: 80,
           child: CustomTextField(
             controller: textController,
             isMonoSpace: true,
@@ -29,7 +29,7 @@ class NumberBasePage extends BaseView<NumberBaseController, NumberBaseState> {
             onChanged: onChanged,
           ),
         ),
-        kGapText,
+        kGapTiny,
       ],
     );
   }
@@ -48,27 +48,45 @@ class NumberBasePage extends BaseView<NumberBaseController, NumberBaseState> {
         children: [
           Text(
             'Configuration',
-            style: AppTextStyles.b1.semiBold,
+            style: AppTextStyles.b2.bold,
           ),
-          kGapSmall,
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Theme.of(context).dividerColor),
-              borderRadius: BorderRadius.circular(8),
-              color:
-                  Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.3),
-            ),
-            child: Obx(
-              () => SwitchListTile(
-                title: const Text('Format number'),
-                value: controller.state.formatNumber.value,
-                onChanged: controller.toggleFormat,
-                activeColor: Theme.of(context).colorScheme.primary,
-                secondary: const Icon(Icons.text_format),
+          kGapTiny,
+          Obx(() {
+            return Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Theme.of(context).dividerColor),
+                borderRadius: BorderRadius.circular(8),
+                color: state.formatNumber.value ? Theme.of(context).colorScheme.primary.withAlpha(24) : Colors.white,
               ),
-            ),
-          ),
-          kGapLarge,
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppDimens.paddingSmaller,
+                vertical: AppDimens.paddingText,
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.text_format,
+                    size: AppDimens.iconSmaller,
+                  ),
+                  kGapTiny,
+                  Expanded(
+                    child: Text(
+                      'Format number',
+                      style: AppTextStyles.b2.semiBold,
+                    ),
+                  ),
+                  Transform.scale(
+                    scale: 0.8,
+                    child: Switch(
+                      value: state.formatNumber.value,
+                      onChanged: controller.toggleFormat,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
+          kGapSmall,
           _buildFieldSection(
             'Hexadecimal',
             controller.hexController,

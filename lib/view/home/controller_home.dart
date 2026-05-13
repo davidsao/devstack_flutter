@@ -29,7 +29,11 @@ class HomeController extends BaseController<HomeState> {
         Nav.encoderBase64,
         Nav.encoderJwt,
       ],
-      LocaleKeys.lbl_menu_formatter.localize(): [],
+      LocaleKeys.lbl_menu_formatter.localize(): [
+        Nav.formatterJson,
+        Nav.formatterXml,
+        Nav.formatterSql,
+      ],
     };
   }
 

@@ -67,14 +67,18 @@ class NumberBaseController extends BaseController<NumberBaseState> {
 
   void _updateOtherFields(int sourceRadix) {
     if (_currentValue == null) return;
-    if (sourceRadix != 16)
+    if (sourceRadix != 16) {
       hexController.text = _format(_currentValue!.toRadixString(16), 16);
-    if (sourceRadix != 10)
+    }
+    if (sourceRadix != 10) {
       decController.text = _format(_currentValue!.toRadixString(10), 10);
-    if (sourceRadix != 8)
+    }
+    if (sourceRadix != 8) {
       octController.text = _format(_currentValue!.toRadixString(8), 8);
-    if (sourceRadix != 2)
+    }
+    if (sourceRadix != 2) {
       binController.text = _format(_currentValue!.toRadixString(2), 2);
+    }
   }
 
   void _updateAllFieldsFromCurrentValue() {
@@ -162,8 +166,9 @@ class NumberFormatInputFormatter extends TextInputFormatter {
       }
       if (formatted[i] != ' ' && formatted[i] != ',') count++;
     }
-    if (count == nonFormatCharsBeforeCursor)
+    if (count == nonFormatCharsBeforeCursor) {
       newCursorPosition = formatted.length;
+    }
 
     return TextEditingValue(
       text: formatted,

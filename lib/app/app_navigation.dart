@@ -14,6 +14,9 @@ enum Nav {
   encoderHtml,
   encoderJwt,
   encoderUrl,
+  formatterJson,
+  formatterXml,
+  formatterSql,
 }
 
 class Navigation {
@@ -52,6 +55,12 @@ extension NavigationExtension on Nav {
         return JwtEncoderPage(viewTag: viewTag);
       case Nav.encoderUrl:
         return UrlEncoderPage(viewTag: viewTag);
+      case Nav.formatterJson:
+        return JsonFormatterPage(viewTag: viewTag);
+      case Nav.formatterSql:
+        return SqlFormatterPage(viewTag: viewTag);
+      case Nav.formatterXml:
+        return XmlFormatterPage(viewTag: viewTag);
       default:
         return const Center(child: Text('ComingSoonPage'));
     }
@@ -59,14 +68,6 @@ extension NavigationExtension on Nav {
 
   AppBindings? getBindings(String? tag) {
     switch (this) {
-      case Nav.encoderBase64:
-        return Base64EncoderBinding(tag: tag);
-      case Nav.encoderHtml:
-        return HtmlEncoderBinding(tag: tag);
-      case Nav.encoderJwt:
-        return JwtEncoderBinding(tag: tag);
-      case Nav.encoderUrl:
-        return UrlEncoderBinding(tag: tag);
       default:
         return null;
     }
@@ -82,6 +83,9 @@ extension NavigationExtension on Nav {
       Nav.encoderUrl: IconKeys.url,
       Nav.encoderHtml: IconKeys.html,
       Nav.encoderBase64: IconKeys.base64,
+      Nav.formatterJson: IconKeys.jsonFormatter,
+      Nav.formatterXml: IconKeys.xmlFormatter,
+      Nav.formatterSql: IconKeys.sqlFormatter,
     }[this];
   }
 
@@ -94,6 +98,9 @@ extension NavigationExtension on Nav {
       Nav.encoderHtml: LocaleKeys.nav_html.localize(),
       Nav.encoderUrl: LocaleKeys.nav_url.localize(),
       Nav.encoderJwt: LocaleKeys.nav_jwt.localize(),
+      Nav.formatterJson: LocaleKeys.nav_json.localize(),
+      Nav.formatterXml: LocaleKeys.nav_xml.localize(),
+      Nav.formatterSql: LocaleKeys.nav_sql.localize(),
     }[this];
   }
 }

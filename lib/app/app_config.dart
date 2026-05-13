@@ -75,6 +75,9 @@ class AppConfig extends StatefulWidget {
     Get.lazyPut(() => DateConverterController(), fenix: true);
     Get.lazyPut(() => JsonYamlController(), fenix: true);
     Get.lazyPut(() => NumberBaseController(), fenix: true);
+    Get.lazyPut(() => JsonFormatterController(), fenix: true);
+    Get.lazyPut(() => SqlFormatterController(), fenix: true);
+    Get.lazyPut(() => XmlFormatterController(), fenix: true);
   }
 }
 

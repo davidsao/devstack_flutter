@@ -1,5 +1,8 @@
+import 'package:devtoys_flutter/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import '../../generated/icon_keys.g.dart';
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -30,6 +33,149 @@ class CustomTextField extends StatefulWidget {
 class _CustomTextFieldState extends State<CustomTextField> {
   bool _isSearchVisible = false;
   final TextEditingController _searchController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+
+  List<int> _matchIndices = [];
+  int _currentMatch = 0;
+  String _lastKnownText = '';
+
+  // Stored constraints to calculate the exact text height
+  double _textFieldMaxWidth = 0;
+  double _textFieldMaxHeight = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _lastKnownText = widget.controller.text;
+    widget.controller.addListener(_onMainTextChanged);
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(_onMainTextChanged);
+    _searchController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onMainTextChanged() {
+    // --- FIX: Only recalculate if the actual text changed, not just the cursor/selection ---
+    if (widget.controller.text != _lastKnownText) {
+      _lastKnownText = widget.controller.text;
+
+      if (_isSearchVisible && _searchController.text.isNotEmpty) {
+        _calculateMatches(_searchController.text);
+      } else if (_isSearchVisible && _searchController.text.isEmpty) {
+        _calculateMatches('');
+      }
+    }
+  }
+
+  void _syncSearchStateToController() {
+    if (widget.controller is SyntaxHighlightingController) {
+      int activeIndex = _matchIndices.isEmpty ? -1 : _currentMatch - 1;
+      (widget.controller as SyntaxHighlightingController)
+          .updateSearch(_searchController.text, activeIndex);
+    }
+  }
+
+  void _calculateMatches(String query) {
+    if (query.isEmpty) {
+      setState(() {
+        _matchIndices = [];
+        _currentMatch = 0;
+      });
+      _syncSearchStateToController();
+      return;
+    }
+
+    final matches = RegExp(RegExp.escape(query), caseSensitive: false)
+        .allMatches(widget.controller.text);
+
+    setState(() {
+      _matchIndices = matches.map((m) => m.start).toList();
+      if (_matchIndices.isNotEmpty) {
+        _currentMatch = 1;
+        _scrollToCurrentMatch();
+      } else {
+        _currentMatch = 0;
+      }
+    });
+    _syncSearchStateToController();
+  }
+
+  void _onSearchChanged(String query) {
+    _calculateMatches(query);
+  }
+
+  void _scrollToCurrentMatch() {
+    if (_matchIndices.isEmpty || _currentMatch < 1) return;
+    int offset = _matchIndices[_currentMatch - 1];
+    int queryLength = _searchController.text.length;
+
+    // Highlight the selection (This triggers the controller listener!)
+    widget.controller.selection =
+        TextSelection(baseOffset: offset, extentOffset: offset + queryLength);
+
+    // Calculate scroll position
+    if (_textFieldMaxWidth > 0 && _scrollController.hasClients) {
+      final textStyle = TextStyle(
+        fontFamily: widget.isMonoSpace ? 'monospace' : null,
+        fontSize: 14,
+      );
+
+      final textUpToMatch = widget.controller.text.substring(0, offset);
+
+      final tp = TextPainter(
+        text: TextSpan(text: textUpToMatch, style: textStyle),
+        textDirection: TextDirection.ltr,
+      );
+
+      tp.layout(maxWidth: _textFieldMaxWidth);
+
+      double targetScroll = tp.size.height - (_textFieldMaxHeight / 2) + 10;
+      if (targetScroll < 0) targetScroll = 0;
+
+      final maxScroll = _scrollController.position.maxScrollExtent;
+      if (targetScroll > maxScroll) targetScroll = maxScroll;
+
+      _scrollController.animateTo(
+        targetScroll,
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  void _nextMatch() {
+    if (_matchIndices.isEmpty) return;
+    setState(() {
+      _currentMatch =
+          _currentMatch < _matchIndices.length ? _currentMatch + 1 : 1;
+    });
+    _scrollToCurrentMatch();
+    _syncSearchStateToController();
+  }
+
+  void _prevMatch() {
+    if (_matchIndices.isEmpty) return;
+    setState(() {
+      _currentMatch =
+          _currentMatch > 1 ? _currentMatch - 1 : _matchIndices.length;
+    });
+    _scrollToCurrentMatch();
+    _syncSearchStateToController();
+  }
+
+  void _toggleSearch() {
+    setState(() {
+      _isSearchVisible = !_isSearchVisible;
+      if (!_isSearchVisible) {
+        _searchController.clear();
+        _onSearchChanged('');
+      }
+    });
+  }
 
   void _selectAll() {
     widget.controller.selection = TextSelection(
@@ -42,9 +188,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     Clipboard.setData(ClipboardData(text: widget.controller.text));
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Copied to clipboard'),
-        duration: Duration(seconds: 1),
-      ),
+          content: Text('Copied to clipboard'), duration: Duration(seconds: 1)),
     );
   }
 
@@ -53,111 +197,166 @@ class _CustomTextFieldState extends State<CustomTextField> {
     final data = await Clipboard.getData(Clipboard.kTextPlain);
     if (data != null && data.text != null) {
       widget.controller.text = data.text!;
+      // Update our tracker manually here so pasting doesn't break logic
+      _lastKnownText = data.text!;
       if (widget.onChanged != null) {
         widget.onChanged!(data.text!);
       }
     }
   }
 
-  void _toggleSearch() {
-    setState(() {
-      _isSearchVisible = !_isSearchVisible;
-      if (!_isSearchVisible) {
-        _searchController.clear();
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).dividerColor),
-        borderRadius: BorderRadius.circular(8),
-        color: Theme.of(context).colorScheme.surface,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // TOOLBAR
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface.withOpacity(0.5),
-              border: Border(
-                  bottom: BorderSide(color: Theme.of(context).dividerColor)),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                if (_isSearchVisible)
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: SizedBox(
-                        height: 36,
-                        child: TextField(
-                          controller: _searchController,
-                          decoration: const InputDecoration(
-                            hintText: 'Search...',
-                            contentPadding: EdgeInsets.symmetric(horizontal: 8),
-                            border: OutlineInputBorder(),
-                          ),
-                          onChanged: (val) {
-                            // Implement search highlighting logic here if needed
-                            setState(() {});
-                          },
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Theme.of(context).dividerColor),
+            borderRadius: BorderRadius.circular(8),
+            color: Theme.of(context).colorScheme.surface,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // TOOLBAR
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface.withOpacity(0.5),
+                  border: Border(
+                      bottom:
+                          BorderSide(color: Theme.of(context).dividerColor)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ToolTipIconButton(
+                      icon: IconKeys.textfieldSelect,
+                      tooltip: 'Select All',
+                      onTap: _selectAll,
+                    ),
+                    ToolTipIconButton(
+                      icon: IconKeys.textfieldCopy,
+                      tooltip: 'Copy',
+                      onTap: _copy,
+                    ),
+                    if (widget.isEditable)
+                      ToolTipIconButton(
+                        icon: IconKeys.textfieldPaste,
+                        tooltip: 'Paste',
+                        onTap: _paste,
+                      ),
+                    ToolTipIconButton(
+                      icon: IconKeys.textfieldSearch,
+                      tooltip: 'Search',
+                      onTap: _toggleSearch,
+                    ),
+                  ],
+                ),
+              ),
+
+              // TEXT FIELD WRAPPED IN LAYOUT BUILDER
+              Expanded(
+                child: LayoutBuilder(builder: (context, constraints) {
+                  _textFieldMaxWidth = constraints.maxWidth - 32;
+                  _textFieldMaxHeight = constraints.maxHeight;
+
+                  return TextField(
+                    controller: widget.controller,
+                    scrollController: _scrollController,
+                    readOnly: !widget.isEditable,
+                    maxLines: widget.maxLines,
+                    expands: widget.maxLines == null,
+                    inputFormatters: widget.inputFormatters,
+                    style: AppTextStyles.b3.copyWith(
+                      fontFamily: widget.isMonoSpace ? 'monospace' : null,
+                    ),
+                    decoration: const InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.all(16),
+                    ),
+                    onChanged: widget.onChanged,
+                  );
+                }),
+              ),
+            ],
+          ),
+        ),
+
+        // OVERFLOW FLOATING SEARCH WIDGET
+        if (_isSearchVisible)
+          Positioned(
+            top: 48,
+            right: 16,
+            child: Material(
+              elevation: 4,
+              borderRadius: BorderRadius.circular(8),
+              color: Theme.of(context).colorScheme.surface,
+              child: Container(
+                height: 40,
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Theme.of(context).dividerColor),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.search, size: 18),
+                    const SizedBox(width: 8),
+                    SizedBox(
+                      width: 150,
+                      child: TextField(
+                        controller: _searchController,
+                        autofocus: true,
+                        decoration: const InputDecoration(
+                          hintText: 'Search...',
+                          border: InputBorder.none,
+                          isDense: true,
+                          contentPadding: EdgeInsets.symmetric(vertical: 8),
                         ),
+                        onChanged: _onSearchChanged,
+                        onSubmitted: (_) => _nextMatch(),
                       ),
                     ),
-                  ),
-                Tooltip(
-                    message: 'Select All',
-                    child: IconButton(
-                        icon: const Icon(Icons.select_all, size: 20),
-                        onPressed: _selectAll)),
-                Tooltip(
-                    message: 'Copy',
-                    child: IconButton(
-                        icon: const Icon(Icons.copy, size: 20),
-                        onPressed: _copy)),
-                if (widget.isEditable)
-                  Tooltip(
-                      message: 'Paste',
-                      child: IconButton(
-                          icon: const Icon(Icons.paste, size: 20),
-                          onPressed: _paste)),
-                Tooltip(
-                    message: 'Search',
-                    child: IconButton(
-                        icon: const Icon(Icons.search, size: 20),
-                        onPressed: _toggleSearch)),
-              ],
+                    const SizedBox(width: 8),
+                    Text(
+                      '${_matchIndices.isEmpty ? 0 : _currentMatch}/${_matchIndices.length}',
+                      style: const TextStyle(fontSize: 12),
+                    ),
+                    const SizedBox(width: 8),
+                    IconButton(
+                      icon: const Icon(Icons.arrow_upward, size: 18),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      onPressed: _prevMatch,
+                    ),
+                    const SizedBox(width: 8),
+                    IconButton(
+                      icon: const Icon(Icons.arrow_downward, size: 18),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      onPressed: _nextMatch,
+                    ),
+                    const SizedBox(width: 8),
+                    Container(
+                        width: 1,
+                        height: 20,
+                        color: Theme.of(context).dividerColor),
+                    const SizedBox(width: 8),
+                    IconButton(
+                      icon: const Icon(Icons.close, size: 18),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      onPressed: _toggleSearch,
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
-
-          // TEXT FIELD
-          Expanded(
-            child: TextField(
-              controller: widget.controller,
-              readOnly: !widget.isEditable,
-              maxLines: widget.maxLines,
-              expands: widget.maxLines == null,
-              inputFormatters: widget.inputFormatters,
-              style: TextStyle(
-                fontFamily: widget.isMonoSpace ? 'monospace' : null,
-                fontSize: 14,
-              ),
-              decoration: const InputDecoration(
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                border: InputBorder.none, // Border handled by outer container
-                contentPadding: EdgeInsets.all(16),
-              ),
-              onChanged: widget.onChanged,
-            ),
-          ),
-        ],
-      ),
+      ],
     );
   }
 }

@@ -11,6 +11,7 @@ class HomePage extends BaseView<HomeController, HomeState> {
   Widget view(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(LocaleKeys.lbl_app_name.localize()),
         leading: Obx(() {
           return InkWell(
@@ -21,6 +22,7 @@ class HomePage extends BaseView<HomeController, HomeState> {
                 Icon(state.isMenuExpanded.value ? Icons.menu : Icons.menu_open),
           );
         }),
+        scrolledUnderElevation: 0.0,
       ),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(

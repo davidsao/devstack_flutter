@@ -39,7 +39,7 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
     for (final entry in state.bottomNavigation.entries) {
       menuItems.add(
         SizedBox(
-          height: 48,
+          height: 40,
           child: Align(
             alignment: Alignment.bottomLeft,
             child: Padding(
@@ -78,7 +78,7 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
               await HapticFeedback.heavyImpact();
             },
             child: SizedBox(
-              height: 48,
+              height: 32,
               child: _navItem(context, nav, isActive),
             ),
           ),
@@ -108,22 +108,21 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
             .withAlpha(200);
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppDimens.paddingSmaller),
+      padding: const EdgeInsets.all(AppDimens.paddingText),
       scrollDirection: Axis.horizontal,
       physics: const NeverScrollableScrollPhysics(),
       child: Row(
         children: [
           AppImage(
             nav.getIcon ?? "",
-            size: 28,
+            size: 18,
             fit: BoxFit.scaleDown,
             color: itemColor,
           ),
           Text(
             nav.getName ?? '',
-            style: Get.textTheme.titleSmall?.copyWith(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
+            style: AppTextStyles.b3.copyWith(
+              fontWeight: active ? FontWeight.bold : FontWeight.w500,
               color: itemColor,
             ),
             maxLines: 2,

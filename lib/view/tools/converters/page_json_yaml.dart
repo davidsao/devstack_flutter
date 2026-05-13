@@ -23,7 +23,7 @@ class JsonYamlPage extends BaseView<JsonYamlController, JsonYamlState> {
               children: [
                 Text(
                   'JSON',
-                  style: AppTextStyles.b1.semiBold,
+                  style: AppTextStyles.b2.bold,
                 ),
                 kGapText,
                 Expanded(
@@ -48,7 +48,7 @@ class JsonYamlPage extends BaseView<JsonYamlController, JsonYamlState> {
               children: [
                 Text(
                   'YAML',
-                  style: AppTextStyles.b1.semiBold,
+                  style: AppTextStyles.b2.bold,
                 ),
                 kGapText,
                 Expanded(
