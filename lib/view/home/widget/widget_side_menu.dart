@@ -1,4 +1,3 @@
-// import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:devtoys_flutter/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,12 +17,52 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
             top: AppDimens.paddingSmaller,
             bottom: AppDimens.paddingSmaller,
           ),
-          child: _buildMenuContent(context),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              // --- SEARCH BAR ---
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: AppDimens.paddingSmaller,
+                  bottom: AppDimens.paddingSmall,
+                ),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: AppDimens.paddingText,
+                    horizontal: AppDimens.paddingSmaller,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Theme.of(context).dividerColor),
+                    borderRadius: BorderRadius.circular(8),
+                    color: Theme.of(context).colorScheme.surface,
+                  ),
+                  child: TextField(
+                    onChanged: controller.onSearchChanged,
+                    decoration: InputDecoration(
+                      hintText: 'Type to search...',
+                      border: InputBorder.none,
+                      isDense: true,
+                      contentPadding: EdgeInsets.symmetric(vertical: 8),
+                    ),
+                    style: AppTextStyles.b3,
+                  ),
+                ),
+              ),
+              // --- MENU LIST ---
+              Expanded(
+                child: _buildMenuContent(context),
+              ),
+            ],
+          ),
         ),
       );
 
-      return GlassContainer(
-        color: Theme.of(context).cardColor,
+      return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
+          color: Theme.of(context).cardColor,
+          boxShadow: AppColors.cardShadow,
+        ),
         child: content,
       ).marginOnly(
         left: AppDimens.marginSmaller,
@@ -32,58 +71,127 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
     });
   }
 
-  /// Builds the Stack containing the highlight box and the menu items
   Widget _buildMenuContent(BuildContext context) {
     List<Widget> menuItems = [];
+    final query = state.searchQuery.value;
 
     for (final entry in state.bottomNavigation.entries) {
+      final categoryKey = entry.key;
+
+      // Filter the items within this category based on the search query
+      final filteredItems = entry.value.where((nav) {
+        final name = nav.getName?.toLowerCase() ?? '';
+        return name.contains(query);
+      }).toList();
+
+      // If a search is active and this category has no matches, skip drawing it
+      if (query.isNotEmpty && filteredItems.isEmpty) {
+        continue;
+      }
+
+      final isCollapsed = state.collapsedCategories.contains(categoryKey);
+      final shouldShowItems = query.isNotEmpty || !isCollapsed;
+
+      // 1. Add Category Header (Clickable to toggle)
       menuItems.add(
-        SizedBox(
-          height: 40,
-          child: Align(
-            alignment: Alignment.bottomLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: AppDimens.paddingSmaller,
-                right: AppDimens.paddingSmaller,
-                bottom: AppDimens.paddingTiny,
-              ),
-              child: Text(
-                entry.key.toUpperCase(),
-                style: Get.textTheme.labelSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 0.5,
-                  color: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.color
-                      ?.withOpacity(0.5),
+        InkWell(
+          onTap: () => controller.toggleCategory(categoryKey),
+          child: SizedBox(
+            height: 40,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: AppDimens.paddingSmaller,
+                  right: AppDimens.paddingSmaller,
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.clip,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        categoryKey.toUpperCase(),
+                        style: Get.textTheme.labelSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.5,
+                          color: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.color
+                              ?.withOpacity(0.5),
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.clip,
+                      ),
+                    ),
+                    // Animated Chevron
+                    if (query.isEmpty)
+                      AnimatedRotation(
+                        // 0.0 is pointing down, -0.5 is pointing up
+                        turns: isCollapsed ? 0.0 : -0.5,
+                        duration: const Duration(milliseconds: 250),
+                        curve: Curves.easeInOutCubic,
+                        child: Icon(
+                          Icons.keyboard_arrow_down,
+                          size: 16,
+                          color: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.color
+                              ?.withOpacity(0.5),
+                        ),
+                      )
+                  ],
+                ),
               ),
             ),
           ),
         ),
       );
 
-      // 2. Add Navigation Items under this section
-      for (final nav in entry.value) {
-        final bool isActive = state.currentBottomNavigation.value == nav;
+      // 2. Add Animated Navigation Items
+      menuItems.add(
+        AnimatedSize(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeInOutCubic,
+          alignment: Alignment.topCenter,
+          clipBehavior: Clip.hardEdge,
+          child: shouldShowItems
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: filteredItems.map((nav) {
+                    final bool isActive =
+                        state.currentBottomNavigation.value == nav;
 
-        menuItems.add(
-          InkWell(
-            onTap: () async {
-              state.currentBottomNavigation.value = nav;
-              await HapticFeedback.heavyImpact();
-            },
-            child: SizedBox(
-              height: 32,
-              child: _navItem(context, nav, isActive),
-            ),
+                    return InkWell(
+                      onTap: () async {
+                        state.currentBottomNavigation.value = nav;
+                        await HapticFeedback.heavyImpact();
+                      },
+                      child: SizedBox(
+                        height: 32,
+                        child: _navItem(context, nav, isActive),
+                      ),
+                    );
+                  }).toList(),
+                )
+              : const SizedBox.shrink(), // Shrinks to 0 height when collapsed
+        ),
+      );
+    }
+
+    // Show a fallback if search yields zero results across all categories
+    if (query.isNotEmpty && menuItems.isEmpty) {
+      return Center(
+        child: Text(
+          'No tools found.',
+          style: AppTextStyles.b3.copyWith(
+            color:
+                Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.5),
           ),
-        );
-      }
+        ),
+      );
     }
 
     return SingleChildScrollView(
@@ -100,7 +208,6 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
     );
   }
 
-  /// Builds the individual Icon and Text
   Widget _navItem(BuildContext context, Nav nav, bool active) {
     Color itemColor = active
         ? Theme.of(context).colorScheme.primary

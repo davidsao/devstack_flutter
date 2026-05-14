@@ -5,14 +5,11 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../generated/locale_keys.g.dart';
-// import 'package:ndef/ndef.dart' as ndef;
 
 class HomeController extends BaseController<HomeState> {
   final IAppManager _appManager;
-
-  HomeController(
-    this._appManager,
-  );
+  HomeController(this._appManager);
+  bool? _wasMobile;
 
   @override
   Future<void> onInit() async {
@@ -43,32 +40,42 @@ class HomeController extends BaseController<HomeState> {
   }
 
   @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
   HomeState initState() {
-    final state = HomeState();
-    return state;
+    return HomeState();
   }
 
-  @override
-  void onResumed() {
-    super.onResumed();
+  void onSearchChanged(String query) {
+    state.searchQuery.value = query.toLowerCase();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  void toggleCategory(String categoryKey) {
+    if (state.collapsedCategories.contains(categoryKey)) {
+      state.collapsedCategories.remove(categoryKey);
+    } else {
+      state.collapsedCategories.add(categoryKey);
+    }
+  }
+
+  void updateResponsiveState(double width) {
+    // 800px is a standard breakpoint for Desktop/Tablet vs Mobile
+    bool isMobile = width < 800;
+
+    // Only auto-toggle if the screen TYPE actually changed
+    if (_wasMobile != isMobile) {
+      _wasMobile = isMobile;
+      // Auto-expand on desktop, auto-collapse on mobile
+      state.isMenuExpanded.value = !isMobile;
+    }
   }
 }
 
 class HomeState extends ViewState {
   RxMap<String, List<Nav>> bottomNavigation = <String, List<Nav>>{}.obs;
   Rx<Nav> currentBottomNavigation = Nav.converterDate.obs;
-
   RxBool isMenuExpanded = true.obs;
+
+  RxString searchQuery = ''.obs;
+  RxSet<String> collapsedCategories = <String>{}.obs;
 }
 
 class HomeBinding extends AppBindings<HomeController> {
@@ -77,8 +84,6 @@ class HomeBinding extends AppBindings<HomeController> {
   @override
   get controller {
     final get = GetIt.instance;
-    return HomeController(
-      get(),
-    );
+    return HomeController(get());
   }
 }

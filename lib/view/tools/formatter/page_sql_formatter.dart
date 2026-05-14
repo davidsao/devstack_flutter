@@ -18,50 +18,37 @@ class SqlFormatterPage
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Row(
-              children: [
+            child: ResponsiveSplitLayout(
+              firstChildren: [
+                Text(
+                  'Input',
+                  style: AppTextStyles.b2.bold,
+                ),
+                kGapTiny,
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Input',
-                        style: AppTextStyles.b2.bold,
-                      ),
-                      kGapTiny,
-                      Expanded(
-                        child: CustomTextField(
-                          controller: controller.inputController,
-                          maxLines: null,
-                          isMonoSpace: true,
-                          onChanged: (_) => controller.format(),
-                        ),
-                      ),
-                    ],
+                  child: CustomTextField(
+                    controller: controller.inputController,
+                    maxLines: null,
+                    isMonoSpace: true,
+                    onChanged: (_) => controller.format(),
                   ),
                 ),
-                const SizedBox(width: 16),
+              ],
+              secondChildren: [
+                Text(
+                  'Output',
+                  style: AppTextStyles.b2.bold,
+                ),
+                kGapTiny,
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Output',
-                        style: AppTextStyles.b2.bold,
-                      ),
-                      kGapTiny,
-                      Expanded(
-                        child: CustomTextField(
-                          controller: controller.outputController,
-                          maxLines: null,
-                          isMonoSpace: true,
-                          isEditable: false,
-                          // No syntax highlighting needed for basic SQL right now
-                          isJsonFormatted: false,
-                          isXMLFormatted: false,
-                        ),
-                      ),
-                    ],
+                  child: CustomTextField(
+                    controller: controller.outputController,
+                    maxLines: null,
+                    isMonoSpace: true,
+                    isEditable: false,
+                    // No syntax highlighting needed for basic SQL right now
+                    isJsonFormatted: false,
+                    isXMLFormatted: false,
                   ),
                 ),
               ],

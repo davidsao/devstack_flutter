@@ -13,59 +13,45 @@ class JsonYamlPage extends BaseView<JsonYamlController, JsonYamlState> {
         top: AppDimens.paddingSmall,
         bottom: AppDimens.paddingSmall + MediaQuery.paddingOf(context).bottom,
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // LEFT SIDE: JSON String
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'JSON',
-                  style: AppTextStyles.b2.bold,
-                ),
-                kGapText,
-                Expanded(
-                  child: CustomTextField(
-                    controller: controller.jsonController,
-                    maxLines: null,
-                    isMonoSpace: true,
-                    isJsonFormatted: true, // Applies syntax highlighting
-                    isXMLFormatted: false,
-                    isEditable: true,
-                    onChanged: controller.onJsonChanged,
-                  ),
-                ),
-              ],
+      child: Expanded(
+        child: ResponsiveSplitLayout(
+          firstChildren: [
+            Text(
+              'JSON',
+              style: AppTextStyles.b2.bold,
             ),
-          ),
-          const SizedBox(width: 16),
-          // RIGHT SIDE: YAML String
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'YAML',
-                  style: AppTextStyles.b2.bold,
-                ),
-                kGapText,
-                Expanded(
-                  child: CustomTextField(
-                    controller: controller.yamlController,
-                    maxLines: null,
-                    isMonoSpace: true,
-                    isJsonFormatted: false,
-                    isXMLFormatted: false,
-                    isEditable: true,
-                    onChanged: controller.onYamlChanged,
-                  ),
-                ),
-              ],
+            kGapText,
+            Expanded(
+              child: CustomTextField(
+                controller: controller.jsonController,
+                maxLines: null,
+                isMonoSpace: true,
+                isJsonFormatted: true, // Applies syntax highlighting
+                isXMLFormatted: false,
+                isEditable: true,
+                onChanged: controller.onJsonChanged,
+              ),
             ),
-          ),
-        ],
+          ],
+          secondChildren: [
+            Text(
+              'YAML',
+              style: AppTextStyles.b2.bold,
+            ),
+            kGapText,
+            Expanded(
+              child: CustomTextField(
+                controller: controller.yamlController,
+                maxLines: null,
+                isMonoSpace: true,
+                isJsonFormatted: false,
+                isXMLFormatted: false,
+                isEditable: true,
+                onChanged: controller.onYamlChanged,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -38,48 +38,35 @@ class JsonFormatterPage
           kGapSmall,
           // Editors
           Expanded(
-            child: Row(
-              children: [
+            child: ResponsiveSplitLayout(
+              firstChildren: [
+                Text(
+                  'Input',
+                  style: AppTextStyles.b2.bold,
+                ),
+                kGapTiny,
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Input',
-                        style: AppTextStyles.b2.bold,
-                      ),
-                      kGapTiny,
-                      Expanded(
-                        child: CustomTextField(
-                          controller: controller.inputController,
-                          maxLines: null,
-                          isMonoSpace: true,
-                          onChanged: (_) => controller.format(),
-                        ),
-                      ),
-                    ],
+                  child: CustomTextField(
+                    controller: controller.inputController,
+                    maxLines: null,
+                    isMonoSpace: true,
+                    onChanged: (_) => controller.format(),
                   ),
                 ),
-                kGapSmall,
+              ],
+              secondChildren: [
+                Text(
+                  'Output',
+                  style: AppTextStyles.b2.bold,
+                ),
+                kGapTiny,
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Output',
-                        style: AppTextStyles.b2.bold,
-                      ),
-                      kGapTiny,
-                      Expanded(
-                        child: CustomTextField(
-                          controller: controller.outputController,
-                          maxLines: null,
-                          isMonoSpace: true,
-                          isJsonFormatted: true,
-                          isEditable: false,
-                        ),
-                      ),
-                    ],
+                  child: CustomTextField(
+                    controller: controller.outputController,
+                    maxLines: null,
+                    isMonoSpace: true,
+                    isJsonFormatted: true,
+                    isEditable: false,
                   ),
                 ),
               ],

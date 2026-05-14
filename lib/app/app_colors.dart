@@ -1,5 +1,6 @@
 import 'package:devtoys_flutter/index.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AppColors {
   static const Color white = Colors.white;
@@ -111,7 +112,23 @@ class AppColors {
   static const Color sponsoredBackground = Color(0xFFE1D8D2);
 
   static const List<BoxShadow> cardShadow = [
-    BoxShadow(color: Color(0x20000000), blurRadius: 12, offset: Offset(0, 4)),
-    BoxShadow(color: Color(0x20000000), blurRadius: 32, offset: Offset(0, 8)),
+    BoxShadow(color: Color(0x10000000), blurRadius: 8, offset: Offset(0, 4)),
+    BoxShadow(color: Color(0x10000000), blurRadius: 24, offset: Offset(0, 8)),
+  ];
+
+  static const List<BoxShadow> toolbarShadow = [
+    BoxShadow(color: Color(0x10000000), blurRadius: 2, offset: Offset(0, 1)),
+    BoxShadow(color: Color(0x10000000), blurRadius: 4, offset: Offset(0, 2)),
+  ];
+
+  static final List<BoxShadow> textfieldShadow = [
+    const BoxShadow(
+      color: Color(0x10000000),
+    ),
+    BoxShadow(
+      color: Theme.of(Get.context!).colorScheme.surface,
+      blurRadius: 3,
+      spreadRadius: -3,
+    ),
   ];
 }

@@ -211,21 +211,26 @@ class _CustomTextFieldState extends State<CustomTextField> {
       children: [
         Container(
           decoration: BoxDecoration(
-            border: Border.all(color: Theme.of(context).dividerColor),
-            borderRadius: BorderRadius.circular(8),
-            color: Theme.of(context).colorScheme.surface,
+            border: Border.all(
+              color: Theme.of(context).dividerColor.withAlpha(10),
+            ),
+            borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
+            color: Colors.transparent,
+            // color: Theme.of(context).colorScheme.surface,
+            boxShadow: AppColors.textfieldShadow,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // TOOLBAR
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
+                margin: const EdgeInsets.all(AppDimens.marginText),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: AppDimens.marginText),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface.withOpacity(0.5),
-                  border: Border(
-                      bottom:
-                          BorderSide(color: Theme.of(context).dividerColor)),
+                  color: Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.circular(AppDimens.radiusSmall),
+                  boxShadow: AppColors.cardShadow,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,

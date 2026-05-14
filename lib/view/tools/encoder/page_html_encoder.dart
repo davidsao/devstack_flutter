@@ -14,35 +14,37 @@ class HtmlEncoderPage
         top: AppDimens.paddingSmall,
         bottom: AppDimens.paddingSmall + MediaQuery.paddingOf(context).bottom,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Decoded',
-            style: AppTextStyles.b1.semiBold,
-          ),
-          kGapText,
-          Expanded(
-            child: CustomTextField(
-              controller: controller.decodedController,
-              maxLines: null,
-              onChanged: controller.onDecodedChanged,
+      child: Expanded(
+        child: ResponsiveSplitLayout(
+          firstChildren: [
+            Text(
+              'Decoded',
+              style: AppTextStyles.b1.semiBold,
             ),
-          ),
-          kGapSmall,
-          Text(
-            'Encoded',
-            style: AppTextStyles.b1.semiBold,
-          ),
-          kGapText,
-          Expanded(
-            child: CustomTextField(
-              controller: controller.encodedController,
-              maxLines: null,
-              onChanged: controller.onEncodedChanged,
+            kGapText,
+            Expanded(
+              child: CustomTextField(
+                controller: controller.decodedController,
+                maxLines: null,
+                onChanged: controller.onDecodedChanged,
+              ),
             ),
-          ),
-        ],
+          ],
+          secondChildren: [
+            Text(
+              'Encoded',
+              style: AppTextStyles.b1.semiBold,
+            ),
+            kGapText,
+            Expanded(
+              child: CustomTextField(
+                controller: controller.encodedController,
+                maxLines: null,
+                onChanged: controller.onEncodedChanged,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
