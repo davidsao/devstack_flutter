@@ -1,0 +1,23 @@
+{
+  "lbl_app_name": "Stack Dév",
+  "lbl_menu_home": "Accueil",
+  "lbl_menu_converter": "Convertisseurs",
+  "nav_json_yaml": "JSON <> YAML",
+  "nav_number_base": "Base Numérique",
+  "nav_date": "Date",
+  "lbl_menu_encoder": "Encodeurs / Décodeurs",
+  "nav_html": "HTML",
+  "nav_url": "URL",
+  "nav_base64": "Base64",
+  "nav_jwt": "JWT",
+  "lbl_menu_formatter": "Formateurs",
+  "nav_json": "JSON",
+  "nav_xml": "XML",
+  "nav_sql": "Formateur SQL",
+  "lbl_menu_generator": "Générateurs",
+  "nav_hash": "Hachage (or Hash)",
+  "nav_uuid": "UUID",
+  "nav_lorem_ipsum": "Lorem Ipsum",
+  "nav_checksum": "Checksum",
+  "nav_qr_generator": "Générateur de Code QR"
+}

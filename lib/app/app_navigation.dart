@@ -7,6 +7,8 @@ import '../generated/locale_keys.g.dart';
 
 enum Nav {
   home,
+  allTools,
+  settings,
   converterDate,
   converterJsonYaml,
   converterNumberBase,
@@ -44,6 +46,10 @@ extension NavigationExtension on Nav {
     switch (this) {
       case Nav.home:
         return HomePage(viewTag: viewTag);
+      case Nav.allTools:
+        return AllToolsPage(viewTag: viewTag);
+      case Nav.settings:
+        return SettingsPage(viewTag: viewTag);
       case Nav.converterDate:
         return DateConverterPage(viewTag: viewTag);
       case Nav.converterJsonYaml:

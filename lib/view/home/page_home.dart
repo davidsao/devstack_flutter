@@ -1,3 +1,4 @@
+import 'package:devtoys_flutter/generated/icon_keys.g.dart';
 import 'package:devtoys_flutter/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,14 +26,14 @@ class HomePage extends BaseView<HomeController, HomeState> {
         children: [
           // Main Content Area
           Obx(() {
-            final nav = state.currentBottomNavigation.value;
+            final nav = app.state.currentTools.value;
             return AnimatedContainer(
               duration: 500.milliseconds,
               curve: Curves.easeOutQuint,
               // On mobile, the menu floats OVER the content, so we remove the margin push
               margin: EdgeInsets.only(
-                left: state.isMenuExpanded.value && !isMobile ? 224.0 : 0.0,
-                top: state.isMenuExpanded.value && !isMobile
+                left: app.state.isMenuExpanded.value && !isMobile ? 224.0 : 0.0,
+                top: app.state.isMenuExpanded.value && !isMobile
                     ? 0.0
                     : kToolbarHeight,
               ),
@@ -45,7 +46,7 @@ class HomePage extends BaseView<HomeController, HomeState> {
             return AnimatedPositioned(
               duration: 800.milliseconds,
               curve: const ElasticOutCurve(0.9),
-              left: state.isMenuExpanded.value ? 0.0 : -224.0,
+              left: app.state.isMenuExpanded.value ? 0.0 : -224.0,
               top: AppDimens.marginSmaller + kToolbarHeight,
               bottom: MediaQuery.paddingOf(context).bottom +
                   AppDimens.marginSmaller,
@@ -61,7 +62,7 @@ class HomePage extends BaseView<HomeController, HomeState> {
               child: AnimatedContainer(
                 duration: 400.milliseconds,
                 curve: Curves.easeOutCubic,
-                width: state.isMenuExpanded.value ? 160 : 40,
+                width: app.state.isMenuExpanded.value ? 200 : 40,
                 height: 40,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
@@ -71,22 +72,48 @@ class HomePage extends BaseView<HomeController, HomeState> {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      if (state.isMenuExpanded.value) kGapSmall else kGapTiny,
+                      if (app.state.isMenuExpanded.value)
+                        kGapSmall
+                      else
+                        kGapTiny,
                       InkWell(
                         onTap: () {
-                          state.isMenuExpanded.toggle();
+                          app.state.isMenuExpanded.toggle();
                         },
-                        child: Icon(state.isMenuExpanded.value
-                            ? Icons.menu_open
-                            : Icons.menu),
+                        child: Icon(
+                          app.state.isMenuExpanded.value
+                              ? Icons.menu_open
+                              : Icons.menu,
+                          size: AppDimens.iconSmall,
+                          color: AppColors.grey,
+                        ),
                       ),
-                      if (state.isMenuExpanded.value) ...[
+                      if (app.state.isMenuExpanded.value) ...[
                         kGapTiny,
-                        Text(
-                          LocaleKeys.lbl_app_name.localize(),
-                          style: AppTextStyles.h4.bold,
+                        InkWell(
+                          onTap: () {
+                            app.state.currentTools.value = Nav.allTools;
+                          },
+                          child: SizedBox(
+                            width: 104,
+                            child: Text(
+                              LocaleKeys.lbl_app_name.localize(),
+                              style: AppTextStyles.h4.bold,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                        kGapTiny,
+                        InkWell(
+                          onTap: () {
+                            app.next(Nav.settings);
+                          },
+                          child: AppImage(
+                            IconKeys.settings,
+                            size: AppDimens.iconSmall,
+                            color: AppColors.grey,
+                          ),
                         ),
                       ],
                     ],

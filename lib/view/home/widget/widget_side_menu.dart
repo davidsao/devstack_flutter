@@ -75,7 +75,7 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
     List<Widget> menuItems = [];
     final query = state.searchQuery.value;
 
-    for (final entry in state.bottomNavigation.entries) {
+    for (final entry in app.state.tools.entries) {
       final categoryKey = entry.key;
 
       // Filter the items within this category based on the search query
@@ -161,12 +161,11 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: filteredItems.map((nav) {
-                    final bool isActive =
-                        state.currentBottomNavigation.value == nav;
+                    final bool isActive = app.state.currentTools.value == nav;
 
                     return InkWell(
                       onTap: () async {
-                        state.currentBottomNavigation.value = nav;
+                        app.state.currentTools.value = nav;
                         await HapticFeedback.heavyImpact();
                       },
                       child: SizedBox(

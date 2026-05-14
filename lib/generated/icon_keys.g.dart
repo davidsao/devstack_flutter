@@ -7,9 +7,10 @@ class IconKeys {
 	static String dropDown = "$_path/icon_drop_down.svg";
 	static String home = "$_path/icon_home.svg";
 	static String html = "$_path/icon_html.svg";
-	static String jsonFormatter = "$_path/icon_json_formatter.svg";
 	static String json = "$_path/icon_json.svg";
+	static String jsonFormatter = "$_path/icon_json_formatter.svg";
 	static String jwt = "$_path/icon_jwt.svg";
+	static String settings = "$_path/icon_settings.svg";
 	static String sqlFormatter = "$_path/icon_sql_formatter.svg";
 	static String textfieldCopy = "$_path/icon_textfield_copy.svg";
 	static String textfieldPaste = "$_path/icon_textfield_paste.svg";

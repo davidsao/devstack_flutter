@@ -1,0 +1,23 @@
+{
+  "lbl_app_name": "DevStack",
+  "lbl_menu_home": "홈",
+  "lbl_menu_converter": "변환기",
+  "nav_json_yaml": "JSON <> YAML",
+  "nav_number_base": "진수 변환",
+  "nav_date": "날짜",
+  "lbl_menu_encoder": "인코더 / 디코더",
+  "nav_html": "HTML",
+  "nav_url": "URL",
+  "nav_base64": "Base64",
+  "nav_jwt": "JWT",
+  "lbl_menu_formatter": "포매터",
+  "nav_json": "JSON",
+  "nav_xml": "XML",
+  "nav_sql": "SQL 포매터",
+  "lbl_menu_generator": "생성기",
+  "nav_hash": "해시",
+  "nav_uuid": "UUID",
+  "nav_lorem_ipsum": "Lorem Ipsum",
+  "nav_checksum": "체크섬",
+  "nav_qr_generator": "QR 코드 생성기"
+}

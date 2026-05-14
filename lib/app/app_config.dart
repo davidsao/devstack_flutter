@@ -68,6 +68,8 @@ class AppConfig extends StatefulWidget {
   void provideAppModules() {
     Get.lazyPut(() => AppController(_get()), fenix: true);
     Get.lazyPut(() => HomeController(_get()), fenix: true);
+    Get.lazyPut(() => AllToolsController(), fenix: true);
+    Get.lazyPut(() => SettingsController(_get(), _get()), fenix: true);
     Get.lazyPut(() => UrlEncoderController(), fenix: true);
     Get.lazyPut(() => HtmlEncoderController(), fenix: true);
     Get.lazyPut(() => Base64EncoderController(), fenix: true);

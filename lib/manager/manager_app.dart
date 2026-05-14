@@ -8,6 +8,9 @@ class AppManager implements IAppManager {
   final int number;
   final String version;
 
+  static const String _pinnedToolsKey = 'pinned_tools';
+  static const String _themeModeKey = 'theme_mode';
+
   AppManager(this.number, this.version);
 
   @override
@@ -22,6 +25,31 @@ class AppManager implements IAppManager {
   void clear() {}
 
   @override
-  // TODO: implement versionNumber
   String get versionNumber => version;
+
+  @override
+  List<String> getPinnedTools() {
+    return _prefs.getStringList(_pinnedToolsKey) ?? [];
+  }
+
+  @override
+  Future<void> togglePinnedTool(String toolName) async {
+    final tools = getPinnedTools();
+    if (tools.contains(toolName)) {
+      tools.remove(toolName);
+    } else {
+      tools.add(toolName);
+    }
+    await _prefs.setStringList(_pinnedToolsKey, tools);
+  }
+
+  @override
+  String getThemeMode() {
+    return _prefs.getString(_themeModeKey) ?? 'system';
+  }
+
+  @override
+  Future<void> setThemeMode(String mode) async {
+    await _prefs.setString(_themeModeKey, mode);
+  }
 }

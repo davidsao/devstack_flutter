@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:devtoys_flutter/index.dart';
+import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+
+import '../../generated/locale_keys.g.dart';
 
 class AppController extends BaseController<AppState> {
   AppController(
@@ -9,6 +12,7 @@ class AppController extends BaseController<AppState> {
   );
 
   final IAppManager _appManager;
+  final Map<String, List<Nav>> _baseCategories = {};
 
   @override
   AppState initState() {
@@ -24,10 +28,77 @@ class AppController extends BaseController<AppState> {
   @override
   Future<void> onInit() async {
     super.onInit();
+
+    _baseCategories.addAll({
+      LocaleKeys.lbl_menu_converter.localize(): [
+        Nav.converterJsonYaml,
+        Nav.converterNumberBase,
+        Nav.converterDate,
+      ],
+      LocaleKeys.lbl_menu_encoder.localize(): [
+        Nav.encoderHtml,
+        Nav.encoderUrl,
+        Nav.encoderBase64,
+        Nav.encoderJwt,
+      ],
+      LocaleKeys.lbl_menu_formatter.localize(): [
+        Nav.formatterJson,
+        Nav.formatterXml,
+        Nav.formatterSql,
+      ],
+      LocaleKeys.lbl_menu_generator.localize(): [
+        Nav.generatorHash,
+        Nav.generatorLoremIpsum,
+        Nav.generatorUuid,
+      ],
+    });
+
+    final pinnedNames = _appManager.getPinnedTools();
+
+    final allTools = _baseCategories.values.expand((e) => e).toList();
+
+    for (final name in pinnedNames) {
+      final nav = allTools.firstWhereOrNull((n) => n.getName == name);
+      if (nav != null) {
+        state.pinnedTools.add(nav);
+      }
+    }
+
+    _updateNavigationMap();
+  }
+
+  void _updateNavigationMap() {
+    final newMap = <String, List<Nav>>{};
+
+    if (state.pinnedTools.isNotEmpty) {
+      newMap['Favorites'] = state.pinnedTools.toList();
+    }
+
+    newMap.addAll(_baseCategories);
+    state.tools.value = newMap;
+  }
+
+  void togglePin(Nav nav) {
+    final name = nav.getName;
+    if (name == null) return;
+
+    if (state.pinnedTools.contains(nav)) {
+      state.pinnedTools.remove(nav);
+    } else {
+      state.pinnedTools.add(nav);
+    }
+
+    _appManager.togglePinnedTool(name);
+    _updateNavigationMap();
   }
 }
 
-class AppState extends ViewState {}
+class AppState extends ViewState {
+  RxBool isMenuExpanded = true.obs;
+  RxList<Nav> pinnedTools = <Nav>[].obs;
+  RxMap<String, List<Nav>> tools = <String, List<Nav>>{}.obs;
+  Rx<Nav> currentTools = Nav.allTools.obs;
+}
 
 class AppBinding extends AppBindings<AppController> {
   AppBinding({required super.tag});

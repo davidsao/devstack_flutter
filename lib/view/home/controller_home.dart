@@ -4,8 +4,6 @@ import 'package:devtoys_flutter/index.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../generated/locale_keys.g.dart';
-
 class HomeController extends BaseController<HomeState> {
   final IAppManager _appManager;
   HomeController(this._appManager);
@@ -14,29 +12,6 @@ class HomeController extends BaseController<HomeState> {
   @override
   Future<void> onInit() async {
     super.onInit();
-    state.bottomNavigation.value = {
-      LocaleKeys.lbl_menu_converter.localize(): [
-        Nav.converterJsonYaml,
-        Nav.converterNumberBase,
-        Nav.converterDate,
-      ],
-      LocaleKeys.lbl_menu_encoder.localize(): [
-        Nav.encoderHtml,
-        Nav.encoderUrl,
-        Nav.encoderBase64,
-        Nav.encoderJwt,
-      ],
-      LocaleKeys.lbl_menu_formatter.localize(): [
-        Nav.formatterJson,
-        Nav.formatterXml,
-        Nav.formatterSql,
-      ],
-      LocaleKeys.lbl_menu_generator.localize(): [
-        Nav.generatorHash,
-        Nav.generatorLoremIpsum,
-        Nav.generatorUuid,
-      ],
-    };
   }
 
   @override
@@ -64,16 +39,12 @@ class HomeController extends BaseController<HomeState> {
     if (_wasMobile != isMobile) {
       _wasMobile = isMobile;
       // Auto-expand on desktop, auto-collapse on mobile
-      state.isMenuExpanded.value = !isMobile;
+      app.state.isMenuExpanded.value = !isMobile;
     }
   }
 }
 
 class HomeState extends ViewState {
-  RxMap<String, List<Nav>> bottomNavigation = <String, List<Nav>>{}.obs;
-  Rx<Nav> currentBottomNavigation = Nav.converterDate.obs;
-  RxBool isMenuExpanded = true.obs;
-
   RxString searchQuery = ''.obs;
   RxSet<String> collapsedCategories = <String>{}.obs;
 }

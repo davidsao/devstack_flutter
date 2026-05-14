@@ -1,0 +1,23 @@
+{
+  "lbl_app_name": "デブスタック",
+  "lbl_menu_home": "ホーム",
+  "lbl_menu_converter": "変換ツール",
+  "nav_json_yaml": "JSON <> YAML",
+  "nav_number_base": "基数変換",
+  "nav_date": "日付",
+  "lbl_menu_encoder": "エンコーダー / デコーダー",
+  "nav_html": "HTML",
+  "nav_url": "URL",
+  "nav_base64": "Base64",
+  "nav_jwt": "JWT",
+  "lbl_menu_formatter": "フォーマッター",
+  "nav_json": "JSON",
+  "nav_xml": "XML",
+  "nav_sql": "SQL フォーマッター",
+  "lbl_menu_generator": "ジェネレーター",
+  "nav_hash": "ハッシュ",
+  "nav_uuid": "UUID",
+  "nav_lorem_ipsum": "Lorem Ipsum",
+  "nav_checksum": "チェックサム",
+  "nav_qr_generator": "QRコードジェネレーター"
+}
