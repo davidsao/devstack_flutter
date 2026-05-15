@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../generated/icon_keys.g.dart';
+import '../../generated/locale_keys.g.dart';
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -237,23 +238,23 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   children: [
                     ToolTipIconButton(
                       icon: IconKeys.textfieldSelect,
-                      tooltip: 'Select All',
+                      tooltip: LocaleKeys.input_tooltip_select_all.localize(),
                       onTap: _selectAll,
                     ),
                     ToolTipIconButton(
                       icon: IconKeys.textfieldCopy,
-                      tooltip: 'Copy',
+                      tooltip: LocaleKeys.input_tooltip_copy.localize(),
                       onTap: _copy,
                     ),
                     if (widget.isEditable)
                       ToolTipIconButton(
                         icon: IconKeys.textfieldPaste,
-                        tooltip: 'Paste',
+                        tooltip: LocaleKeys.input_tooltip_paste.localize(),
                         onTap: _paste,
                       ),
                     ToolTipIconButton(
                       icon: IconKeys.textfieldSearch,
-                      tooltip: 'Search',
+                      tooltip: LocaleKeys.input_tooltip_search.localize(),
                       onTap: _toggleSearch,
                     ),
                   ],

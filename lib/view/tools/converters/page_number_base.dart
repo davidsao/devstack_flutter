@@ -1,3 +1,4 @@
+import 'package:devtoys_flutter/generated/locale_keys.g.dart';
 import 'package:devtoys_flutter/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -47,7 +48,7 @@ class NumberBasePage extends BaseView<NumberBaseController, NumberBaseState> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Configuration',
+            LocaleKeys.lbl_number_configuration.localize(),
             style: AppTextStyles.b2.bold,
           ),
           kGapTiny,
@@ -56,7 +57,9 @@ class NumberBasePage extends BaseView<NumberBaseController, NumberBaseState> {
               decoration: BoxDecoration(
                 border: Border.all(color: Theme.of(context).dividerColor),
                 borderRadius: BorderRadius.circular(8),
-                color: state.formatNumber.value ? Theme.of(context).colorScheme.primary.withAlpha(24) : Colors.white,
+                color: state.formatNumber.value
+                    ? Theme.of(context).colorScheme.primary.withAlpha(24)
+                    : Colors.white,
               ),
               padding: const EdgeInsets.symmetric(
                 horizontal: AppDimens.paddingSmaller,
@@ -71,7 +74,7 @@ class NumberBasePage extends BaseView<NumberBaseController, NumberBaseState> {
                   kGapTiny,
                   Expanded(
                     child: Text(
-                      'Format number',
+                      LocaleKeys.lbl_number_format_number.localize(),
                       style: AppTextStyles.b2.semiBold,
                     ),
                   ),
@@ -88,7 +91,7 @@ class NumberBasePage extends BaseView<NumberBaseController, NumberBaseState> {
           }),
           kGapSmall,
           _buildFieldSection(
-            'Hexadecimal',
+            LocaleKeys.lbl_number_hexadecimal.localize(),
             controller.hexController,
             [
               FilteringTextInputFormatter.allow(RegExp(r'[0-9a-fA-F ]')),
@@ -97,7 +100,7 @@ class NumberBasePage extends BaseView<NumberBaseController, NumberBaseState> {
             controller.onHexChanged,
           ),
           _buildFieldSection(
-            'Decimal',
+            LocaleKeys.lbl_number_decimal.localize(),
             controller.decController,
             [
               FilteringTextInputFormatter.allow(RegExp(r'[0-9,]')),
@@ -106,7 +109,7 @@ class NumberBasePage extends BaseView<NumberBaseController, NumberBaseState> {
             controller.onDecChanged,
           ),
           _buildFieldSection(
-            'Octal',
+            LocaleKeys.lbl_number_octal.localize(),
             controller.octController,
             [
               FilteringTextInputFormatter.allow(RegExp(r'[0-7 ]')),
@@ -115,7 +118,7 @@ class NumberBasePage extends BaseView<NumberBaseController, NumberBaseState> {
             controller.onOctChanged,
           ),
           _buildFieldSection(
-            'Binary',
+            LocaleKeys.lbl_number_binary.localize(),
             controller.binController,
             [
               FilteringTextInputFormatter.allow(RegExp(r'[01 ]')),

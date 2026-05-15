@@ -82,88 +82,94 @@ class HomePage extends BaseView<HomeController, HomeState> {
               top: AppDimens.marginSmaller + MediaQuery.paddingOf(context).top,
               left: AppDimens.marginMedium,
               right: AppDimens.marginMedium,
-              child: Row(
+              child: Stack(
                 children: [
-                  AnimatedContainer(
-                    duration: 400.milliseconds,
-                    curve: Curves.easeOutCubic,
-                    width: app.state.isMenuExpanded.value ? 200 : 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.circular(AppDimens.radiusMedium),
-                      color: Theme.of(context).cardColor,
-                      boxShadow: AppColors.cardShadow,
-                    ),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          if (app.state.isMenuExpanded.value)
-                            kGapSmall
-                          else
-                            kGapTiny,
-                          InkWell(
-                            onTap: () {
-                              app.state.isMenuExpanded.toggle();
-                            },
-                            child: Icon(
-                              app.state.isMenuExpanded.value
-                                  ? Icons.menu_open
-                                  : Icons.menu,
-                              size: AppDimens.iconSmall,
-                              color: AppColors.grey,
-                            ),
-                          ),
-                          if (app.state.isMenuExpanded.value) ...[
-                            kGapTiny,
-                            InkWell(
-                              onTap: () {
-                                app.state.currentTools.value = Nav.allTools;
-                                // Auto-close menu on mobile when tapping logo
-                                if (isMobile) {
-                                  app.state.isMenuExpanded.value = false;
-                                }
-                              },
-                              child: SizedBox(
-                                width: 104,
-                                child: Text(
-                                  LocaleKeys.lbl_app_name.localize(),
-                                  style: AppTextStyles.h4.bold,
-                                  textAlign: TextAlign.center,
+                  Row(
+                    children: [
+                      const Spacer(),
+                      if (isMobile)
+                        Text(
+                          app.state.currentTools.value.getName ??
+                              LocaleKeys.lbl_app_name.localize(),
+                          style: AppTextStyles.h4.bold,
+                        ).marginOnly(top: AppDimens.marginTiny),
+                      const Spacer(),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      AnimatedContainer(
+                        duration: 400.milliseconds,
+                        curve: Curves.easeOutCubic,
+                        width: app.state.isMenuExpanded.value ? 200 : 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(AppDimens.radiusMedium),
+                          color: Theme.of(context).cardColor,
+                          boxShadow: AppColors.cardShadow,
+                        ),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              if (app.state.isMenuExpanded.value)
+                                kGapSmall
+                              else
+                                kGapTiny,
+                              InkWell(
+                                onTap: () {
+                                  app.state.isMenuExpanded.toggle();
+                                },
+                                child: Icon(
+                                  app.state.isMenuExpanded.value
+                                      ? Icons.menu_open
+                                      : Icons.menu,
+                                  size: AppDimens.iconSmall,
+                                  color: AppColors.grey,
                                 ),
                               ),
-                            ),
-                            kGapTiny,
-                            InkWell(
-                              onTap: () {
-                                app.next(Nav.settings);
-                                if (isMobile) {
-                                  app.state.isMenuExpanded.value = false;
-                                }
-                              },
-                              child: AppImage(
-                                IconKeys.settings,
-                                size: AppDimens.iconSmall,
-                                color: AppColors.grey,
-                              ),
-                            ),
-                          ],
-                        ],
+                              if (app.state.isMenuExpanded.value) ...[
+                                kGapTiny,
+                                InkWell(
+                                  onTap: () {
+                                    app.state.currentTools.value = Nav.allTools;
+                                    // Auto-close menu on mobile when tapping logo
+                                    if (isMobile) {
+                                      app.state.isMenuExpanded.value = false;
+                                    }
+                                  },
+                                  child: SizedBox(
+                                    width: 104,
+                                    child: Text(
+                                      LocaleKeys.lbl_app_name.localize(),
+                                      style: AppTextStyles.h4.bold,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                                kGapTiny,
+                                InkWell(
+                                  onTap: () {
+                                    app.next(Nav.settings);
+                                    if (isMobile) {
+                                      app.state.isMenuExpanded.value = false;
+                                    }
+                                  },
+                                  child: AppImage(
+                                    IconKeys.settings,
+                                    size: AppDimens.iconSmall,
+                                    color: AppColors.grey,
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Spacer(),
-                  if (isMobile)
-                    Text(
-                      app.state.currentTools.value.getName ??
-                          LocaleKeys.lbl_app_name.localize(),
-                      style: AppTextStyles.h4.bold,
-                    ),
-                  Spacer(),
-                  SizedBox(
-                    width: 40,
-                  ),
+                      Spacer(),
+                    ],
+                  )
                 ],
               ),
             );
