@@ -22,6 +22,8 @@ enum Nav {
   generatorHash,
   generatorLoremIpsum,
   generatorUuid,
+  generatorChecksum,
+  generatorQr,
 }
 
 class Navigation {
@@ -76,6 +78,10 @@ extension NavigationExtension on Nav {
         return LoremIpsumGeneratorPage(viewTag: viewTag);
       case Nav.generatorUuid:
         return UuidGeneratorPage(viewTag: viewTag);
+      case Nav.generatorChecksum:
+        return ChecksumPage(viewTag: viewTag);
+      case Nav.generatorQr:
+        return QrGeneratorPage(viewTag: viewTag);
       default:
         return const Center(child: Text('ComingSoonPage'));
     }
@@ -104,6 +110,8 @@ extension NavigationExtension on Nav {
       Nav.generatorHash: IconKeys.jsonFormatter,
       Nav.generatorLoremIpsum: IconKeys.xmlFormatter,
       Nav.generatorUuid: IconKeys.sqlFormatter,
+      Nav.generatorChecksum: IconKeys.base64,
+      Nav.generatorQr: IconKeys.base64,
     }[this];
   }
 
@@ -122,6 +130,8 @@ extension NavigationExtension on Nav {
       Nav.generatorHash: LocaleKeys.nav_hash.localize(),
       Nav.generatorLoremIpsum: LocaleKeys.nav_lorem_ipsum.localize(),
       Nav.generatorUuid: LocaleKeys.nav_uuid.localize(),
+      Nav.generatorChecksum: LocaleKeys.nav_checksum.localize(),
+      Nav.generatorQr: LocaleKeys.nav_qr_generator.localize(),
     }[this];
   }
 }

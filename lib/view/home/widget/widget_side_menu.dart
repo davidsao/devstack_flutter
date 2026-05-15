@@ -8,6 +8,9 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
 
   @override
   Widget view(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final isMobile = screenWidth < 800;
+
     return Obx(() {
       Widget content = SizedBox(
         width: 208,
@@ -50,7 +53,7 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
               ),
               // --- MENU LIST ---
               Expanded(
-                child: _buildMenuContent(context),
+                child: _buildMenuContent(context, isMobile),
               ),
             ],
           ),
@@ -71,7 +74,7 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
     });
   }
 
-  Widget _buildMenuContent(BuildContext context) {
+  Widget _buildMenuContent(BuildContext context, bool isMobile) {
     List<Widget> menuItems = [];
     final query = state.searchQuery.value;
 
@@ -166,6 +169,9 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
                     return InkWell(
                       onTap: () async {
                         app.state.currentTools.value = nav;
+                        if (isMobile) {
+                          app.state.isMenuExpanded.value = false;
+                        }
                         await HapticFeedback.heavyImpact();
                       },
                       child: SizedBox(

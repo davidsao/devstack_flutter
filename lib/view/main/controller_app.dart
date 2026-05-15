@@ -50,6 +50,8 @@ class AppController extends BaseController<AppState> {
         Nav.generatorHash,
         Nav.generatorLoremIpsum,
         Nav.generatorUuid,
+        Nav.generatorChecksum,
+        Nav.generatorQr,
       ],
     });
 

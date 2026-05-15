@@ -29,45 +29,50 @@ class AllToolsPage extends BaseView<AllToolsController, AllToolsState> {
               child: Obx(() {
                 final categories = app.state.tools.value;
 
-                return ListView.builder(
-                  itemCount: categories.length,
-                  itemBuilder: (context, index) {
-                    final categoryName = categories.keys.elementAt(index);
-                    final tools = categories[categoryName]!;
+                return MediaQuery.removePadding(
+                  context: context,
+                  removeTop: true,
+                  removeBottom: true,
+                  child: ListView.builder(
+                    itemCount: categories.length,
+                    itemBuilder: (context, index) {
+                      final categoryName = categories.keys.elementAt(index);
+                      final tools = categories[categoryName]!;
 
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Category Header
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: AppDimens.paddingTiny),
-                          child: Text(
-                            categoryName,
-                            style: AppTextStyles.b1.bold,
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Category Header
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: AppDimens.paddingTiny),
+                            child: Text(
+                              categoryName,
+                              style: AppTextStyles.b1.bold,
+                            ),
                           ),
-                        ),
-                        // Responsive Grid of Tool Cards
-                        GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 240, // Max width of a card
-                            mainAxisExtent: 64, // Fixed height of a card
-                            crossAxisSpacing: AppDimens.marginSmaller,
-                            mainAxisSpacing: AppDimens.marginSmaller,
+                          // Responsive Grid of Tool Cards
+                          GridView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 240, // Max width of a card
+                              mainAxisExtent: 64, // Fixed height of a card
+                              crossAxisSpacing: AppDimens.marginSmaller,
+                              mainAxisSpacing: AppDimens.marginSmaller,
+                            ),
+                            itemCount: tools.length,
+                            itemBuilder: (context, toolIndex) {
+                              final nav = tools[toolIndex];
+                              return _buildToolCard(context, nav);
+                            },
                           ),
-                          itemCount: tools.length,
-                          itemBuilder: (context, toolIndex) {
-                            final nav = tools[toolIndex];
-                            return _buildToolCard(context, nav);
-                          },
-                        ),
-                        kGapSmall,
-                      ],
-                    );
-                  },
+                          kGapSmall,
+                        ],
+                      );
+                    },
+                  ),
                 );
               }),
             ),
@@ -91,7 +96,9 @@ class AllToolsPage extends BaseView<AllToolsController, AllToolsState> {
         child: GlassContainer(
           borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.symmetric(
+                horizontal: AppDimens.paddingSmall,
+                vertical: AppDimens.paddingTiny),
             child: Row(
               children: [
                 AppImage(
@@ -103,7 +110,7 @@ class AllToolsPage extends BaseView<AllToolsController, AllToolsState> {
                 Expanded(
                   child: Text(
                     nav.getName ?? '',
-                    style: AppTextStyles.b2.semiBold,
+                    style: AppTextStyles.b2.semiBold.copyWith(height: 1.1),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),

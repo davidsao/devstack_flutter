@@ -21,10 +21,12 @@ class HomePage extends BaseView<HomeController, HomeState> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      extendBodyBehindAppBar: true,
+      extendBody: true,
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // Main Content Area
+          // 1. Main Content Area
           Obx(() {
             final nav = app.state.currentTools.value;
             return AnimatedContainer(
@@ -34,91 +36,135 @@ class HomePage extends BaseView<HomeController, HomeState> {
               margin: EdgeInsets.only(
                 left: app.state.isMenuExpanded.value && !isMobile ? 224.0 : 0.0,
                 top: app.state.isMenuExpanded.value && !isMobile
-                    ? 0.0
-                    : kToolbarHeight,
+                    ? MediaQuery.paddingOf(context).top
+                    : kToolbarHeight + MediaQuery.paddingOf(context).top,
               ),
               child: nav.getWidget(null),
             );
           }),
 
-          // Side Menu
+          // 2. Mobile Scrim (Dark overlay so users can tap outside the menu to close it)
+          if (isMobile)
+            Obx(() {
+              if (app.state.isMenuExpanded.value) {
+                return Positioned.fill(
+                  child: GestureDetector(
+                    onTap: () => app.state.isMenuExpanded.value = false,
+                    child: Container(
+                      color: Colors.black.withOpacity(0.4),
+                    ),
+                  ),
+                );
+              }
+              return const SizedBox.shrink();
+            }),
+
+          // 3. Side Menu
           Obx(() {
             return AnimatedPositioned(
-              duration: 800.milliseconds,
-              curve: const ElasticOutCurve(0.9),
+              duration: 500.milliseconds, // Snappier duration for mobile
+              curve: Curves.easeOutQuint,
               left: app.state.isMenuExpanded.value ? 0.0 : -224.0,
-              top: AppDimens.marginSmaller + kToolbarHeight,
+              width:
+                  224.0, // <-- CRITICAL FIX: Explicit width guarantees it renders off-screen
+              top: AppDimens.marginSmaller +
+                  kToolbarHeight +
+                  MediaQuery.paddingOf(context).top,
               bottom: MediaQuery.paddingOf(context).bottom +
                   AppDimens.marginSmaller,
               child: HomeSideMenu(),
             );
           }),
 
-          // Toggle Button
+          // 4. Toggle Button
           Obx(() {
             return Positioned(
-              top: AppDimens.marginSmaller,
+              top: AppDimens.marginSmaller + MediaQuery.paddingOf(context).top,
               left: AppDimens.marginMedium,
-              child: AnimatedContainer(
-                duration: 400.milliseconds,
-                curve: Curves.easeOutCubic,
-                width: app.state.isMenuExpanded.value ? 200 : 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
-                  color: Theme.of(context).cardColor,
-                  boxShadow: AppColors.cardShadow,
-                ),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      if (app.state.isMenuExpanded.value)
-                        kGapSmall
-                      else
-                        kGapTiny,
-                      InkWell(
-                        onTap: () {
-                          app.state.isMenuExpanded.toggle();
-                        },
-                        child: Icon(
-                          app.state.isMenuExpanded.value
-                              ? Icons.menu_open
-                              : Icons.menu,
-                          size: AppDimens.iconSmall,
-                          color: AppColors.grey,
-                        ),
-                      ),
-                      if (app.state.isMenuExpanded.value) ...[
-                        kGapTiny,
-                        InkWell(
-                          onTap: () {
-                            app.state.currentTools.value = Nav.allTools;
-                          },
-                          child: SizedBox(
-                            width: 104,
-                            child: Text(
-                              LocaleKeys.lbl_app_name.localize(),
-                              style: AppTextStyles.h4.bold,
-                              textAlign: TextAlign.center,
+              right: AppDimens.marginMedium,
+              child: Row(
+                children: [
+                  AnimatedContainer(
+                    duration: 400.milliseconds,
+                    curve: Curves.easeOutCubic,
+                    width: app.state.isMenuExpanded.value ? 200 : 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          BorderRadius.circular(AppDimens.radiusMedium),
+                      color: Theme.of(context).cardColor,
+                      boxShadow: AppColors.cardShadow,
+                    ),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          if (app.state.isMenuExpanded.value)
+                            kGapSmall
+                          else
+                            kGapTiny,
+                          InkWell(
+                            onTap: () {
+                              app.state.isMenuExpanded.toggle();
+                            },
+                            child: Icon(
+                              app.state.isMenuExpanded.value
+                                  ? Icons.menu_open
+                                  : Icons.menu,
+                              size: AppDimens.iconSmall,
+                              color: AppColors.grey,
                             ),
                           ),
-                        ),
-                        kGapTiny,
-                        InkWell(
-                          onTap: () {
-                            app.next(Nav.settings);
-                          },
-                          child: AppImage(
-                            IconKeys.settings,
-                            size: AppDimens.iconSmall,
-                            color: AppColors.grey,
-                          ),
-                        ),
-                      ],
-                    ],
+                          if (app.state.isMenuExpanded.value) ...[
+                            kGapTiny,
+                            InkWell(
+                              onTap: () {
+                                app.state.currentTools.value = Nav.allTools;
+                                // Auto-close menu on mobile when tapping logo
+                                if (isMobile) {
+                                  app.state.isMenuExpanded.value = false;
+                                }
+                              },
+                              child: SizedBox(
+                                width: 104,
+                                child: Text(
+                                  LocaleKeys.lbl_app_name.localize(),
+                                  style: AppTextStyles.h4.bold,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                            kGapTiny,
+                            InkWell(
+                              onTap: () {
+                                app.next(Nav.settings);
+                                if (isMobile) {
+                                  app.state.isMenuExpanded.value = false;
+                                }
+                              },
+                              child: AppImage(
+                                IconKeys.settings,
+                                size: AppDimens.iconSmall,
+                                color: AppColors.grey,
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                  Spacer(),
+                  if (isMobile)
+                    Text(
+                      app.state.currentTools.value.getName ??
+                          LocaleKeys.lbl_app_name.localize(),
+                      style: AppTextStyles.h4.bold,
+                    ),
+                  Spacer(),
+                  SizedBox(
+                    width: 40,
+                  ),
+                ],
               ),
             );
           }),
