@@ -55,5 +55,16 @@ abstract class  LocaleKeys {
   static const input_tooltip_copy = 'input_tooltip_copy';
   static const input_tooltip_paste = 'input_tooltip_paste';
   static const input_tooltip_search = 'input_tooltip_search';
+  static const lbl_settings_title = 'lbl_settings_title';
+  static const lbl_settings_appearance = 'lbl_settings_appearance';
+  static const lbl_settings_theme = 'lbl_settings_theme';
+  static const lbl_settings_language = 'lbl_settings_language';
+  static const lbl_settings_app_language = 'lbl_settings_app_language';
+  static const lbl_settings_about = 'lbl_settings_about';
+  static const lbl_settings_theme_default = 'lbl_settings_theme_default';
+  static const lbl_settings_theme_light = 'lbl_settings_theme_light';
+  static const lbl_settings_theme_dark = 'lbl_settings_theme_dark';
+  static const lbl_settings_version = 'lbl_settings_version';
+  static const lbl_settings_build = 'lbl_settings_build';
 
 }

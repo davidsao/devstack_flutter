@@ -66,7 +66,18 @@ class CodegenLoader extends AssetLoader{
   "input_tooltip_select_all": "すべて選択",
   "input_tooltip_copy": "コピー",
   "input_tooltip_paste": "貼り付け",
-  "input_tooltip_search": "検索"
+  "input_tooltip_search": "検索",
+  "lbl_settings_title": "設定",
+  "lbl_settings_appearance": "外観",
+  "lbl_settings_theme": "アプリのテーマ:",
+  "lbl_settings_language": "言語",
+  "lbl_settings_app_language": "アプリの言語:",
+  "lbl_settings_about": "情報",
+  "lbl_settings_theme_default": "システムのデフォルト",
+  "lbl_settings_theme_light": "ライトモード",
+  "lbl_settings_theme_dark": "ダークモード",
+  "lbl_settings_version": "バージョン",
+  "lbl_settings_build": "ビルド"
 };
 static const Map<String,dynamic> _en = {
   "lbl_app_name": "DevStack",
@@ -120,7 +131,18 @@ static const Map<String,dynamic> _en = {
   "input_tooltip_select_all": "Select all",
   "input_tooltip_copy": "Copy",
   "input_tooltip_paste": "Paste",
-  "input_tooltip_search": "Search"
+  "input_tooltip_search": "Search",
+  "lbl_settings_title": "Settings",
+  "lbl_settings_appearance": "Appearance",
+  "lbl_settings_theme": "App Theme:",
+  "lbl_settings_language": "Language",
+  "lbl_settings_app_language": "App Language:",
+  "lbl_settings_about": "About",
+  "lbl_settings_theme_default": "System Default",
+  "lbl_settings_theme_light": "Light Mode",
+  "lbl_settings_theme_dark": "Dark Mode",
+  "lbl_settings_version": "Version",
+  "lbl_settings_build": "Build"
 };
 static const Map<String,dynamic> _zh_Hans = {
   "lbl_app_name": "开发栈",
@@ -174,7 +196,18 @@ static const Map<String,dynamic> _zh_Hans = {
   "input_tooltip_select_all": "全选",
   "input_tooltip_copy": "复制",
   "input_tooltip_paste": "粘贴",
-  "input_tooltip_search": "搜索"
+  "input_tooltip_search": "搜索",
+  "lbl_settings_title": "设置",
+  "lbl_settings_appearance": "外观",
+  "lbl_settings_theme": "应用程序主题：",
+  "lbl_settings_language": "语言",
+  "lbl_settings_app_language": "应用程序语言：",
+  "lbl_settings_about": "关于",
+  "lbl_settings_theme_default": "系统默认",
+  "lbl_settings_theme_light": "浅色模式",
+  "lbl_settings_theme_dark": "深色模式",
+  "lbl_settings_version": "版本",
+  "lbl_settings_build": "构建"
 };
 static const Map<String,dynamic> _fr = {
   "lbl_app_name": "Stack Dév",
@@ -228,7 +261,18 @@ static const Map<String,dynamic> _fr = {
   "input_tooltip_select_all": "Tout sélectionner",
   "input_tooltip_copy": "Copier",
   "input_tooltip_paste": "Coller",
-  "input_tooltip_search": "Rechercher"
+  "input_tooltip_search": "Rechercher",
+  "lbl_settings_title": "Paramètres",
+  "lbl_settings_appearance": "Apparence",
+  "lbl_settings_theme": "Thème de l'application :",
+  "lbl_settings_language": "Langue",
+  "lbl_settings_app_language": "Langue de l'application :",
+  "lbl_settings_about": "À propos",
+  "lbl_settings_theme_default": "Par défaut du système",
+  "lbl_settings_theme_light": "Mode clair",
+  "lbl_settings_theme_dark": "Mode sombre",
+  "lbl_settings_version": "Version",
+  "lbl_settings_build": "Build"
 };
 static const Map<String,dynamic> _ko = {
   "lbl_app_name": "DevStack",
@@ -282,7 +326,18 @@ static const Map<String,dynamic> _ko = {
   "input_tooltip_select_all": "모두 선택",
   "input_tooltip_copy": "복사",
   "input_tooltip_paste": "붙여넣기",
-  "input_tooltip_search": "검색"
+  "input_tooltip_search": "검색",
+  "lbl_settings_title": "설정",
+  "lbl_settings_appearance": "모양",
+  "lbl_settings_theme": "앱 테마:",
+  "lbl_settings_language": "언어",
+  "lbl_settings_app_language": "앱 언어:",
+  "lbl_settings_about": "정보",
+  "lbl_settings_theme_default": "시스템 기본값",
+  "lbl_settings_theme_light": "라이트 모드",
+  "lbl_settings_theme_dark": "다크 모드",
+  "lbl_settings_version": "버전",
+  "lbl_settings_build": "빌드"
 };
 static const Map<String,dynamic> _es = {
   "lbl_app_name": "Pila Dev",
@@ -336,7 +391,18 @@ static const Map<String,dynamic> _es = {
   "input_tooltip_select_all": "Seleccionar todo",
   "input_tooltip_copy": "Copiar",
   "input_tooltip_paste": "Pegar",
-  "input_tooltip_search": "Buscar"
+  "input_tooltip_search": "Buscar",
+  "lbl_settings_title": "Configuración",
+  "lbl_settings_appearance": "Apariencia",
+  "lbl_settings_theme": "Tema de la aplicación:",
+  "lbl_settings_language": "Idioma",
+  "lbl_settings_app_language": "Idioma de la aplicación:",
+  "lbl_settings_about": "Acerca de",
+  "lbl_settings_theme_default": "Predeterminado del sistema",
+  "lbl_settings_theme_light": "Modo claro",
+  "lbl_settings_theme_dark": "Modo oscuro",
+  "lbl_settings_version": "Versión",
+  "lbl_settings_build": "Compilación"
 };
 static const Map<String,dynamic> _zh_Hant = {
   "lbl_app_name": "DevStack",
@@ -390,7 +456,18 @@ static const Map<String,dynamic> _zh_Hant = {
   "input_tooltip_select_all": "全選",
   "input_tooltip_copy": "複製",
   "input_tooltip_paste": "貼上",
-  "input_tooltip_search": "搜尋"
+  "input_tooltip_search": "搜尋",
+  "lbl_settings_title": "設定",
+  "lbl_settings_appearance": "外觀",
+  "lbl_settings_theme": "應用程式主題：",
+  "lbl_settings_language": "語言",
+  "lbl_settings_app_language": "應用程式語言：",
+  "lbl_settings_about": "關於",
+  "lbl_settings_theme_default": "系統預設",
+  "lbl_settings_theme_light": "淺色模式",
+  "lbl_settings_theme_dark": "深色模式",
+  "lbl_settings_version": "版本",
+  "lbl_settings_build": "組建"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ja": _ja, "en": _en, "zh_Hans": _zh_Hans, "fr": _fr, "ko": _ko, "es": _es, "zh_Hant": _zh_Hant};
 }

@@ -18,14 +18,15 @@ class NumberBasePage extends BaseView<NumberBaseController, NumberBaseState> {
         ),
         kGapText,
         SizedBox(
-          height: 80,
+          height: 88,
           child: CustomTextField(
             controller: textController,
             isMonoSpace: true,
             isJsonFormatted: false,
             isXMLFormatted: false,
             isEditable: true,
-            maxLines: null,
+            isSearchable: false,
+            maxLines: 1,
             inputFormatters: formatters, // Pass the formatters down
             onChanged: onChanged,
           ),

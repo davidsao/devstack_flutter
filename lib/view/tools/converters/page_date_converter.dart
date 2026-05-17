@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../generated/icon_keys.g.dart';
+import '../../../generated/locale_keys.g.dart';
 
 class DateConverterPage
     extends BaseView<DateConverterController, DateConverterState> {
@@ -18,22 +19,10 @@ class DateConverterPage
         children: [
           Obx(() {
             return DropDownWidget(
-              title: 'Time zone:',
+              title: LocaleKeys.lbl_date_time_zone.localize(),
               choices: state.choices.value,
               selectedValue: state.timeZoneName.value,
-              onSelected: (String val) {
-                if (val == 'UTC') {
-                  controller.state.timeZoneOffset.value = Duration.zero;
-                  controller.state.timeZoneName.value = 'UTC';
-                } else {
-                  controller.state.timeZoneOffset.value =
-                      DateTime.now().timeZoneOffset;
-                  controller.state.timeZoneName.value = 'Local System Time';
-                }
-                // Force sync fields to new timezone
-                controller
-                    .updateFromTimestamp(controller.timestampController.text);
-              },
+              onSelected: controller.changeTimeZone,
               maxWidth: true,
             );
           }),
@@ -51,30 +40,32 @@ class DateConverterPage
             child: Obx(() => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(controller.state.isDst.value
-                        ? 'There is daylight saving time.'
-                        : 'There is no daylight saving time.'),
+                    Text(
+                      controller.state.isDst.value
+                          ? LocaleKeys.lbl_date_has_daylight.localize()
+                          : LocaleKeys.lbl_date_no_daylight.localize(),
+                    ),
                     const SizedBox(height: 16),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _buildInfoRow(
-                          'Offset',
+                          LocaleKeys.lbl_date_offset.localize(),
                           controller.formattedOffset,
                         ),
                         kGapTiny,
                         _buildInfoRow(
-                          'Local Date Time',
+                          LocaleKeys.lbl_date_local_datetime.localize(),
                           controller.localDateTimeString,
                         ),
                         kGapTiny,
                         _buildInfoRow(
-                          'UtcTicks',
+                          LocaleKeys.lbl_date_utc_ticks.localize(),
                           controller.utcTicks,
                         ),
                         kGapTiny,
                         _buildInfoRow(
-                          'UTC Date Time',
+                          LocaleKeys.lbl_date_utc_datetime.localize(),
                           controller.utcDateTimeString,
                         ),
                       ],
@@ -88,25 +79,46 @@ class DateConverterPage
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Timestamp',
+              Text(LocaleKeys.lbl_date_timestamp.localize(),
                   style: TextStyle(fontWeight: FontWeight.w500)),
               Row(
                 children: [
                   Tooltip(
-                      message: 'Now',
-                      child: IconButton(
-                          icon: const Icon(Icons.today, size: 20),
-                          onPressed: controller.setNow)),
+                    message: 'Now',
+                    child: InkWell(
+                      onTap: controller.setNow,
+                      child: AppImage(
+                        IconKeys.calendar,
+                        size: AppDimens.iconSmall,
+                      ).marginAll(
+                        AppDimens.marginTiny,
+                      ),
+                    ),
+                  ),
                   Tooltip(
-                      message: 'Paste',
-                      child: IconButton(
-                          icon: const Icon(Icons.paste, size: 20),
-                          onPressed: controller.pasteTimestamp)),
+                    message: LocaleKeys.input_tooltip_paste.localize(),
+                    child: InkWell(
+                      onTap: controller.pasteTimestamp,
+                      child: AppImage(
+                        IconKeys.textfieldPaste,
+                        size: AppDimens.iconSmall,
+                      ).marginAll(
+                        AppDimens.marginTiny,
+                      ),
+                    ),
+                  ),
                   Tooltip(
-                      message: 'Copy',
-                      child: IconButton(
-                          icon: const Icon(Icons.copy, size: 20),
-                          onPressed: controller.copyTimestamp)),
+                    message: LocaleKeys.input_tooltip_copy.localize(),
+                    child: InkWell(
+                      onTap: controller.copyTimestamp,
+                      child: AppImage(
+                        IconKeys.textfieldCopy,
+                        size: AppDimens.iconSmall,
+                      ).marginAll(
+                        AppDimens.marginTiny,
+                      ),
+                    ),
+                  ),
                 ],
               )
             ],
@@ -141,16 +153,18 @@ class DateConverterPage
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildComponentInput('Year', controller.yearController, width),
-                _buildComponentInput(
-                    'Month', controller.monthController, width),
-                _buildComponentInput('Day', controller.dayController, width),
-                _buildComponentInput(
-                    'Hour (24 hour)', controller.hourController, width),
-                _buildComponentInput(
-                    'Minutes', controller.minuteController, width),
-                _buildComponentInput(
-                    'Seconds', controller.secondController, width),
+                _buildComponentInput(LocaleKeys.input_date_year.localize(),
+                    controller.yearController, width),
+                _buildComponentInput(LocaleKeys.input_date_month.localize(),
+                    controller.monthController, width),
+                _buildComponentInput(LocaleKeys.input_date_day.localize(),
+                    controller.dayController, width),
+                _buildComponentInput(LocaleKeys.input_date_hour.localize(),
+                    controller.hourController, width),
+                _buildComponentInput(LocaleKeys.input_date_minutes.localize(),
+                    controller.minuteController, width),
+                _buildComponentInput(LocaleKeys.input_date_seconds.localize(),
+                    controller.secondController, width),
               ],
             );
           })

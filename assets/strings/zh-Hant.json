@@ -50,5 +50,16 @@
   "input_tooltip_select_all": "全選",
   "input_tooltip_copy": "複製",
   "input_tooltip_paste": "貼上",
-  "input_tooltip_search": "搜尋"
+  "input_tooltip_search": "搜尋",
+  "lbl_settings_title": "設定",
+  "lbl_settings_appearance": "外觀",
+  "lbl_settings_theme": "應用程式主題：",
+  "lbl_settings_language": "語言",
+  "lbl_settings_app_language": "應用程式語言：",
+  "lbl_settings_about": "關於",
+  "lbl_settings_theme_default": "系統預設",
+  "lbl_settings_theme_light": "淺色模式",
+  "lbl_settings_theme_dark": "深色模式",
+  "lbl_settings_version": "版本",
+  "lbl_settings_build": "組建"
 }

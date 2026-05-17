@@ -3,6 +3,7 @@ class IconKeys {
 	static const String _path = "assets/icons";
 
 	static String base64 = "$_path/icon_base64.svg";
+	static String calendar = "$_path/icon_calendar.svg";
 	static String date = "$_path/icon_date.svg";
 	static String dropDown = "$_path/icon_drop_down.svg";
 	static String home = "$_path/icon_home.svg";

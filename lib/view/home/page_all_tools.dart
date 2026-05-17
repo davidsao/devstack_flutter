@@ -2,6 +2,8 @@ import 'package:devtoys_flutter/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../generated/locale_keys.g.dart';
+
 class AllToolsPage extends BaseView<AllToolsController, AllToolsState> {
   const AllToolsPage({super.key, super.viewTag});
 
@@ -21,7 +23,7 @@ class AllToolsPage extends BaseView<AllToolsController, AllToolsState> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'All Tools',
+              LocaleKeys.lbl_all_tools.localize(),
               style: AppTextStyles.h2.bold,
             ),
             kGapMedium,

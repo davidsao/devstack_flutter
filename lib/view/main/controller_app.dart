@@ -9,9 +9,11 @@ import '../../generated/locale_keys.g.dart';
 class AppController extends BaseController<AppState> {
   AppController(
     this._appManager,
+    this._localeManager,
   );
 
   final IAppManager _appManager;
+  final ILocaleManager _localeManager;
   final Map<String, List<Nav>> _baseCategories = {};
 
   @override
@@ -28,6 +30,34 @@ class AppController extends BaseController<AppState> {
   @override
   Future<void> onInit() async {
     super.onInit();
+
+    state.currentLanguage.value = _localeManager.language;
+
+    state.currentLanguage.listen((e) {
+      _localeManager.language = e;
+      Future.delayed(const Duration(milliseconds: 200), () {
+        _initTools();
+      });
+    });
+
+    _initTools();
+
+    final pinnedNames = _appManager.getPinnedTools();
+
+    final allTools = _baseCategories.values.expand((e) => e).toList();
+
+    for (final name in pinnedNames) {
+      final nav = allTools.firstWhereOrNull((n) => n.getName == name);
+      if (nav != null) {
+        state.pinnedTools.add(nav);
+      }
+    }
+
+    _updateNavigationMap();
+  }
+
+  void _initTools() {
+    _baseCategories.clear();
 
     _baseCategories.addAll({
       LocaleKeys.lbl_menu_converter.localize(): [
@@ -54,17 +84,6 @@ class AppController extends BaseController<AppState> {
         Nav.generatorQr,
       ],
     });
-
-    final pinnedNames = _appManager.getPinnedTools();
-
-    final allTools = _baseCategories.values.expand((e) => e).toList();
-
-    for (final name in pinnedNames) {
-      final nav = allTools.firstWhereOrNull((n) => n.getName == name);
-      if (nav != null) {
-        state.pinnedTools.add(nav);
-      }
-    }
 
     _updateNavigationMap();
   }
@@ -96,6 +115,7 @@ class AppController extends BaseController<AppState> {
 }
 
 class AppState extends ViewState {
+  Rx<Language> currentLanguage = Language.english.obs;
   RxBool isMenuExpanded = true.obs;
   RxList<Nav> pinnedTools = <Nav>[].obs;
   RxMap<String, List<Nav>> tools = <String, List<Nav>>{}.obs;
@@ -109,6 +129,7 @@ class AppBinding extends AppBindings<AppController> {
   AppController get controller {
     final getIt = GetIt.instance;
     return AppController(
+      getIt(),
       getIt(),
     );
   }

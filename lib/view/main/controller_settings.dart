@@ -46,7 +46,7 @@ class SettingsController extends BaseController<SettingsState> {
   }
 
   void setLocale(Language language) {
-    _localeManager.language = language;
+    app.state.currentLanguage.value = language;
   }
 }
 

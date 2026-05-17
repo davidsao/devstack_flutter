@@ -20,7 +20,7 @@ class UrlEncoderPage extends BaseView<UrlEncoderController, UrlEncoderState> {
               firstChildren: [
                 Text(
                   'Decoded',
-                  style: AppTextStyles.b1.semiBold,
+                  style: AppTextStyles.b2.semiBold,
                 ),
                 kGapText,
                 Expanded(
@@ -34,7 +34,7 @@ class UrlEncoderPage extends BaseView<UrlEncoderController, UrlEncoderState> {
               secondChildren: [
                 Text(
                   'Encoded',
-                  style: AppTextStyles.b1.semiBold,
+                  style: AppTextStyles.b2.semiBold,
                 ),
                 kGapText,
                 Expanded(

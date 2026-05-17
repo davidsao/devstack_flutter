@@ -49,6 +49,7 @@ abstract class BaseController<S extends ViewState>
       ..lazyPut(
         () => AppController(
           getIt(),
+          getIt(),
         ),
         fenix: true,
       );

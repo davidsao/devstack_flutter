@@ -50,5 +50,16 @@
   "input_tooltip_select_all": "Seleccionar todo",
   "input_tooltip_copy": "Copiar",
   "input_tooltip_paste": "Pegar",
-  "input_tooltip_search": "Buscar"
+  "input_tooltip_search": "Buscar",
+  "lbl_settings_title": "Configuración",
+  "lbl_settings_appearance": "Apariencia",
+  "lbl_settings_theme": "Tema de la aplicación:",
+  "lbl_settings_language": "Idioma",
+  "lbl_settings_app_language": "Idioma de la aplicación:",
+  "lbl_settings_about": "Acerca de",
+  "lbl_settings_theme_default": "Predeterminado del sistema",
+  "lbl_settings_theme_light": "Modo claro",
+  "lbl_settings_theme_dark": "Modo oscuro",
+  "lbl_settings_version": "Versión",
+  "lbl_settings_build": "Compilación"
 }

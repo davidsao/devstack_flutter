@@ -11,6 +11,7 @@ class CustomTextField extends StatefulWidget {
   final bool isJsonFormatted;
   final bool isXMLFormatted;
   final bool isEditable;
+  final bool isSearchable;
   final int? maxLines;
   final ValueChanged<String>? onChanged;
   final List<TextInputFormatter>? inputFormatters;
@@ -22,6 +23,7 @@ class CustomTextField extends StatefulWidget {
     this.isJsonFormatted = false,
     this.isXMLFormatted = false,
     this.isEditable = true,
+    this.isSearchable = true,
     this.maxLines,
     this.onChanged,
     this.inputFormatters,
@@ -252,11 +254,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
                         tooltip: LocaleKeys.input_tooltip_paste.localize(),
                         onTap: _paste,
                       ),
-                    ToolTipIconButton(
-                      icon: IconKeys.textfieldSearch,
-                      tooltip: LocaleKeys.input_tooltip_search.localize(),
-                      onTap: _toggleSearch,
-                    ),
+                    if (widget.isSearchable)
+                      ToolTipIconButton(
+                        icon: IconKeys.textfieldSearch,
+                        tooltip: LocaleKeys.input_tooltip_search.localize(),
+                        onTap: _toggleSearch,
+                      ),
                   ],
                 ),
               ),

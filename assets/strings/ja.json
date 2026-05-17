@@ -50,5 +50,16 @@
   "input_tooltip_select_all": "すべて選択",
   "input_tooltip_copy": "コピー",
   "input_tooltip_paste": "貼り付け",
-  "input_tooltip_search": "検索"
+  "input_tooltip_search": "検索",
+  "lbl_settings_title": "設定",
+  "lbl_settings_appearance": "外観",
+  "lbl_settings_theme": "アプリのテーマ:",
+  "lbl_settings_language": "言語",
+  "lbl_settings_app_language": "アプリの言語:",
+  "lbl_settings_about": "情報",
+  "lbl_settings_theme_default": "システムのデフォルト",
+  "lbl_settings_theme_light": "ライトモード",
+  "lbl_settings_theme_dark": "ダークモード",
+  "lbl_settings_version": "バージョン",
+  "lbl_settings_build": "ビルド"
 }
