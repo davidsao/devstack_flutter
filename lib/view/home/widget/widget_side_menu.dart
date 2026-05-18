@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import '../../../generated/locale_keys.g.dart';
+
 class HomeSideMenu extends BaseView<HomeController, HomeState> {
   HomeSideMenu({super.key, super.viewTag});
 
@@ -42,7 +44,7 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
                   child: TextField(
                     onChanged: controller.onSearchChanged,
                     decoration: InputDecoration(
-                      hintText: 'Type to search...',
+                      hintText: LocaleKeys.input_search.localize(),
                       border: InputBorder.none,
                       isDense: true,
                       contentPadding: EdgeInsets.symmetric(vertical: 8),
@@ -83,8 +85,19 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
 
       // Filter the items within this category based on the search query
       final filteredItems = entry.value.where((nav) {
+        // 1. Check the currently active localized name
         final name = nav.getName?.toLowerCase() ?? '';
-        return name.contains(query);
+        if (name.contains(query)) return true;
+
+        // 2. Check the global multi-language search terms
+        final searchTerms = nav.searchTerms;
+        for (final term in searchTerms) {
+          if (term.toLowerCase().contains(query)) {
+            return true;
+          }
+        }
+
+        return false; // No match found
       }).toList();
 
       // If a search is active and this category has no matches, skip drawing it

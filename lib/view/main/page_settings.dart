@@ -124,7 +124,7 @@ class SettingsPage extends BaseView<SettingsController, SettingsState> {
                             )),
                         const Divider(height: 32),
                         Text(
-                          '© 2026 DevToys Flutter. All rights reserved.',
+                          '© 2026 DevStack Flutter. All rights reserved.',
                           style: AppTextStyles.b3.copyWith(
                             color: Theme.of(context)
                                 .textTheme

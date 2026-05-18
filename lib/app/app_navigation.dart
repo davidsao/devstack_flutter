@@ -99,19 +99,19 @@ extension NavigationExtension on Nav {
       Nav.home: IconKeys.home,
       Nav.converterDate: IconKeys.date,
       Nav.converterJsonYaml: IconKeys.json,
-      Nav.converterNumberBase: IconKeys.base64,
+      Nav.converterNumberBase: IconKeys.numberBase,
       Nav.encoderJwt: IconKeys.jwt,
       Nav.encoderUrl: IconKeys.url,
       Nav.encoderHtml: IconKeys.html,
       Nav.encoderBase64: IconKeys.base64,
-      Nav.formatterJson: IconKeys.jsonFormatter,
-      Nav.formatterXml: IconKeys.xmlFormatter,
-      Nav.formatterSql: IconKeys.sqlFormatter,
-      Nav.generatorHash: IconKeys.jsonFormatter,
-      Nav.generatorLoremIpsum: IconKeys.xmlFormatter,
-      Nav.generatorUuid: IconKeys.sqlFormatter,
-      Nav.generatorChecksum: IconKeys.base64,
-      Nav.generatorQr: IconKeys.base64,
+      Nav.formatterJson: IconKeys.jsonFormat,
+      Nav.formatterXml: IconKeys.xml,
+      Nav.formatterSql: IconKeys.sql,
+      Nav.generatorHash: IconKeys.hash,
+      Nav.generatorLoremIpsum: IconKeys.loremIpsum,
+      Nav.generatorUuid: IconKeys.uuid,
+      Nav.generatorChecksum: IconKeys.checksum,
+      Nav.generatorQr: IconKeys.qr,
     }[this];
   }
 
@@ -133,5 +133,146 @@ extension NavigationExtension on Nav {
       Nav.generatorChecksum: LocaleKeys.nav_checksum.localize(),
       Nav.generatorQr: LocaleKeys.nav_qr_generator.localize(),
     }[this];
+  }
+
+  List<String> get searchTerms {
+    return {
+          Nav.converterDate: ['date', '日期', '日付', '날짜', 'fecha'],
+          Nav.converterNumberBase: [
+            'number base',
+            '進制轉換',
+            '进制转换',
+            '基数変換',
+            '진수 변환',
+            'base numérica',
+            'base numérique'
+          ],
+          Nav.converterJsonYaml: ['json', 'yaml', 'converter'],
+          Nav.encoderBase64: [
+            'base64',
+            'encoder',
+            '編碼',
+            '编码',
+            'エンコーダ',
+            '인코더',
+            'codificador',
+            'encodeur'
+          ],
+          Nav.encoderHtml: [
+            'html',
+            'encoder',
+            '編碼',
+            '编码',
+            'エンコーダ',
+            '인코더',
+            'codificador',
+            'encodeur'
+          ],
+          Nav.encoderUrl: [
+            'url',
+            'encoder',
+            '編碼',
+            '编码',
+            'エンコーダ',
+            '인코더',
+            'codificador',
+            'encodeur'
+          ],
+          Nav.encoderJwt: [
+            'jwt',
+            'encoder',
+            '編碼',
+            '编码',
+            'エンコーダ',
+            '인코더',
+            'codificador',
+            'encodeur'
+          ],
+          Nav.formatterJson: [
+            'json',
+            'formatter',
+            '格式化',
+            'フォーマッタ',
+            '포매터',
+            'formateador',
+            'formateur'
+          ],
+          Nav.formatterXml: [
+            'xml',
+            'formatter',
+            '格式化',
+            'フォーマッタ',
+            '포매터',
+            'formateador',
+            'formateur'
+          ],
+          Nav.formatterSql: [
+            'sql',
+            'formatter',
+            '格式化',
+            'フォーマッタ',
+            '포매터',
+            'formateador',
+            'formateur'
+          ],
+          Nav.generatorHash: [
+            'hash',
+            '哈希',
+            'ハッシュ',
+            '해시',
+            'generator',
+            '產生器',
+            '生成器',
+            'ジェネレーター',
+            '생성기',
+            'generador',
+            'générateur'
+          ],
+          Nav.generatorLoremIpsum: [
+            'lorem ipsum',
+            'generator',
+            '產生器',
+            '生成器',
+            'ジェネレーター',
+            '생성기',
+            'generador',
+            'générateur'
+          ],
+          Nav.generatorUuid: [
+            'uuid',
+            'generator',
+            '產生器',
+            '生成器',
+            'ジェネレーター',
+            '생성기',
+            'generador',
+            'générateur'
+          ],
+          Nav.generatorChecksum: [
+            'checksum',
+            '校验和',
+            'チェックサム',
+            '체크섬',
+            'generator',
+            '產生器',
+            '生成器',
+            'ジェネレーター',
+            '생성기',
+            'generador',
+            'générateur'
+          ],
+          Nav.generatorQr: [
+            'qr',
+            'qrcode',
+            'generator',
+            '產生器',
+            '生成器',
+            'ジェネレーター',
+            '생성기',
+            'generador',
+            'générateur'
+          ],
+        }[this] ??
+        [];
   }
 }
