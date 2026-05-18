@@ -80,8 +80,8 @@ class HomePage extends BaseView<HomeController, HomeState> {
           Obx(() {
             return Positioned(
               top: AppDimens.marginSmaller + MediaQuery.paddingOf(context).top,
-              left: AppDimens.marginMedium,
-              right: AppDimens.marginMedium,
+              left: AppDimens.marginSmaller,
+              right: AppDimens.marginSmaller,
               child: Stack(
                 children: [
                   Row(

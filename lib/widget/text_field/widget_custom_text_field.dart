@@ -122,10 +122,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
     // Calculate scroll position
     if (_textFieldMaxWidth > 0 && _scrollController.hasClients) {
-      final textStyle = TextStyle(
-        fontFamily: widget.isMonoSpace ? 'monospace' : null,
-        fontSize: 14,
-      );
+      final textStyle =
+          widget.isMonoSpace ? AppTextStyles.monoStyle() : AppTextStyles.b3;
 
       final textUpToMatch = widget.controller.text.substring(0, offset);
 
@@ -235,32 +233,36 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   borderRadius: BorderRadius.circular(AppDimens.radiusSmall),
                   boxShadow: AppColors.cardShadow,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ToolTipIconButton(
-                      icon: IconKeys.textfieldSelect,
-                      tooltip: LocaleKeys.input_tooltip_select_all.localize(),
-                      onTap: _selectAll,
-                    ),
-                    ToolTipIconButton(
-                      icon: IconKeys.textfieldCopy,
-                      tooltip: LocaleKeys.input_tooltip_copy.localize(),
-                      onTap: _copy,
-                    ),
-                    if (widget.isEditable)
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  reverse: true,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
                       ToolTipIconButton(
-                        icon: IconKeys.textfieldPaste,
-                        tooltip: LocaleKeys.input_tooltip_paste.localize(),
-                        onTap: _paste,
+                        icon: IconKeys.textfieldSelect,
+                        tooltip: LocaleKeys.input_tooltip_select_all.localize(),
+                        onTap: _selectAll,
                       ),
-                    if (widget.isSearchable)
                       ToolTipIconButton(
-                        icon: IconKeys.textfieldSearch,
-                        tooltip: LocaleKeys.input_tooltip_search.localize(),
-                        onTap: _toggleSearch,
+                        icon: IconKeys.textfieldCopy,
+                        tooltip: LocaleKeys.input_tooltip_copy.localize(),
+                        onTap: _copy,
                       ),
-                  ],
+                      if (widget.isEditable)
+                        ToolTipIconButton(
+                          icon: IconKeys.textfieldPaste,
+                          tooltip: LocaleKeys.input_tooltip_paste.localize(),
+                          onTap: _paste,
+                        ),
+                      if (widget.isSearchable)
+                        ToolTipIconButton(
+                          icon: IconKeys.textfieldSearch,
+                          tooltip: LocaleKeys.input_tooltip_search.localize(),
+                          onTap: _toggleSearch,
+                        ),
+                    ],
+                  ),
                 ),
               ),
 
@@ -277,9 +279,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     maxLines: widget.maxLines,
                     expands: widget.maxLines == null,
                     inputFormatters: widget.inputFormatters,
-                    style: AppTextStyles.b3.copyWith(
-                      fontFamily: widget.isMonoSpace ? 'monospace' : null,
-                    ),
+                    style: widget.isMonoSpace
+                        ? AppTextStyles.monoStyle()
+                        : AppTextStyles.b2,
                     decoration: const InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       border: InputBorder.none,

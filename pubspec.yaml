@@ -54,6 +54,8 @@ dependencies:
   cross_file: ^0.3.5+2
   qr_flutter: ^4.1.0
   timezone: ^0.11.0
+  google_fonts: ^6.2.1
+  custom_sliding_segmented_control: ^1.8.5
 
 dev_dependencies:
   flutter_test:

@@ -61,5 +61,16 @@
   "lbl_settings_theme_light": "라이트 모드",
   "lbl_settings_theme_dark": "다크 모드",
   "lbl_settings_version": "버전",
-  "lbl_settings_build": "빌드"
+  "lbl_settings_build": "빌드",
+  "lbl_indent": "들여쓰기",
+  "lbl_input": "입력",
+  "lbl_output": "출력",
+  "lbl_2_spaces": "공백 2개",
+  "lbl_4_spaces": "공백 4개",
+  "lbl_tabs": "탭",
+  "lbl_encoded": "인코딩됨",
+  "lbl_decoded": "디코딩됨",
+  "lbl_encoded_jwt": "인코딩된 JWT",
+  "lbl_decoded_header": "디코딩된 헤더 (JSON)",
+  "lbl_decoded_payload": "디코딩된 페이로드 (JSON)"
 }

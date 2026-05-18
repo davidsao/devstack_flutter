@@ -66,5 +66,16 @@ abstract class  LocaleKeys {
   static const lbl_settings_theme_dark = 'lbl_settings_theme_dark';
   static const lbl_settings_version = 'lbl_settings_version';
   static const lbl_settings_build = 'lbl_settings_build';
+  static const lbl_indent = 'lbl_indent';
+  static const lbl_input = 'lbl_input';
+  static const lbl_output = 'lbl_output';
+  static const lbl_2_spaces = 'lbl_2_spaces';
+  static const lbl_4_spaces = 'lbl_4_spaces';
+  static const lbl_tabs = 'lbl_tabs';
+  static const lbl_encoded = 'lbl_encoded';
+  static const lbl_decoded = 'lbl_decoded';
+  static const lbl_encoded_jwt = 'lbl_encoded_jwt';
+  static const lbl_decoded_header = 'lbl_decoded_header';
+  static const lbl_decoded_payload = 'lbl_decoded_payload';
 
 }

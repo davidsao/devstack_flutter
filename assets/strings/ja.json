@@ -61,5 +61,16 @@
   "lbl_settings_theme_light": "ライトモード",
   "lbl_settings_theme_dark": "ダークモード",
   "lbl_settings_version": "バージョン",
-  "lbl_settings_build": "ビルド"
+  "lbl_settings_build": "ビルド",
+  "lbl_indent": "インデント",
+  "lbl_input": "入力",
+  "lbl_output": "出力",
+  "lbl_2_spaces": "スペース2個",
+  "lbl_4_spaces": "スペース4個",
+  "lbl_tabs": "タブ",
+  "lbl_encoded": "エンコード済み",
+  "lbl_decoded": "デコード済み",
+  "lbl_encoded_jwt": "エンコード済み JWT",
+  "lbl_decoded_header": "デコード済みヘッダー (JSON)",
+  "lbl_decoded_payload": "デコード済みペイロード (JSON)"
 }

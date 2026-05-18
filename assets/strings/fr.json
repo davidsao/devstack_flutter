@@ -61,5 +61,16 @@
   "lbl_settings_theme_light": "Mode clair",
   "lbl_settings_theme_dark": "Mode sombre",
   "lbl_settings_version": "Version",
-  "lbl_settings_build": "Build"
+  "lbl_settings_build": "Build",
+  "lbl_indent": "Indentation",
+  "lbl_input": "Entrée",
+  "lbl_output": "Sortie",
+  "lbl_2_spaces": "2 espaces",
+  "lbl_4_spaces": "4 espaces",
+  "lbl_tabs": "Tabulations",
+  "lbl_encoded": "Encodé",
+  "lbl_decoded": "Décodé",
+  "lbl_encoded_jwt": "JWT encodé",
+  "lbl_decoded_header": "En-tête décodé (JSON)",
+  "lbl_decoded_payload": "Payload décodé (JSON)"
 }

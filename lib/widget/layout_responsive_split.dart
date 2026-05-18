@@ -6,6 +6,7 @@ class ResponsiveSplitLayout extends StatelessWidget {
   final List<Widget> secondChildren;
   final int firstFlex;
   final int secondFlex;
+  final bool secondChildrenScrollable;
   final double breakpoint;
 
   const ResponsiveSplitLayout({
@@ -14,6 +15,7 @@ class ResponsiveSplitLayout extends StatelessWidget {
     required this.secondChildren,
     this.firstFlex = 1,
     this.secondFlex = 1,
+    this.secondChildrenScrollable = false,
     this.breakpoint = 1024.0,
   });
 
@@ -21,11 +23,25 @@ class ResponsiveSplitLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDesktop = MediaQuery.sizeOf(context).width >= breakpoint;
 
+    // Build the core column for the second children list
+    Widget secondContent = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: secondChildren,
+    );
+
+    // IMPLEMENTATION: If true, wrap the column in a scroll container
+    if (secondChildrenScrollable) {
+      secondContent = SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: secondContent,
+      );
+    }
+
     return Flex(
       direction: isDesktop ? Axis.horizontal : Axis.vertical,
-      // Stretch ensures the columns fill the available cross-axis space
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        // LEFT / TOP PANEL
         Expanded(
           flex: firstFlex,
           child: Column(
@@ -33,14 +49,14 @@ class ResponsiveSplitLayout extends StatelessWidget {
             children: firstChildren,
           ),
         ),
-        // Gap between the two sections
+
+        // Dynamic adaptive spacing between the two panels
         kGapSmall,
+
+        // RIGHT / BOTTOM PANEL
         Expanded(
           flex: secondFlex,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: secondChildren,
-          ),
+          child: secondContent,
         ),
       ],
     );

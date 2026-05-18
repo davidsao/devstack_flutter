@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 
@@ -91,16 +92,18 @@ class _MainAppState extends State<MainApp> {
         highlightColor: AppColors.black.shade100.withAlpha(50),
         splashColor: AppColors.black.shade100.withAlpha(50),
         brightness: MediaQuery.platformBrightnessOf(context),
-        textTheme: TextTheme(
-          headlineLarge: AppTextStyles.h1,
-          headlineMedium: AppTextStyles.h2,
-          headlineSmall: AppTextStyles.h3,
-          titleLarge: AppTextStyles.t1,
-          titleMedium: AppTextStyles.t2,
-          titleSmall: AppTextStyles.t3,
-          bodyLarge: AppTextStyles.b1,
-          bodyMedium: AppTextStyles.b2,
-          bodySmall: AppTextStyles.b3,
+        textTheme: GoogleFonts.interTextTheme(
+          TextTheme(
+            headlineLarge: AppTextStyles.h1,
+            headlineMedium: AppTextStyles.h2,
+            headlineSmall: AppTextStyles.h3,
+            titleLarge: AppTextStyles.t1,
+            titleMedium: AppTextStyles.t2,
+            titleSmall: AppTextStyles.t3,
+            bodyLarge: AppTextStyles.b1,
+            bodyMedium: AppTextStyles.b2,
+            bodySmall: AppTextStyles.b3,
+          ),
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(

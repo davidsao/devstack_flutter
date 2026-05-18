@@ -12,7 +12,13 @@ class ChecksumController extends BaseController<ChecksumState> {
   final outputController = TextEditingController();
   final compareController = TextEditingController();
 
-  final algorithms = ['MD5', 'SHA1', 'SHA256', 'SHA384', 'SHA512'];
+  final algorithms = {
+    'MD5': 'MD5',
+    'SHA1': 'SHA1',
+    'SHA256': 'SHA256',
+    'SHA384': 'SHA384',
+    'SHA512': 'SHA512'
+  };
 
   @override
   ChecksumState initState() => ChecksumState();

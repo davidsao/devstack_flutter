@@ -13,17 +13,38 @@ class DateConverterPage
   @override
   Widget view(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(AppDimens.paddingSmall),
+      padding: EdgeInsets.only(
+        left: AppDimens.paddingMedium,
+        right: AppDimens.paddingMedium,
+        top: AppDimens.paddingMedium,
+        bottom: AppDimens.paddingSmall + MediaQuery.paddingOf(context).bottom,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(
+            LocaleKeys.lbl_number_configuration.localize(),
+            style: AppTextStyles.b2.bold,
+          ),
+          kGapTiny,
           Obx(() {
-            return DropDownWidget(
-              title: LocaleKeys.lbl_date_time_zone.localize(),
-              choices: state.choices.value,
-              selectedValue: state.timeZoneName.value,
-              onSelected: controller.changeTimeZone,
-              maxWidth: true,
+            return Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Theme.of(context).dividerColor),
+                borderRadius: BorderRadius.circular(8),
+                color: Theme.of(context).colorScheme.primary.withAlpha(24),
+              ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppDimens.paddingSmaller,
+                vertical: AppDimens.paddingTiny,
+              ),
+              child: DropDownWidget(
+                title: LocaleKeys.lbl_date_time_zone.localize(),
+                choices: state.choices.value,
+                selectedValue: state.timeZoneName.value,
+                onSelected: controller.changeTimeZone,
+                maxWidth: true,
+              ),
             );
           }),
           kGapMedium,
@@ -34,8 +55,7 @@ class DateConverterPage
             decoration: BoxDecoration(
               border: Border.all(color: Theme.of(context).dividerColor),
               borderRadius: BorderRadius.circular(8),
-              color:
-                  Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.3),
+              color: Theme.of(context).colorScheme.surface,
             ),
             child: Obx(() => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +93,7 @@ class DateConverterPage
                   ],
                 )),
           ),
-          const SizedBox(height: 24),
+          kGapSmall,
 
           // --- TIMESTAMP ---
           Row(

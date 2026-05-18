@@ -22,6 +22,7 @@ class DropDownWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(title, style: AppTextStyles.b2.bold),
         kGapSmall,
@@ -41,8 +42,9 @@ class DropDownWidget extends StatelessWidget {
       width: maxWidth ? null : 144,
       padding: const EdgeInsets.symmetric(horizontal: AppDimens.paddingSmaller),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary.withAlpha(40),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
+        boxShadow: AppColors.toolbarShadow,
       ),
       child: DropdownButtonHideUnderline(
         child: Theme(
@@ -64,7 +66,7 @@ class DropDownWidget extends StatelessWidget {
                 value: e.key,
                 child: Text(
                   e.value,
-                  style: AppTextStyles.b3.copyWith(height: 1.1),
+                  style: AppTextStyles.b2.copyWith(height: 1.1),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),

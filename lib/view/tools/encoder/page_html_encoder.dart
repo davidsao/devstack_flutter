@@ -1,6 +1,8 @@
 import 'package:devtoys_flutter/index.dart';
 import 'package:flutter/material.dart';
 
+import '../../../generated/locale_keys.g.dart';
+
 class HtmlEncoderPage
     extends BaseView<HtmlEncoderController, HtmlEncoderState> {
   const HtmlEncoderPage({super.key, super.viewTag});
@@ -11,7 +13,7 @@ class HtmlEncoderPage
       padding: EdgeInsets.only(
         left: AppDimens.paddingMedium,
         right: AppDimens.paddingMedium,
-        top: AppDimens.paddingSmall,
+        top: AppDimens.paddingMedium,
         bottom: AppDimens.paddingSmall + MediaQuery.paddingOf(context).bottom,
       ),
       child: Column(
@@ -20,7 +22,7 @@ class HtmlEncoderPage
             child: ResponsiveSplitLayout(
               firstChildren: [
                 Text(
-                  'Decoded',
+                  LocaleKeys.lbl_decoded.localize(),
                   style: AppTextStyles.b2.semiBold,
                 ),
                 kGapText,
@@ -34,7 +36,7 @@ class HtmlEncoderPage
               ],
               secondChildren: [
                 Text(
-                  'Encoded',
+                  LocaleKeys.lbl_encoded.localize(),
                   style: AppTextStyles.b2.semiBold,
                 ),
                 kGapText,

@@ -50,7 +50,7 @@ class AllToolsPage extends BaseView<AllToolsController, AllToolsState> {
                                 vertical: AppDimens.paddingTiny),
                             child: Text(
                               categoryName,
-                              style: AppTextStyles.b1.bold,
+                              style: AppTextStyles.t3,
                             ),
                           ),
                           // Responsive Grid of Tool Cards

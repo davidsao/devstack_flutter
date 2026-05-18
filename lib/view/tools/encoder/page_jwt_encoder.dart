@@ -1,6 +1,8 @@
 import 'package:devtoys_flutter/index.dart';
 import 'package:flutter/material.dart';
 
+import '../../../generated/locale_keys.g.dart';
+
 class JwtEncoderPage extends BaseView<JwtEncoderController, JwtEncoderState> {
   const JwtEncoderPage({super.key, super.viewTag});
 
@@ -10,20 +12,17 @@ class JwtEncoderPage extends BaseView<JwtEncoderController, JwtEncoderState> {
       padding: EdgeInsets.only(
         left: AppDimens.paddingMedium,
         right: AppDimens.paddingMedium,
-        top: AppDimens.paddingSmall,
+        top: AppDimens.paddingMedium,
         bottom: AppDimens.paddingSmall + MediaQuery.paddingOf(context).bottom,
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
-          // LEFT SIDE: Encoded JWT String
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+            child: ResponsiveSplitLayout(
+              firstChildren: [
                 Text(
-                  'Encoded JWT',
-                  style: AppTextStyles.b1.semiBold,
+                  LocaleKeys.lbl_encoded_jwt.localize(),
+                  style: AppTextStyles.b2.semiBold,
                 ),
                 kGapText,
                 Expanded(
@@ -38,17 +37,10 @@ class JwtEncoderPage extends BaseView<JwtEncoderController, JwtEncoderState> {
                   ),
                 ),
               ],
-            ),
-          ),
-          const SizedBox(width: 16),
-          // RIGHT SIDE: Decoded JSON Parts
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              secondChildren: [
                 Text(
-                  'Decoded Header (JSON)',
-                  style: AppTextStyles.b1.semiBold,
+                  LocaleKeys.lbl_decoded_header.localize(),
+                  style: AppTextStyles.b2.semiBold,
                 ),
                 kGapText,
                 Expanded(
@@ -65,12 +57,12 @@ class JwtEncoderPage extends BaseView<JwtEncoderController, JwtEncoderState> {
                 ),
                 kGapSmall,
                 Text(
-                  'Decoded Payload (JSON)',
-                  style: AppTextStyles.b1.semiBold,
+                  LocaleKeys.lbl_decoded_payload.localize(),
+                  style: AppTextStyles.b2.semiBold,
                 ),
                 kGapText,
                 Expanded(
-                  flex: 2, // Payload usually has more data
+                  flex: 1, // Payload usually has more data
                   child: CustomTextField(
                     controller: controller.payloadController,
                     maxLines: null,

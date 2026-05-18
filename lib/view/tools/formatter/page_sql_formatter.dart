@@ -1,6 +1,8 @@
 import 'package:devtoys_flutter/index.dart';
 import 'package:flutter/material.dart';
 
+import '../../../generated/locale_keys.g.dart';
+
 class SqlFormatterPage
     extends BaseView<SqlFormatterController, SqlFormatterState> {
   const SqlFormatterPage({super.key, super.viewTag});
@@ -11,7 +13,7 @@ class SqlFormatterPage
       padding: EdgeInsets.only(
         left: AppDimens.paddingMedium,
         right: AppDimens.paddingMedium,
-        top: AppDimens.paddingSmall,
+        top: AppDimens.paddingMedium,
         bottom: AppDimens.paddingSmall + MediaQuery.paddingOf(context).bottom,
       ),
       child: Column(
@@ -21,7 +23,7 @@ class SqlFormatterPage
             child: ResponsiveSplitLayout(
               firstChildren: [
                 Text(
-                  'Input',
+                  LocaleKeys.lbl_input.localize(),
                   style: AppTextStyles.b2.bold,
                 ),
                 kGapTiny,
@@ -36,7 +38,7 @@ class SqlFormatterPage
               ],
               secondChildren: [
                 Text(
-                  'Output',
+                  LocaleKeys.lbl_output.localize(),
                   style: AppTextStyles.b2.bold,
                 ),
                 kGapTiny,

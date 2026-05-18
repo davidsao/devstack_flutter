@@ -77,7 +77,18 @@ class CodegenLoader extends AssetLoader{
   "lbl_settings_theme_light": "ライトモード",
   "lbl_settings_theme_dark": "ダークモード",
   "lbl_settings_version": "バージョン",
-  "lbl_settings_build": "ビルド"
+  "lbl_settings_build": "ビルド",
+  "lbl_indent": "インデント",
+  "lbl_input": "入力",
+  "lbl_output": "出力",
+  "lbl_2_spaces": "スペース2個",
+  "lbl_4_spaces": "スペース4個",
+  "lbl_tabs": "タブ",
+  "lbl_encoded": "エンコード済み",
+  "lbl_decoded": "デコード済み",
+  "lbl_encoded_jwt": "エンコード済み JWT",
+  "lbl_decoded_header": "デコード済みヘッダー (JSON)",
+  "lbl_decoded_payload": "デコード済みペイロード (JSON)"
 };
 static const Map<String,dynamic> _en = {
   "lbl_app_name": "DevStack",
@@ -142,7 +153,18 @@ static const Map<String,dynamic> _en = {
   "lbl_settings_theme_light": "Light Mode",
   "lbl_settings_theme_dark": "Dark Mode",
   "lbl_settings_version": "Version",
-  "lbl_settings_build": "Build"
+  "lbl_settings_build": "Build",
+  "lbl_indent": "Indentation",
+  "lbl_input": "Input",
+  "lbl_output": "Output",
+  "lbl_2_spaces": "2 spaces",
+  "lbl_4_spaces": "4 spaces",
+  "lbl_tabs": "Tabs",
+  "lbl_encoded": "Encoded",
+  "lbl_decoded": "Decoded",
+  "lbl_encoded_jwt": "Encoded JWT",
+  "lbl_decoded_header": "Decoded Header (JSON)",
+  "lbl_decoded_payload": "Decoded Payload (JSON)"
 };
 static const Map<String,dynamic> _zh_Hans = {
   "lbl_app_name": "开发栈",
@@ -207,7 +229,18 @@ static const Map<String,dynamic> _zh_Hans = {
   "lbl_settings_theme_light": "浅色模式",
   "lbl_settings_theme_dark": "深色模式",
   "lbl_settings_version": "版本",
-  "lbl_settings_build": "构建"
+  "lbl_settings_build": "构建",
+  "lbl_indent": "缩进",
+  "lbl_input": "输入",
+  "lbl_output": "输出",
+  "lbl_2_spaces": "2 个空格",
+  "lbl_4_spaces": "4 个空格",
+  "lbl_tabs": "制表符",
+  "lbl_encoded": "已编码",
+  "lbl_decoded": "已解码",
+  "lbl_encoded_jwt": "已编码的 JWT",
+  "lbl_decoded_header": "已解码的标头 (JSON)",
+  "lbl_decoded_payload": "已解码的负载 (JSON)"
 };
 static const Map<String,dynamic> _fr = {
   "lbl_app_name": "Stack Dév",
@@ -272,7 +305,18 @@ static const Map<String,dynamic> _fr = {
   "lbl_settings_theme_light": "Mode clair",
   "lbl_settings_theme_dark": "Mode sombre",
   "lbl_settings_version": "Version",
-  "lbl_settings_build": "Build"
+  "lbl_settings_build": "Build",
+  "lbl_indent": "Indentation",
+  "lbl_input": "Entrée",
+  "lbl_output": "Sortie",
+  "lbl_2_spaces": "2 espaces",
+  "lbl_4_spaces": "4 espaces",
+  "lbl_tabs": "Tabulations",
+  "lbl_encoded": "Encodé",
+  "lbl_decoded": "Décodé",
+  "lbl_encoded_jwt": "JWT encodé",
+  "lbl_decoded_header": "En-tête décodé (JSON)",
+  "lbl_decoded_payload": "Payload décodé (JSON)"
 };
 static const Map<String,dynamic> _ko = {
   "lbl_app_name": "DevStack",
@@ -337,7 +381,18 @@ static const Map<String,dynamic> _ko = {
   "lbl_settings_theme_light": "라이트 모드",
   "lbl_settings_theme_dark": "다크 모드",
   "lbl_settings_version": "버전",
-  "lbl_settings_build": "빌드"
+  "lbl_settings_build": "빌드",
+  "lbl_indent": "들여쓰기",
+  "lbl_input": "입력",
+  "lbl_output": "출력",
+  "lbl_2_spaces": "공백 2개",
+  "lbl_4_spaces": "공백 4개",
+  "lbl_tabs": "탭",
+  "lbl_encoded": "인코딩됨",
+  "lbl_decoded": "디코딩됨",
+  "lbl_encoded_jwt": "인코딩된 JWT",
+  "lbl_decoded_header": "디코딩된 헤더 (JSON)",
+  "lbl_decoded_payload": "디코딩된 페이로드 (JSON)"
 };
 static const Map<String,dynamic> _es = {
   "lbl_app_name": "Pila Dev",
@@ -402,7 +457,18 @@ static const Map<String,dynamic> _es = {
   "lbl_settings_theme_light": "Modo claro",
   "lbl_settings_theme_dark": "Modo oscuro",
   "lbl_settings_version": "Versión",
-  "lbl_settings_build": "Compilación"
+  "lbl_settings_build": "Compilación",
+  "lbl_indent": "Indentación",
+  "lbl_input": "Entrada",
+  "lbl_output": "Salida",
+  "lbl_2_spaces": "2 espacios",
+  "lbl_4_spaces": "4 espacios",
+  "lbl_tabs": "Tabulaciones",
+  "lbl_encoded": "Codificado",
+  "lbl_decoded": "Decodificado",
+  "lbl_encoded_jwt": "JWT codificado",
+  "lbl_decoded_header": "Encabezado decodificado (JSON)",
+  "lbl_decoded_payload": "Payload decodificado (JSON)"
 };
 static const Map<String,dynamic> _zh_Hant = {
   "lbl_app_name": "DevStack",
@@ -467,7 +533,18 @@ static const Map<String,dynamic> _zh_Hant = {
   "lbl_settings_theme_light": "淺色模式",
   "lbl_settings_theme_dark": "深色模式",
   "lbl_settings_version": "版本",
-  "lbl_settings_build": "組建"
+  "lbl_settings_build": "組建",
+  "lbl_indent": "縮排",
+  "lbl_input": "輸入",
+  "lbl_output": "輸出",
+  "lbl_2_spaces": "2 個空格",
+  "lbl_4_spaces": "4 個空格",
+  "lbl_tabs": "定位字元",
+  "lbl_encoded": "已編碼",
+  "lbl_decoded": "已解碼",
+  "lbl_encoded_jwt": "已編碼的 JWT",
+  "lbl_decoded_header": "已解碼的標頭 (JSON)",
+  "lbl_decoded_payload": "已解碼的負載 (JSON)"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ja": _ja, "en": _en, "zh_Hans": _zh_Hans, "fr": _fr, "ko": _ko, "es": _es, "zh_Hant": _zh_Hant};
 }

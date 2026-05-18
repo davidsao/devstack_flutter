@@ -61,5 +61,16 @@
   "lbl_settings_theme_light": "淺色模式",
   "lbl_settings_theme_dark": "深色模式",
   "lbl_settings_version": "版本",
-  "lbl_settings_build": "組建"
+  "lbl_settings_build": "組建",
+  "lbl_indent": "縮排",
+  "lbl_input": "輸入",
+  "lbl_output": "輸出",
+  "lbl_2_spaces": "2 個空格",
+  "lbl_4_spaces": "4 個空格",
+  "lbl_tabs": "定位字元",
+  "lbl_encoded": "已編碼",
+  "lbl_decoded": "已解碼",
+  "lbl_encoded_jwt": "已編碼的 JWT",
+  "lbl_decoded_header": "已解碼的標頭 (JSON)",
+  "lbl_decoded_payload": "已解碼的負載 (JSON)"
 }

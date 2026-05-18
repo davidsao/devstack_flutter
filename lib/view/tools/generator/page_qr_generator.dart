@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import '../../../generated/locale_keys.g.dart';
+
 class QrGeneratorPage
     extends BaseView<QrGeneratorController, QrGeneratorState> {
   const QrGeneratorPage({super.key, super.viewTag});
@@ -20,34 +22,37 @@ class QrGeneratorPage
       padding: EdgeInsets.only(
         left: AppDimens.paddingMedium,
         right: AppDimens.paddingMedium,
-        top: AppDimens.paddingSmall,
+        top: AppDimens.paddingMedium,
         bottom: AppDimens.paddingSmall + MediaQuery.paddingOf(context).bottom,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // --- CONFIGURATION ---
-          _buildSectionTitle('Configuration'),
-          GlassContainer(
-            borderRadius: BorderRadius.circular(8),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Obx(() {
-                return DropDownWidget(
-                  title: 'Correction Level',
-                  choices: choices,
-                  selectedValue: controller.currentCorrectionLevel,
-                  onSelected: controller.updateCorrectionLevel,
-                  maxWidth: true,
-                );
-              }),
+          _buildSectionTitle(LocaleKeys.lbl_number_configuration.localize()),
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Theme.of(context).dividerColor),
+              borderRadius: BorderRadius.circular(8),
+              color: Theme.of(context).colorScheme.primary.withAlpha(24),
             ),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppDimens.paddingSmaller,
+              vertical: AppDimens.paddingTiny,
+            ),
+            child: Obx(() {
+              return DropDownWidget(
+                title: 'Correction Level',
+                choices: choices,
+                selectedValue: controller.currentCorrectionLevel,
+                onSelected: controller.updateCorrectionLevel,
+              );
+            }),
           ),
           kGapMedium,
 
           // --- INPUT ---
           _buildSectionTitle('Input'),
-          kGapText,
           Expanded(
             flex: 2,
             child: CustomTextField(
@@ -63,15 +68,13 @@ class QrGeneratorPage
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildSectionTitle('QR Code'),
-              ElevatedButton.icon(
-                onPressed: controller.exportQrCode,
-                icon: const Icon(Icons.download, size: 16),
-                label: const Text('Export'),
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
-                ),
-              ),
+              AppButton(controller.exportQrCode,
+                  style: AppButtonStyle.primary(size: AppButtonStyleSize.small),
+                  child: Row(
+                    children: [
+                      Text('Export'),
+                    ],
+                  )),
             ],
           ),
           Expanded(
@@ -108,9 +111,8 @@ class QrGeneratorPage
 
   Widget _buildSectionTitle(String title) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Text(title,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+      padding: const EdgeInsets.only(bottom: AppDimens.marginTiny),
+      child: Text(title, style: AppTextStyles.b2.bold),
     );
   }
 }

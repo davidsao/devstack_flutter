@@ -10,7 +10,7 @@ class JsonYamlPage extends BaseView<JsonYamlController, JsonYamlState> {
       padding: EdgeInsets.only(
         left: AppDimens.paddingMedium,
         right: AppDimens.paddingMedium,
-        top: AppDimens.paddingSmall,
+        top: AppDimens.paddingMedium,
         bottom: AppDimens.paddingSmall + MediaQuery.paddingOf(context).bottom,
       ),
       child: Column(

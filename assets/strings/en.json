@@ -61,5 +61,16 @@
   "lbl_settings_theme_light": "Light Mode",
   "lbl_settings_theme_dark": "Dark Mode",
   "lbl_settings_version": "Version",
-  "lbl_settings_build": "Build"
+  "lbl_settings_build": "Build",
+  "lbl_indent": "Indentation",
+  "lbl_input": "Input",
+  "lbl_output": "Output",
+  "lbl_2_spaces": "2 spaces",
+  "lbl_4_spaces": "4 spaces",
+  "lbl_tabs": "Tabs",
+  "lbl_encoded": "Encoded",
+  "lbl_decoded": "Decoded",
+  "lbl_encoded_jwt": "Encoded JWT",
+  "lbl_decoded_header": "Decoded Header (JSON)",
+  "lbl_decoded_payload": "Decoded Payload (JSON)"
 }

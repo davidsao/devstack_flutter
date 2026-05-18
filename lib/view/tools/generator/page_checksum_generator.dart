@@ -12,7 +12,7 @@ class ChecksumPage extends BaseView<ChecksumController, ChecksumState> {
       padding: EdgeInsets.only(
         left: AppDimens.paddingMedium,
         right: AppDimens.paddingMedium,
-        top: AppDimens.paddingSmall,
+        top: AppDimens.paddingMedium,
         bottom: AppDimens.paddingSmall + MediaQuery.paddingOf(context).bottom,
       ),
       child: SingleChildScrollView(
@@ -21,79 +21,47 @@ class ChecksumPage extends BaseView<ChecksumController, ChecksumState> {
           children: [
             // --- CONFIGURATION ---
             _buildSectionTitle('Configuration'),
-            GlassContainer(
-              borderRadius: BorderRadius.circular(8),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Row(
-                      children: [
-                        Text('aA',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey)),
-                        SizedBox(width: 16),
-                        Text('Uppercase',
-                            style: TextStyle(fontWeight: FontWeight.w500)),
-                      ],
-                    ),
-                    Obx(() => Switch(
-                          value: state.isUppercase.value,
-                          onChanged: controller.toggleUppercase,
-                        )),
-                  ],
-                ),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Theme.of(context).dividerColor),
+                borderRadius: BorderRadius.circular(8),
+                color: Theme.of(context).colorScheme.primary.withAlpha(24),
               ),
-            ),
-            kGapSmall,
-            GlassContainer(
-              borderRadius: BorderRadius.circular(8),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Row(
-                      children: [
-                        Icon(Icons.swap_horiz, color: Colors.grey),
-                        SizedBox(width: 16),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Hash Algorithm',
-                                style: TextStyle(fontWeight: FontWeight.w500)),
-                            Text('Select which algorithm you want to use',
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.grey)),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Obx(() => DropdownButtonHideUnderline(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            decoration: BoxDecoration(
-                              color:
-                                  Theme.of(context).colorScheme.surfaceVariant,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: DropdownButton<String>(
-                              value: state.selectedAlgorithm.value,
-                              items: controller.algorithms
-                                  .map((a) => DropdownMenuItem(
-                                      value: a, child: Text(a)))
-                                  .toList(),
-                              onChanged: (val) =>
-                                  controller.changeAlgorithm(val!),
-                            ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppDimens.paddingSmaller,
+                vertical: AppDimens.paddingTiny,
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Uppercase',
+                        style: AppTextStyles.b2.bold,
+                      ),
+                      Obx(
+                        () => Transform.scale(
+                          scale: 0.8,
+                          child: Switch(
+                            value: state.isUppercase.value,
+                            onChanged: controller.toggleUppercase,
                           ),
-                        )),
-                  ],
-                ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  kGapText,
+                  Obx(() {
+                    return DropDownWidget(
+                      title: 'Hash Algorithm',
+                      choices: controller.algorithms,
+                      selectedValue: state.selectedAlgorithm.value,
+                      onSelected: (String val) =>
+                          controller.changeAlgorithm(val),
+                    );
+                  }),
+                ],
               ),
             ),
             kGapMedium,

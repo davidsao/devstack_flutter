@@ -1,6 +1,9 @@
 import 'package:devtoys_flutter/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+
+import '../../../generated/locale_keys.g.dart';
 
 class LoremIpsumGeneratorPage
     extends BaseView<LoremIpsumGeneratorController, LoremIpsumGeneratorState> {
@@ -12,47 +15,49 @@ class LoremIpsumGeneratorPage
       padding: EdgeInsets.only(
         left: AppDimens.paddingMedium,
         right: AppDimens.paddingMedium,
-        top: AppDimens.paddingSmall,
+        top: AppDimens.paddingMedium,
         bottom: AppDimens.paddingSmall + MediaQuery.paddingOf(context).bottom,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(
+            LocaleKeys.lbl_number_configuration.localize(),
+            style: AppTextStyles.b2.bold,
+          ),
+          kGapTiny,
           // Configuration Panel
           Container(
-            padding: const EdgeInsets.all(16),
-            width: double.infinity,
             decoration: BoxDecoration(
               border: Border.all(color: Theme.of(context).dividerColor),
               borderRadius: BorderRadius.circular(8),
+              color: Theme.of(context).colorScheme.primary.withAlpha(24),
             ),
-            // FIX: Using Wrap for a responsive, side-by-side toolbar layout
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppDimens.paddingSmaller,
+              vertical: AppDimens.paddingTiny,
+            ),
             child: Wrap(
               crossAxisAlignment: WrapCrossAlignment.center,
-              spacing:
-                  AppDimens.paddingLarge, // Horizontal gap between components
-              runSpacing: AppDimens
-                  .paddingSmall, // Vertical gap if they wrap to the next line
+              spacing: AppDimens.paddingLarge,
+              runSpacing: AppDimens.paddingSmaller,
               children: [
                 Obx(() {
                   return DropDownWidget(
-                    title: 'Type:',
+                    title: 'Type',
                     choices: state.choices,
                     selectedValue: state.type.value,
                     onSelected: (String val) {
                       state.type.value = val;
                       controller.generateText();
                     },
-                    // FIX: Set to false so it uses your fixed width (144) instead of taking up the whole screen
                     maxWidth: false,
                   );
                 }),
                 Row(
-                  mainAxisSize: MainAxisSize
-                      .min, // Keeps the row tight around its children
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Length (1-1000):', style: AppTextStyles.b2.bold),
-                    kGapSmall,
+                    Text('Length (1-999)', style: AppTextStyles.b2.bold),
                     Container(
                       width: 80,
                       decoration: BoxDecoration(
@@ -64,10 +69,15 @@ class LoremIpsumGeneratorPage
                       child: TextField(
                         controller: controller.lengthController,
                         keyboardType: TextInputType.number,
+                        maxLength: 3,
                         textAlign: TextAlign.center,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           isDense: true,
+                          counterText: "",
                           contentPadding: EdgeInsets.symmetric(vertical: 8),
                         ),
                         onChanged: controller.updateLength,
@@ -80,9 +90,9 @@ class LoremIpsumGeneratorPage
           ),
           kGapMedium,
           // Output Area
-          const Text(
+          Text(
             'Generated Lorem Ipsum',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: AppTextStyles.b2.bold,
           ),
           kGapTiny,
           Expanded(
