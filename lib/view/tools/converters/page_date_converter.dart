@@ -110,6 +110,7 @@ class DateConverterPage
                       child: AppImage(
                         IconKeys.calendar,
                         size: AppDimens.iconSmall,
+                        color: Theme.of(context).iconTheme.color,
                       ).marginAll(
                         AppDimens.marginTiny,
                       ),
@@ -122,6 +123,7 @@ class DateConverterPage
                       child: AppImage(
                         IconKeys.textfieldPaste,
                         size: AppDimens.iconSmall,
+                        color: Theme.of(context).iconTheme.color,
                       ).marginAll(
                         AppDimens.marginTiny,
                       ),
@@ -134,6 +136,7 @@ class DateConverterPage
                       child: AppImage(
                         IconKeys.textfieldCopy,
                         size: AppDimens.iconSmall,
+                        color: Theme.of(context).iconTheme.color,
                       ).marginAll(
                         AppDimens.marginTiny,
                       ),

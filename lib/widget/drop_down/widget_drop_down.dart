@@ -42,9 +42,10 @@ class DropDownWidget extends StatelessWidget {
       width: maxWidth ? null : 144,
       padding: const EdgeInsets.symmetric(horizontal: AppDimens.paddingSmaller),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color:
+            Theme.of(context).dropdownMenuTheme.inputDecorationTheme?.fillColor,
         borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
-        boxShadow: AppColors.toolbarShadow,
+        boxShadow: AppColors.toolbarShadow(context),
       ),
       child: DropdownButtonHideUnderline(
         child: Theme(

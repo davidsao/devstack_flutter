@@ -133,7 +133,7 @@ class AllToolsPage extends BaseView<AllToolsController, AllToolsState> {
                                 .withAlpha(64),
                           ),
                           shape: BoxShape.circle,
-                          color: Colors.white,
+                          color: Theme.of(context).cardColor,
                         ),
                         padding: const EdgeInsets.all(4.0),
                         child: Icon(

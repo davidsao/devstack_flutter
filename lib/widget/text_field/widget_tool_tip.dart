@@ -22,6 +22,7 @@ class ToolTipIconButton extends StatelessWidget {
         child: AppImage(
           icon,
           size: AppDimens.iconSmaller,
+          color: Theme.of(context).iconTheme.color,
         ).marginAll(AppDimens.marginTiny),
       ),
     );

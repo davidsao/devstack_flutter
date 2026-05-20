@@ -216,7 +216,7 @@ class HashGeneratorPage
               borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
             ),
             thumbDecoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).scaffoldBackgroundColor,
               borderRadius: BorderRadius.circular(AppDimens.radiusSmall),
             ),
             initialValue: controller.state.isTextMode.value,

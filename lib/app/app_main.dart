@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:get_it/get_it.dart';
 
 final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 
@@ -42,17 +42,6 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     final localize = context.localizationDelegates;
 
-    final colors = ColorScheme(
-      primary: AppColors.primary,
-      secondary: AppColors.secondary,
-      surface: Colors.white,
-      error: AppColors.error,
-      onPrimary: Colors.white,
-      onSecondary: AppColors.black,
-      onSurface: AppColors.black,
-      onError: Colors.white,
-      brightness: Brightness.light,
-    );
     if (math.min(
           MediaQuery.of(context).size.width,
           MediaQuery.of(context).size.height,
@@ -76,6 +65,41 @@ class _MainAppState extends State<MainApp> {
       ),
     );
 
+    final appManager = GetIt.instance<IAppManager>();
+    final savedTheme = appManager.getThemeMode();
+
+    ThemeMode initialThemeMode = ThemeMode.system;
+    if (savedTheme == 'light') {
+      initialThemeMode = ThemeMode.light;
+    } else if (savedTheme == 'dark') {
+      initialThemeMode = ThemeMode.dark;
+    }
+
+    final lightColorScheme = ColorScheme(
+      primary: AppColors.primary,
+      secondary: AppColors.secondary,
+      surface: Colors.white,
+      error: AppColors.error,
+      onPrimary: Colors.white,
+      onSecondary: AppColors.black,
+      onSurface: AppColors.black,
+      onError: Colors.white,
+      brightness: Brightness.light,
+    );
+
+    // 2. Define Dark Color Scheme
+    final darkColorScheme = ColorScheme(
+      primary: AppColors.primary.shade300,
+      secondary: AppColors.secondary.shade300,
+      surface: AppColors.black.shade900,
+      error: AppColors.error,
+      onPrimary: Colors.white,
+      onSecondary: AppColors.black,
+      onSurface: Colors.white,
+      onError: Colors.white,
+      brightness: Brightness.dark,
+    );
+
     return GetMaterialApp(
       home: widget.home ?? HomePage(),
       localizationsDelegates: [...localize],
@@ -87,24 +111,12 @@ class _MainAppState extends State<MainApp> {
       locale: context.locale,
       debugShowMaterialGrid: false,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.from(colorScheme: colors, useMaterial3: true).copyWith(
+      themeMode: initialThemeMode,
+      theme: ThemeData.from(colorScheme: lightColorScheme, useMaterial3: true)
+          .copyWith(
         scaffoldBackgroundColor: AppColors.background,
         highlightColor: AppColors.black.shade100.withAlpha(50),
         splashColor: AppColors.black.shade100.withAlpha(50),
-        brightness: MediaQuery.platformBrightnessOf(context),
-        textTheme: GoogleFonts.interTextTheme(
-          TextTheme(
-            headlineLarge: AppTextStyles.h1,
-            headlineMedium: AppTextStyles.h2,
-            headlineSmall: AppTextStyles.h3,
-            titleLarge: AppTextStyles.t1,
-            titleMedium: AppTextStyles.t2,
-            titleSmall: AppTextStyles.t3,
-            bodyLarge: AppTextStyles.b1,
-            bodyMedium: AppTextStyles.b2,
-            bodySmall: AppTextStyles.b3,
-          ),
-        ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
@@ -118,10 +130,27 @@ class _MainAppState extends State<MainApp> {
             ),
           ),
         ),
+        iconTheme: IconThemeData(
+          color: AppColors.primary.shade800,
+        ),
+        inputDecorationTheme: InputDecorationThemeData(
+          fillColor: AppColors.grey.shade50,
+        ),
         bottomSheetTheme: const BottomSheetThemeData(
           backgroundColor: Colors.transparent,
           modalBarrierColor: Colors.transparent,
           elevation: 0,
+        ),
+        dropdownMenuTheme: DropdownMenuThemeData(
+          inputDecorationTheme: InputDecorationThemeData(
+            fillColor: Colors.white,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
+              borderSide: BorderSide(
+                color: AppColors.grey.shade50,
+              ),
+            ),
+          ),
         ),
         dividerTheme: DividerTheme.of(
           context,
@@ -154,6 +183,35 @@ class _MainAppState extends State<MainApp> {
             strokeRadius: 8.0,
           ),
           overlayShape: const RoundSliderOverlayShape(overlayRadius: 16),
+        ),
+      ),
+      darkTheme:
+          ThemeData.from(colorScheme: darkColorScheme, useMaterial3: true)
+              .copyWith(
+        scaffoldBackgroundColor: AppColors.black.shade900, // Dark background
+        highlightColor: Colors.white.withAlpha(20),
+        splashColor: Colors.white.withAlpha(20),
+        dividerTheme: DividerTheme.of(context)
+            .copyWith(color: AppColors.grey.shade700, thickness: 1, space: 0),
+        checkboxTheme: CheckboxTheme.of(context).copyWith(
+          side: BorderSide(color: Colors.white, width: 1),
+        ),
+        iconTheme: IconThemeData(
+          color: AppColors.primary.shade100,
+        ),
+        inputDecorationTheme: InputDecorationThemeData(
+          fillColor: AppColors.grey.shade700,
+        ),
+        dropdownMenuTheme: DropdownMenuThemeData(
+          inputDecorationTheme: InputDecorationThemeData(
+            fillColor: AppColors.grey.shade700,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
+              borderSide: BorderSide(
+                color: AppColors.grey.shade900,
+              ),
+            ),
+          ),
         ),
       ),
       builder: (context, child) {

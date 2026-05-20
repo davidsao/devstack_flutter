@@ -218,7 +218,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
             color: Colors.transparent,
             // color: Theme.of(context).colorScheme.surface,
-            boxShadow: AppColors.textfieldShadow,
+            boxShadow: AppColors.textfieldShadow(context),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -231,7 +231,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(AppDimens.radiusSmall),
-                  boxShadow: AppColors.cardShadow,
+                  boxShadow: AppColors.cardShadow(context),
                 ),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -282,7 +282,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     style: widget.isMonoSpace
                         ? AppTextStyles.monoStyle()
                         : AppTextStyles.b2,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
+                      fillColor:
+                          Theme.of(context).inputDecorationTheme.fillColor,
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.all(16),

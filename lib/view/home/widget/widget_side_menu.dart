@@ -66,7 +66,7 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
           color: Theme.of(context).cardColor,
-          boxShadow: AppColors.cardShadow,
+          boxShadow: AppColors.cardShadow(context),
         ),
         child: content,
       ).marginOnly(
