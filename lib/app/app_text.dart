@@ -27,6 +27,7 @@ class AppTextStyles {
     return GoogleFonts.jetBrainsMono(
       fontSize: fontSize,
       fontWeight: fontWeight,
+      height: 1.1,
     );
   }
 

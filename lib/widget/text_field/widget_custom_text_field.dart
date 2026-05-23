@@ -12,6 +12,7 @@ class CustomTextField extends StatefulWidget {
   final bool isXMLFormatted;
   final bool isEditable;
   final bool isSearchable;
+  final bool showLineNumbers;
   final int? maxLines;
   final ValueChanged<String>? onChanged;
   final List<TextInputFormatter>? inputFormatters;
@@ -24,6 +25,7 @@ class CustomTextField extends StatefulWidget {
     this.isXMLFormatted = false,
     this.isEditable = true,
     this.isSearchable = true,
+    this.showLineNumbers = false,
     this.maxLines,
     this.onChanged,
     this.inputFormatters,
@@ -37,13 +39,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
   bool _isSearchVisible = false;
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  final ScrollController _lineScrollController = ScrollController();
 
   List<int> _matchIndices = [];
   int _currentMatch = 0;
   String _lastKnownText = '';
 
-  // Stored constraints to calculate the exact text height
-  double _textFieldMaxWidth = 0;
+  List<int> _visualLineCounts = [1];
+
+  double _availableTextWidth = 0;
   double _textFieldMaxHeight = 0;
 
   @override
@@ -51,20 +55,74 @@ class _CustomTextFieldState extends State<CustomTextField> {
     super.initState();
     _lastKnownText = widget.controller.text;
     widget.controller.addListener(_onMainTextChanged);
+    _scrollController.addListener(_syncScroll);
   }
 
   @override
   void dispose() {
     widget.controller.removeListener(_onMainTextChanged);
+    _scrollController.removeListener(_syncScroll);
     _searchController.dispose();
     _scrollController.dispose();
+    _lineScrollController.dispose();
     super.dispose();
   }
 
+  void _syncScroll() {
+    if (_lineScrollController.hasClients && _scrollController.hasClients) {
+      _lineScrollController.jumpTo(_scrollController.offset);
+    }
+  }
+
+  void _updateLineCount() {
+    if (!widget.showLineNumbers || _availableTextWidth <= 0) return;
+
+    final textStyle = widget.isMonoSpace ? AppTextStyles.monoStyle() : AppTextStyles.b2;
+    final lines = widget.controller.text.split('\n');
+
+    List<int> newVisualCounts = [];
+
+    for (String line in lines) {
+      if (line.isEmpty) {
+        newVisualCounts.add(1);
+        continue;
+      }
+
+      final tp = TextPainter(
+        text: TextSpan(text: line, style: textStyle),
+        textDirection: TextDirection.ltr,
+      );
+
+      tp.layout(maxWidth: _availableTextWidth);
+      final lineMetrics = tp.computeLineMetrics();
+
+      newVisualCounts.add(lineMetrics.isEmpty ? 1 : lineMetrics.length);
+    }
+
+    bool changed = false;
+    if (newVisualCounts.length != _visualLineCounts.length) {
+      changed = true;
+    } else {
+      for (int i = 0; i < newVisualCounts.length; i++) {
+        if (newVisualCounts[i] != _visualLineCounts[i]) {
+          changed = true;
+          break;
+        }
+      }
+    }
+
+    if (changed) {
+      setState(() {
+        _visualLineCounts = newVisualCounts;
+      });
+    }
+  }
+
   void _onMainTextChanged() {
-    // --- FIX: Only recalculate if the actual text changed, not just the cursor/selection ---
     if (widget.controller.text != _lastKnownText) {
       _lastKnownText = widget.controller.text;
+
+      _updateLineCount();
 
       if (_isSearchVisible && _searchController.text.isNotEmpty) {
         _calculateMatches(_searchController.text);
@@ -116,14 +174,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
     int offset = _matchIndices[_currentMatch - 1];
     int queryLength = _searchController.text.length;
 
-    // Highlight the selection (This triggers the controller listener!)
     widget.controller.selection =
         TextSelection(baseOffset: offset, extentOffset: offset + queryLength);
 
-    // Calculate scroll position
-    if (_textFieldMaxWidth > 0 && _scrollController.hasClients) {
+    if (_availableTextWidth > 0 && _scrollController.hasClients) {
       final textStyle =
-          widget.isMonoSpace ? AppTextStyles.monoStyle() : AppTextStyles.b3;
+      widget.isMonoSpace ? AppTextStyles.monoStyle() : AppTextStyles.b3;
 
       final textUpToMatch = widget.controller.text.substring(0, offset);
 
@@ -132,7 +188,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         textDirection: TextDirection.ltr,
       );
 
-      tp.layout(maxWidth: _textFieldMaxWidth);
+      tp.layout(maxWidth: _availableTextWidth);
 
       double targetScroll = tp.size.height - (_textFieldMaxHeight / 2) + 10;
       if (targetScroll < 0) targetScroll = 0;
@@ -152,7 +208,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     if (_matchIndices.isEmpty) return;
     setState(() {
       _currentMatch =
-          _currentMatch < _matchIndices.length ? _currentMatch + 1 : 1;
+      _currentMatch < _matchIndices.length ? _currentMatch + 1 : 1;
     });
     _scrollToCurrentMatch();
     _syncSearchStateToController();
@@ -162,7 +218,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     if (_matchIndices.isEmpty) return;
     setState(() {
       _currentMatch =
-          _currentMatch > 1 ? _currentMatch - 1 : _matchIndices.length;
+      _currentMatch > 1 ? _currentMatch - 1 : _matchIndices.length;
     });
     _scrollToCurrentMatch();
     _syncSearchStateToController();
@@ -198,8 +254,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
     final data = await Clipboard.getData(Clipboard.kTextPlain);
     if (data != null && data.text != null) {
       widget.controller.text = data.text!;
-      // Update our tracker manually here so pasting doesn't break logic
       _lastKnownText = data.text!;
+      _updateLineCount();
       if (widget.onChanged != null) {
         widget.onChanged!(data.text!);
       }
@@ -208,6 +264,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final textStyle =
+    widget.isMonoSpace ? AppTextStyles.monoStyle() : AppTextStyles.b2;
+
+    final tp = TextPainter(
+      text: TextSpan(text: '1', style: textStyle),
+      textDirection: TextDirection.ltr,
+    )..layout();
+    final double lineHeight = tp.height;
+
     return Stack(
       children: [
         Container(
@@ -217,7 +282,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ),
             borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
             color: Colors.transparent,
-            // color: Theme.of(context).colorScheme.surface,
             boxShadow: AppColors.textfieldShadow(context),
           ),
           child: Column(
@@ -266,32 +330,100 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 ),
               ),
 
-              // TEXT FIELD WRAPPED IN LAYOUT BUILDER
+              // TEXT FIELD & GUTTER
               Expanded(
-                child: LayoutBuilder(builder: (context, constraints) {
-                  _textFieldMaxWidth = constraints.maxWidth - 32;
-                  _textFieldMaxHeight = constraints.maxHeight;
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // LINE NUMBERS GUTTER
+                    if (widget.showLineNumbers)
+                      IgnorePointer(
+                        ignoring: true,
+                        child: Container(
+                          width: 42,
+                          padding: const EdgeInsets.symmetric(vertical: AppDimens.paddingSmaller),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .surface
+                                .withAlpha(50),
+                            border: Border(
+                              right: BorderSide(
+                                color: Theme.of(context).dividerColor.withAlpha(50),
+                              ),
+                            ),
+                          ),
+                          // FIX 2: Added ScrollConfiguration to hide scrollbars
+                          child: ScrollConfiguration(
+                            behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+                            child: ListView.builder(
+                              controller: _lineScrollController,
+                              physics: const ClampingScrollPhysics(),
+                              padding: EdgeInsets.zero,
+                              itemCount: _visualLineCounts.length,
+                              itemBuilder: (context, index) {
+                                final visualLines = _visualLineCounts[index];
+                                return SizedBox(
+                                  height: lineHeight * visualLines,
+                                  child: Align(
+                                    alignment: Alignment.topCenter,
+                                    child: SizedBox(
+                                      height: lineHeight,
+                                      child: Text(
+                                        '${index + 1}',
+                                        textAlign: TextAlign.center,
+                                        style: AppTextStyles.monoStyle(),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
 
-                  return TextField(
-                    controller: widget.controller,
-                    scrollController: _scrollController,
-                    readOnly: !widget.isEditable,
-                    maxLines: widget.maxLines,
-                    expands: widget.maxLines == null,
-                    inputFormatters: widget.inputFormatters,
-                    style: widget.isMonoSpace
-                        ? AppTextStyles.monoStyle()
-                        : AppTextStyles.b2,
-                    decoration: InputDecoration(
-                      fillColor:
-                          Theme.of(context).inputDecorationTheme.fillColor,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.all(16),
+                    // TEXT FIELD
+                    Expanded(
+                      child: LayoutBuilder(builder: (context, constraints) {
+                        final availableWidth = constraints.maxWidth > 32
+                            ? constraints.maxWidth - 32
+                            : constraints.maxWidth;
+
+                        if (availableWidth != _availableTextWidth) {
+                          _availableTextWidth = availableWidth;
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            _updateLineCount();
+                          });
+                        }
+
+                        _textFieldMaxHeight = constraints.maxHeight;
+
+                        return TextField(
+                          controller: widget.controller,
+                          scrollController: _scrollController,
+                          // FIX 1: Applied ClampingScrollPhysics to stop the main field from bouncing
+                          // and desyncing the line numbers
+                          scrollPhysics: const ClampingScrollPhysics(),
+                          readOnly: !widget.isEditable,
+                          maxLines: widget.maxLines,
+                          expands: widget.maxLines == null,
+                          inputFormatters: widget.inputFormatters,
+                          style: textStyle,
+                          decoration: InputDecoration(
+                            fillColor: Theme.of(context)
+                                .inputDecorationTheme
+                                .fillColor,
+                            floatingLabelBehavior: FloatingLabelBehavior.never,
+                            border: InputBorder.none,
+                            contentPadding: const EdgeInsets.all(16),
+                          ),
+                          onChanged: widget.onChanged,
+                        );
+                      }),
                     ),
-                    onChanged: widget.onChanged,
-                  );
-                }),
+                  ],
+                ),
               ),
             ],
           ),

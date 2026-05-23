@@ -85,6 +85,7 @@ class JsonFormatterPage
                     isMonoSpace: true,
                     isJsonFormatted: true,
                     isEditable: false,
+                    showLineNumbers: true,
                   ),
                 ),
               ],
