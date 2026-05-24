@@ -1,6 +1,9 @@
 import 'package:devtoys_flutter/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:re_editor/re_editor.dart';
+import 'package:re_highlight/languages/json.dart';
+import 'package:re_highlight/styles/googlecode.dart';
 
 import '../../generated/icon_keys.g.dart';
 import '../../generated/locale_keys.g.dart';
@@ -36,213 +39,84 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
-  bool _isSearchVisible = false;
-  final TextEditingController _searchController = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
-  final ScrollController _lineScrollController = ScrollController();
-
-  List<int> _matchIndices = [];
-  int _currentMatch = 0;
-  String _lastKnownText = '';
-
-  List<int> _visualLineCounts = [1];
-
-  double _availableTextWidth = 0;
-  double _textFieldMaxHeight = 0;
+  // re_editor controllers
+  late CodeLineEditingController _codeController;
+  late CodeScrollController _codeScrollController;
+  late CodeFindController _codeFindController;
+  late bool _isWordWrapEnabled = true;
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    _lastKnownText = widget.controller.text;
-    widget.controller.addListener(_onMainTextChanged);
-    _scrollController.addListener(_syncScroll);
+
+    // 1. Initialize re_editor's controller with the current text
+    _codeController =
+        CodeLineEditingController.fromText(widget.controller.text);
+
+    _codeFindController = CodeFindController(_codeController);
+
+    // 2. Initialize the scroll controller
+    _updateScrollController();
+
+    // 3. Two-way binding: Push re_editor changes to the standard controller
+    _codeController.addListener(() {
+      if (widget.controller.text != _codeController.text) {
+        widget.controller.text = _codeController.text;
+        if (widget.onChanged != null) {
+          widget.onChanged!(_codeController.text);
+        }
+      }
+    });
+
+    // 4. Two-way binding: Push standard controller changes to re_editor
+    widget.controller.addListener(() {
+      if (_codeController.text != widget.controller.text) {
+        _codeController.text = widget.controller.text;
+      }
+    });
   }
 
   @override
   void dispose() {
-    widget.controller.removeListener(_onMainTextChanged);
-    _scrollController.removeListener(_syncScroll);
-    _searchController.dispose();
-    _scrollController.dispose();
-    _lineScrollController.dispose();
+    _codeController.dispose();
+    _codeScrollController.dispose();
+    _codeFindController.dispose();
     super.dispose();
   }
 
-  void _syncScroll() {
-    if (_lineScrollController.hasClients && _scrollController.hasClients) {
-      _lineScrollController.jumpTo(_scrollController.offset);
-    }
+  void _updateScrollController() {
+    _codeScrollController = CodeScrollController(
+      verticalScroller: ScrollController(),
+      horizontalScroller: _isWordWrapEnabled ? null : ScrollController(),
+    );
   }
 
-  void _updateLineCount() {
-    if (!widget.showLineNumbers || _availableTextWidth <= 0) return;
-
-    final textStyle = widget.isMonoSpace ? AppTextStyles.monoStyle() : AppTextStyles.b2;
-    final lines = widget.controller.text.split('\n');
-
-    List<int> newVisualCounts = [];
-
-    for (String line in lines) {
-      if (line.isEmpty) {
-        newVisualCounts.add(1);
-        continue;
-      }
-
-      final tp = TextPainter(
-        text: TextSpan(text: line, style: textStyle),
-        textDirection: TextDirection.ltr,
-      );
-
-      tp.layout(maxWidth: _availableTextWidth);
-      final lineMetrics = tp.computeLineMetrics();
-
-      newVisualCounts.add(lineMetrics.isEmpty ? 1 : lineMetrics.length);
-    }
-
-    bool changed = false;
-    if (newVisualCounts.length != _visualLineCounts.length) {
-      changed = true;
-    } else {
-      for (int i = 0; i < newVisualCounts.length; i++) {
-        if (newVisualCounts[i] != _visualLineCounts[i]) {
-          changed = true;
-          break;
-        }
-      }
-    }
-
-    if (changed) {
-      setState(() {
-        _visualLineCounts = newVisualCounts;
-      });
-    }
-  }
-
-  void _onMainTextChanged() {
-    if (widget.controller.text != _lastKnownText) {
-      _lastKnownText = widget.controller.text;
-
-      _updateLineCount();
-
-      if (_isSearchVisible && _searchController.text.isNotEmpty) {
-        _calculateMatches(_searchController.text);
-      } else if (_isSearchVisible && _searchController.text.isEmpty) {
-        _calculateMatches('');
-      }
-    }
-  }
-
-  void _syncSearchStateToController() {
-    if (widget.controller is SyntaxHighlightingController) {
-      int activeIndex = _matchIndices.isEmpty ? -1 : _currentMatch - 1;
-      (widget.controller as SyntaxHighlightingController)
-          .updateSearch(_searchController.text, activeIndex);
-    }
-  }
-
-  void _calculateMatches(String query) {
-    if (query.isEmpty) {
-      setState(() {
-        _matchIndices = [];
-        _currentMatch = 0;
-      });
-      _syncSearchStateToController();
-      return;
-    }
-
-    final matches = RegExp(RegExp.escape(query), caseSensitive: false)
-        .allMatches(widget.controller.text);
-
+  void _toggleWordWrap() {
     setState(() {
-      _matchIndices = matches.map((m) => m.start).toList();
-      if (_matchIndices.isNotEmpty) {
-        _currentMatch = 1;
-        _scrollToCurrentMatch();
-      } else {
-        _currentMatch = 0;
-      }
+      _isWordWrapEnabled = !_isWordWrapEnabled;
+      _updateScrollController();
     });
-    _syncSearchStateToController();
-  }
-
-  void _onSearchChanged(String query) {
-    _calculateMatches(query);
-  }
-
-  void _scrollToCurrentMatch() {
-    if (_matchIndices.isEmpty || _currentMatch < 1) return;
-    int offset = _matchIndices[_currentMatch - 1];
-    int queryLength = _searchController.text.length;
-
-    widget.controller.selection =
-        TextSelection(baseOffset: offset, extentOffset: offset + queryLength);
-
-    if (_availableTextWidth > 0 && _scrollController.hasClients) {
-      final textStyle =
-      widget.isMonoSpace ? AppTextStyles.monoStyle() : AppTextStyles.b3;
-
-      final textUpToMatch = widget.controller.text.substring(0, offset);
-
-      final tp = TextPainter(
-        text: TextSpan(text: textUpToMatch, style: textStyle),
-        textDirection: TextDirection.ltr,
-      );
-
-      tp.layout(maxWidth: _availableTextWidth);
-
-      double targetScroll = tp.size.height - (_textFieldMaxHeight / 2) + 10;
-      if (targetScroll < 0) targetScroll = 0;
-
-      final maxScroll = _scrollController.position.maxScrollExtent;
-      if (targetScroll > maxScroll) targetScroll = maxScroll;
-
-      _scrollController.animateTo(
-        targetScroll,
-        duration: const Duration(milliseconds: 250),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
-
-  void _nextMatch() {
-    if (_matchIndices.isEmpty) return;
-    setState(() {
-      _currentMatch =
-      _currentMatch < _matchIndices.length ? _currentMatch + 1 : 1;
-    });
-    _scrollToCurrentMatch();
-    _syncSearchStateToController();
-  }
-
-  void _prevMatch() {
-    if (_matchIndices.isEmpty) return;
-    setState(() {
-      _currentMatch =
-      _currentMatch > 1 ? _currentMatch - 1 : _matchIndices.length;
-    });
-    _scrollToCurrentMatch();
-    _syncSearchStateToController();
   }
 
   void _toggleSearch() {
-    setState(() {
-      _isSearchVisible = !_isSearchVisible;
-      if (!_isSearchVisible) {
-        _searchController.clear();
-        _onSearchChanged('');
-      }
-    });
+    Actions.invoke(_focusNode.context!, const CodeShortcutFindIntent());
   }
 
   void _selectAll() {
-    widget.controller.selection = TextSelection(
+    final lines = _codeController.codeLines;
+    if (lines.isEmpty) return;
+
+    _codeController.selection = CodeLineSelection(
+      baseIndex: 0,
       baseOffset: 0,
-      extentOffset: widget.controller.text.length,
+      extentIndex: lines.length - 1,
+      extentOffset: lines.last.text.length,
     );
   }
 
   void _copy() {
-    Clipboard.setData(ClipboardData(text: widget.controller.text));
+    Clipboard.setData(ClipboardData(text: _codeController.text));
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
           content: Text('Copied to clipboard'), duration: Duration(seconds: 1)),
@@ -253,255 +127,135 @@ class _CustomTextFieldState extends State<CustomTextField> {
     if (!widget.isEditable) return;
     final data = await Clipboard.getData(Clipboard.kTextPlain);
     if (data != null && data.text != null) {
-      widget.controller.text = data.text!;
-      _lastKnownText = data.text!;
-      _updateLineCount();
-      if (widget.onChanged != null) {
-        widget.onChanged!(data.text!);
-      }
+      _codeController.text = data.text!;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final textStyle =
-    widget.isMonoSpace ? AppTextStyles.monoStyle() : AppTextStyles.b2;
+        widget.isMonoSpace ? AppTextStyles.monoStyle() : AppTextStyles.b2;
 
-    final tp = TextPainter(
-      text: TextSpan(text: '1', style: textStyle),
-      textDirection: TextDirection.ltr,
-    )..layout();
-    final double lineHeight = tp.height;
-
-    return Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Theme.of(context).dividerColor.withAlpha(10),
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Theme.of(context).dividerColor.withAlpha(10),
+        ),
+        borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
+        color: Colors.transparent,
+        boxShadow: AppColors.textfieldShadow(context),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // TOOLBAR
+          Container(
+            margin: const EdgeInsets.all(AppDimens.marginText),
+            padding:
+                const EdgeInsets.symmetric(horizontal: AppDimens.marginText),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
+              borderRadius: BorderRadius.circular(AppDimens.radiusSmall),
+              boxShadow: AppColors.cardShadow(context),
             ),
-            borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
-            color: Colors.transparent,
-            boxShadow: AppColors.textfieldShadow(context),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              reverse: true,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Tooltip(
+                    message: _isWordWrapEnabled
+                        ? 'Disable Word Wrap'
+                        : 'Enable Word Wrap',
+                    child: IconButton(
+                      icon: Icon(
+                        _isWordWrapEnabled ? Icons.wrap_text : Icons.subject,
+                        size: 20,
+                        color:
+                            Theme.of(context).iconTheme.color?.withOpacity(0.7),
+                      ),
+                      onPressed: _toggleWordWrap,
+                      splashRadius: 20,
+                      padding: EdgeInsets.zero,
+                      constraints:
+                          const BoxConstraints(minWidth: 40, minHeight: 40),
+                    ),
+                  ),
+                  ToolTipIconButton(
+                    icon: IconKeys.textfieldSelect,
+                    tooltip: LocaleKeys.input_tooltip_select_all.localize(),
+                    onTap: _selectAll,
+                  ),
+                  ToolTipIconButton(
+                    icon: IconKeys.textfieldCopy,
+                    tooltip: LocaleKeys.input_tooltip_copy.localize(),
+                    onTap: _copy,
+                  ),
+                  if (widget.isEditable)
+                    ToolTipIconButton(
+                      icon: IconKeys.textfieldPaste,
+                      tooltip: LocaleKeys.input_tooltip_paste.localize(),
+                      onTap: _paste,
+                    ),
+                  if (widget.isSearchable)
+                    ToolTipIconButton(
+                      icon: IconKeys.textfieldSearch,
+                      tooltip: LocaleKeys.input_tooltip_search.localize(),
+                      onTap: _toggleSearch,
+                    ),
+                ],
+              ),
+            ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // TOOLBAR
-              Container(
-                margin: const EdgeInsets.all(AppDimens.marginText),
-                padding: const EdgeInsets.symmetric(
-                    horizontal: AppDimens.marginText),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
-                  borderRadius: BorderRadius.circular(AppDimens.radiusSmall),
-                  boxShadow: AppColors.cardShadow(context),
-                ),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  reverse: true,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ToolTipIconButton(
-                        icon: IconKeys.textfieldSelect,
-                        tooltip: LocaleKeys.input_tooltip_select_all.localize(),
-                        onTap: _selectAll,
+
+          // NATIVE RE_EDITOR INTEGRATION
+          Expanded(
+            child: Stack(
+              children: [
+                Container(
+                  color: Theme.of(context).inputDecorationTheme.fillColor,
+                  child: CodeEditor(
+                    focusNode: _focusNode,
+                    controller: _codeController,
+                    scrollController: _codeScrollController,
+                    findController: _codeFindController,
+                    readOnly: !widget.isEditable,
+                    style: CodeEditorStyle(
+                      fontFamily: textStyle.fontFamily,
+                      codeTheme: CodeHighlightTheme(
+                        languages: {
+                          'json': CodeHighlightThemeMode(mode: langJson)
+                        },
+                        theme: googlecodeTheme,
                       ),
-                      ToolTipIconButton(
-                        icon: IconKeys.textfieldCopy,
-                        tooltip: LocaleKeys.input_tooltip_copy.localize(),
-                        onTap: _copy,
-                      ),
-                      if (widget.isEditable)
-                        ToolTipIconButton(
-                          icon: IconKeys.textfieldPaste,
-                          tooltip: LocaleKeys.input_tooltip_paste.localize(),
-                          onTap: _paste,
-                        ),
-                      if (widget.isSearchable)
-                        ToolTipIconButton(
-                          icon: IconKeys.textfieldSearch,
-                          tooltip: LocaleKeys.input_tooltip_search.localize(),
-                          onTap: _toggleSearch,
-                        ),
-                    ],
+                    ),
+                    indicatorBuilder: widget.showLineNumbers
+                        ? (context, editingController, chunkController,
+                            notifier) {
+                            return Row(
+                              children: [
+                                DefaultCodeLineNumber(
+                                  controller: editingController,
+                                  notifier: notifier,
+                                ),
+                              ],
+                            );
+                          }
+                        : null,
+                    findBuilder: widget.isSearchable
+                        ? (context, controller, readOnly) {
+                            return CodeFindPanelView(
+                                controller: controller, readOnly: readOnly);
+                          }
+                        : null,
                   ),
                 ),
-              ),
-
-              // TEXT FIELD & GUTTER
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // LINE NUMBERS GUTTER
-                    if (widget.showLineNumbers)
-                      IgnorePointer(
-                        ignoring: true,
-                        child: Container(
-                          width: 42,
-                          padding: const EdgeInsets.symmetric(vertical: AppDimens.paddingSmaller),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .surface
-                                .withAlpha(50),
-                            border: Border(
-                              right: BorderSide(
-                                color: Theme.of(context).dividerColor.withAlpha(50),
-                              ),
-                            ),
-                          ),
-                          // FIX 2: Added ScrollConfiguration to hide scrollbars
-                          child: ScrollConfiguration(
-                            behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-                            child: ListView.builder(
-                              controller: _lineScrollController,
-                              physics: const ClampingScrollPhysics(),
-                              padding: EdgeInsets.zero,
-                              itemCount: _visualLineCounts.length,
-                              itemBuilder: (context, index) {
-                                final visualLines = _visualLineCounts[index];
-                                return SizedBox(
-                                  height: lineHeight * visualLines,
-                                  child: Align(
-                                    alignment: Alignment.topCenter,
-                                    child: SizedBox(
-                                      height: lineHeight,
-                                      child: Text(
-                                        '${index + 1}',
-                                        textAlign: TextAlign.center,
-                                        style: AppTextStyles.monoStyle(),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-
-                    // TEXT FIELD
-                    Expanded(
-                      child: LayoutBuilder(builder: (context, constraints) {
-                        final availableWidth = constraints.maxWidth > 32
-                            ? constraints.maxWidth - 32
-                            : constraints.maxWidth;
-
-                        if (availableWidth != _availableTextWidth) {
-                          _availableTextWidth = availableWidth;
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            _updateLineCount();
-                          });
-                        }
-
-                        _textFieldMaxHeight = constraints.maxHeight;
-
-                        return TextField(
-                          controller: widget.controller,
-                          scrollController: _scrollController,
-                          // FIX 1: Applied ClampingScrollPhysics to stop the main field from bouncing
-                          // and desyncing the line numbers
-                          scrollPhysics: const ClampingScrollPhysics(),
-                          readOnly: !widget.isEditable,
-                          maxLines: widget.maxLines,
-                          expands: widget.maxLines == null,
-                          inputFormatters: widget.inputFormatters,
-                          style: textStyle,
-                          decoration: InputDecoration(
-                            fillColor: Theme.of(context)
-                                .inputDecorationTheme
-                                .fillColor,
-                            floatingLabelBehavior: FloatingLabelBehavior.never,
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.all(16),
-                          ),
-                          onChanged: widget.onChanged,
-                        );
-                      }),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        // OVERFLOW FLOATING SEARCH WIDGET
-        if (_isSearchVisible)
-          Positioned(
-            top: 48,
-            right: 16,
-            child: Material(
-              elevation: 4,
-              borderRadius: BorderRadius.circular(8),
-              color: Theme.of(context).colorScheme.surface,
-              child: Container(
-                height: 40,
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Theme.of(context).dividerColor),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.search, size: 18),
-                    const SizedBox(width: 8),
-                    SizedBox(
-                      width: 150,
-                      child: TextField(
-                        controller: _searchController,
-                        autofocus: true,
-                        decoration: const InputDecoration(
-                          hintText: 'Search...',
-                          border: InputBorder.none,
-                          isDense: true,
-                          contentPadding: EdgeInsets.symmetric(vertical: 8),
-                        ),
-                        onChanged: _onSearchChanged,
-                        onSubmitted: (_) => _nextMatch(),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      '${_matchIndices.isEmpty ? 0 : _currentMatch}/${_matchIndices.length}',
-                      style: const TextStyle(fontSize: 12),
-                    ),
-                    const SizedBox(width: 8),
-                    IconButton(
-                      icon: const Icon(Icons.arrow_upward, size: 18),
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                      onPressed: _prevMatch,
-                    ),
-                    const SizedBox(width: 8),
-                    IconButton(
-                      icon: const Icon(Icons.arrow_downward, size: 18),
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                      onPressed: _nextMatch,
-                    ),
-                    const SizedBox(width: 8),
-                    Container(
-                        width: 1,
-                        height: 20,
-                        color: Theme.of(context).dividerColor),
-                    const SizedBox(width: 8),
-                    IconButton(
-                      icon: const Icon(Icons.close, size: 18),
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                      onPressed: _toggleSearch,
-                    ),
-                  ],
-                ),
-              ),
+              ],
             ),
           ),
-      ],
+        ],
+      ),
     );
   }
 }
