@@ -76,6 +76,7 @@ class AppController extends BaseController<AppState> {
         Nav.formatterJson,
         Nav.formatterXml,
         Nav.formatterSql,
+        Nav.minifier,
       ],
       LocaleKeys.lbl_menu_generator.localize(): [
         Nav.generatorHash,

@@ -19,6 +19,7 @@ enum Nav {
   formatterJson,
   formatterXml,
   formatterSql,
+  minifier,
   generatorHash,
   generatorLoremIpsum,
   generatorUuid,
@@ -72,6 +73,8 @@ extension NavigationExtension on Nav {
         return SqlFormatterPage(viewTag: viewTag);
       case Nav.formatterXml:
         return XmlFormatterPage(viewTag: viewTag);
+      case Nav.minifier:
+        return MinifierPage(viewTag: viewTag);
       case Nav.generatorHash:
         return HashGeneratorPage(viewTag: viewTag);
       case Nav.generatorLoremIpsum:
@@ -107,6 +110,7 @@ extension NavigationExtension on Nav {
       Nav.formatterJson: IconKeys.jsonFormat,
       Nav.formatterXml: IconKeys.xml,
       Nav.formatterSql: IconKeys.sql,
+      Nav.minifier: IconKeys.sql,
       Nav.generatorHash: IconKeys.hash,
       Nav.generatorLoremIpsum: IconKeys.loremIpsum,
       Nav.generatorUuid: IconKeys.uuid,
@@ -127,6 +131,7 @@ extension NavigationExtension on Nav {
       Nav.formatterJson: LocaleKeys.nav_json.localize(),
       Nav.formatterXml: LocaleKeys.nav_xml.localize(),
       Nav.formatterSql: LocaleKeys.nav_sql.localize(),
+      Nav.minifier: 'Minifier',
       Nav.generatorHash: LocaleKeys.nav_hash.localize(),
       Nav.generatorLoremIpsum: LocaleKeys.nav_lorem_ipsum.localize(),
       Nav.generatorUuid: LocaleKeys.nav_uuid.localize(),
@@ -215,6 +220,7 @@ extension NavigationExtension on Nav {
             'formateador',
             'formateur'
           ],
+          Nav.minifier: ['minifier'],
           Nav.generatorHash: [
             'hash',
             '哈希',

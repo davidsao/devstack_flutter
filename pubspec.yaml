@@ -84,3 +84,4 @@ flutter:
     - assets/strings/
     - assets/icons/
     - assets/js/sql-formatter.min.js
+    - assets/js/terser.min.js
