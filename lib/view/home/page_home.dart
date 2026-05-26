@@ -35,9 +35,11 @@ class HomePage extends BaseView<HomeController, HomeState> {
               // On mobile, the menu floats OVER the content, so we remove the margin push
               margin: EdgeInsets.only(
                 left: app.state.isMenuExpanded.value && !isMobile ? 224.0 : 0.0,
-                top: app.state.isMenuExpanded.value && !isMobile
-                    ? MediaQuery.paddingOf(context).top
-                    : kToolbarHeight + MediaQuery.paddingOf(context).top,
+                top: app.state.isMenuExpanded.value && app.state.isIpad.value
+                    ? MediaQuery.paddingOf(context).top + 44.0
+                    : (app.state.isMenuExpanded.value && !isMobile
+                        ? MediaQuery.paddingOf(context).top
+                        : kToolbarHeight + MediaQuery.paddingOf(context).top),
               ),
               child: nav.getWidget(null),
             );
@@ -65,8 +67,7 @@ class HomePage extends BaseView<HomeController, HomeState> {
               duration: 500.milliseconds, // Snappier duration for mobile
               curve: Curves.easeOutQuint,
               left: app.state.isMenuExpanded.value ? 0.0 : -224.0,
-              width:
-                  224.0, // <-- CRITICAL FIX: Explicit width guarantees it renders off-screen
+              width: 224.0,
               top: AppDimens.marginSmaller +
                   kToolbarHeight +
                   MediaQuery.paddingOf(context).top,
@@ -79,8 +80,10 @@ class HomePage extends BaseView<HomeController, HomeState> {
           // 4. Toggle Button
           Obx(() {
             return Positioned(
-              top: AppDimens.marginSmaller + MediaQuery.paddingOf(context).top,
-              left: AppDimens.marginSmaller,
+              top: MediaQuery.paddingOf(context).top +
+                  (app.state.isIpad.value ? 0.0 : AppDimens.marginSmaller),
+              left:
+                  AppDimens.marginSmaller + (app.state.isIpad.value ? 64 : 0.0),
               right: AppDimens.marginSmaller,
               child: Stack(
                 children: [

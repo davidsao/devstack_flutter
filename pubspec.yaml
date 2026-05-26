@@ -58,6 +58,8 @@ dependencies:
   custom_sliding_segmented_control: ^1.8.5
   re_editor: ^0.8.0
   re_highlight: ^0.0.3
+  device_info_plus: ^11.3.0
+  flutter_js: ^0.8.7
 
 dev_dependencies:
   flutter_test:
@@ -81,3 +83,4 @@ flutter:
     - assets/
     - assets/strings/
     - assets/icons/
+    - assets/js/sql-formatter.min.js

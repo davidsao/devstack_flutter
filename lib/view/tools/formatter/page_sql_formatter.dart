@@ -32,6 +32,7 @@ class SqlFormatterPage
                     controller: controller.inputController,
                     maxLines: null,
                     isMonoSpace: true,
+                    isSqlFormatted: true,
                     onChanged: (_) => controller.format(),
                   ),
                 ),
@@ -48,6 +49,7 @@ class SqlFormatterPage
                     maxLines: null,
                     isMonoSpace: true,
                     isEditable: false,
+                    isSqlFormatted: true,
                     // No syntax highlighting needed for basic SQL right now
                     isJsonFormatted: false,
                     isXMLFormatted: false,

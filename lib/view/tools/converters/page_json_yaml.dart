@@ -48,6 +48,7 @@ class JsonYamlPage extends BaseView<JsonYamlController, JsonYamlState> {
                     isMonoSpace: true,
                     isJsonFormatted: false,
                     isXMLFormatted: false,
+                    isYamlFormatted: true,
                     isEditable: true,
                     onChanged: controller.onYamlChanged,
                   ),

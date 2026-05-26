@@ -20,7 +20,7 @@ class AppTextStyles {
 
   // Use JetBrains Mono for code/editors
   static TextStyle monoStyle({
-    double fontSize = 13,
+    double fontSize = 12,
     FontWeight fontWeight = FontWeight.w600,
     Color color = AppColors.textPrimary,
   }) {
