@@ -23,8 +23,8 @@ enum Nav {
   generatorHash,
   generatorLoremIpsum,
   generatorUuid,
-  generatorChecksum,
   generatorQr,
+  textRegex,
 }
 
 class Navigation {
@@ -81,10 +81,10 @@ extension NavigationExtension on Nav {
         return LoremIpsumGeneratorPage(viewTag: viewTag);
       case Nav.generatorUuid:
         return UuidGeneratorPage(viewTag: viewTag);
-      case Nav.generatorChecksum:
-        return ChecksumPage(viewTag: viewTag);
       case Nav.generatorQr:
         return QrGeneratorPage(viewTag: viewTag);
+      case Nav.textRegex:
+        return RegexTesterPage(viewTag: viewTag);
       default:
         return const Center(child: Text('ComingSoonPage'));
     }
@@ -114,8 +114,8 @@ extension NavigationExtension on Nav {
       Nav.generatorHash: IconKeys.hash,
       Nav.generatorLoremIpsum: IconKeys.loremIpsum,
       Nav.generatorUuid: IconKeys.uuid,
-      Nav.generatorChecksum: IconKeys.checksum,
       Nav.generatorQr: IconKeys.qr,
+      Nav.textRegex: IconKeys.regex,
     }[this];
   }
 
@@ -135,8 +135,8 @@ extension NavigationExtension on Nav {
       Nav.generatorHash: LocaleKeys.nav_hash.localize(),
       Nav.generatorLoremIpsum: LocaleKeys.nav_lorem_ipsum.localize(),
       Nav.generatorUuid: LocaleKeys.nav_uuid.localize(),
-      Nav.generatorChecksum: LocaleKeys.nav_checksum.localize(),
       Nav.generatorQr: LocaleKeys.nav_qr_generator.localize(),
+      Nav.textRegex: LocaleKeys.nav_regex.localize(),
     }[this];
   }
 
@@ -261,19 +261,6 @@ extension NavigationExtension on Nav {
             'generador',
             'générateur'
           ],
-          Nav.generatorChecksum: [
-            'checksum',
-            '校验和',
-            'チェックサム',
-            '체크섬',
-            'generator',
-            '產生器',
-            '生成器',
-            'ジェネレーター',
-            '생성기',
-            'generador',
-            'générateur'
-          ],
           Nav.generatorQr: [
             'qr',
             'qrcode',
@@ -284,6 +271,14 @@ extension NavigationExtension on Nav {
             '생성기',
             'generador',
             'générateur'
+          ],
+          Nav.textRegex: [
+            'regex',
+            '正则表达式',
+            '正規表現',
+            '정규식',
+            'Expresión regular',
+            'Expression régulière',
           ],
         }[this] ??
         [];

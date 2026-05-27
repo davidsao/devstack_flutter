@@ -6,6 +6,7 @@ class IconKeys {
 	static String base64 = "$_path/icon_base64.svg";
 	static String calendar = "$_path/icon_calendar.svg";
 	static String checksum = "$_path/icon_checksum.svg";
+	static String close = "$_path/icon_close.svg";
 	static String date = "$_path/icon_date.svg";
 	static String dropDown = "$_path/icon_drop_down.svg";
 	static String hash = "$_path/icon_hash.svg";
@@ -18,6 +19,7 @@ class IconKeys {
 	static String minify = "$_path/icon_minify.svg";
 	static String numberBase = "$_path/icon_number_base.svg";
 	static String qr = "$_path/icon_qr.svg";
+	static String regex = "$_path/icon_regex.svg";
 	static String settings = "$_path/icon_settings.svg";
 	static String sql = "$_path/icon_sql.svg";
 	static String textfieldCopy = "$_path/icon_textfield_copy.svg";

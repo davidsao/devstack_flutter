@@ -12,10 +12,10 @@ class QrGeneratorPage
   @override
   Widget view(BuildContext context) {
     final Map<String, String> choices = {
-      'Low': 'Low',
-      'Medium': 'Medium',
-      'Quartile': 'Quartile',
-      'High': 'High',
+      'Low': LocaleKeys.lbl_qr_low.localize(),
+      'Medium': LocaleKeys.lbl_qr_medium.localize(),
+      'Quartile': LocaleKeys.lbl_qr_quartile.localize(),
+      'High': LocaleKeys.lbl_qr_high.localize(),
     };
 
     return Padding(
@@ -42,7 +42,7 @@ class QrGeneratorPage
             ),
             child: Obx(() {
               return DropDownWidget(
-                title: 'Correction Level',
+                title: LocaleKeys.lbl_qr_correction_level.localize(),
                 choices: choices,
                 selectedValue: controller.currentCorrectionLevel,
                 onSelected: controller.updateCorrectionLevel,
@@ -52,7 +52,7 @@ class QrGeneratorPage
           kGapMedium,
 
           // --- INPUT ---
-          _buildSectionTitle('Input'),
+          _buildSectionTitle(LocaleKeys.lbl_qr_input.localize()),
           Expanded(
             flex: 2,
             child: CustomTextField(
@@ -67,12 +67,12 @@ class QrGeneratorPage
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildSectionTitle('QR Code'),
+              _buildSectionTitle(LocaleKeys.lbl_qr_qr_code.localize()),
               AppButton(controller.exportQrCode,
                   style: AppButtonStyle.primary(size: AppButtonStyleSize.small),
                   child: Row(
                     children: [
-                      Text('Export'),
+                      Text(LocaleKeys.btn_export.localize()),
                     ],
                   )),
             ],
@@ -88,7 +88,7 @@ class QrGeneratorPage
               child: Center(
                 child: Obx(() {
                   if (state.qrData.value.isEmpty) {
-                    return const Text('Enter text to generate QR code',
+                    return Text(LocaleKeys.input_qr_input.localize(),
                         style: TextStyle(color: Colors.grey));
                   }
 

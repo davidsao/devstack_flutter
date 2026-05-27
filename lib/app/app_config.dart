@@ -84,8 +84,8 @@ class AppConfig extends StatefulWidget {
     Get.lazyPut(() => HashGeneratorController(), fenix: true);
     Get.lazyPut(() => UuidGeneratorController(), fenix: true);
     Get.lazyPut(() => LoremIpsumGeneratorController(), fenix: true);
-    Get.lazyPut(() => ChecksumController(), fenix: true);
     Get.lazyPut(() => QrGeneratorController(), fenix: true);
+    Get.lazyPut(() => RegexTesterController(), fenix: true);
   }
 }
 

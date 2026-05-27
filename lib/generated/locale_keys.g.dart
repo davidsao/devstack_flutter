@@ -25,6 +25,9 @@ abstract class  LocaleKeys {
   static const nav_lorem_ipsum = 'nav_lorem_ipsum';
   static const nav_checksum = 'nav_checksum';
   static const nav_qr_generator = 'nav_qr_generator';
+  static const lbl_menu_other_tool = 'lbl_menu_other_tool';
+  static const nav_regex = 'nav_regex';
+  static const nav_color_picker = 'nav_color_picker';
   static const btn_add_to_favorite = 'btn_add_to_favorite';
   static const btn_remove_from_favorite = 'btn_remove_from_favorite';
   static const lbl_all_tools = 'lbl_all_tools';
@@ -94,5 +97,27 @@ abstract class  LocaleKeys {
   static const lbl_uuid_hyphens = 'lbl_uuid_hyphens';
   static const lbl_uuid_uppercase = 'lbl_uuid_uppercase';
   static const btn_regenerate = 'btn_regenerate';
+  static const lbl_regex_option = 'lbl_regex_option';
+  static const lbl_regex_title = 'lbl_regex_title';
+  static const lbl_regex_text = 'lbl_regex_text';
+  static const lbl_regex_invalid = 'lbl_regex_invalid';
+  static const lbl_regex_option_custom = 'lbl_regex_option_custom';
+  static const lbl_regex_option_email = 'lbl_regex_option_email';
+  static const lbl_regex_option_alphanumeric = 'lbl_regex_option_alphanumeric';
+  static const lbl_regex_option_duplicates = 'lbl_regex_option_duplicates';
+  static const lbl_regex_option_us_postal = 'lbl_regex_option_us_postal';
+  static const lbl_regex_option_date = 'lbl_regex_option_date';
+  static const lbl_regex_option_time_12_hm = 'lbl_regex_option_time_12_hm';
+  static const lbl_regex_option_time_24_hm = 'lbl_regex_option_time_24_hm';
+  static const lbl_regex_option_time_24_hms = 'lbl_regex_option_time_24_hms';
+  static const lbl_qr_correction_level = 'lbl_qr_correction_level';
+  static const lbl_qr_input = 'lbl_qr_input';
+  static const lbl_qr_qr_code = 'lbl_qr_qr_code';
+  static const btn_export = 'btn_export';
+  static const lbl_qr_low = 'lbl_qr_low';
+  static const lbl_qr_medium = 'lbl_qr_medium';
+  static const lbl_qr_quartile = 'lbl_qr_quartile';
+  static const lbl_qr_high = 'lbl_qr_high';
+  static const input_qr_input = 'input_qr_input';
 
 }
