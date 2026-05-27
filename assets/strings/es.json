@@ -119,5 +119,8 @@
   "lbl_color_hex": "Color Hex",
   "lbl_color_copy": "Copiar color",
   "lbl_color_code": "Copiar código",
-  "lbl_color_components": "Componentes"
+  "lbl_color_components": "Componentes",
+  "lbl_settings_copyright": "Inspirado en el proyecto original DevToys de veler.",
+  "lbl_settings_licence": "Licencias de código abierto",
+  "lbl_settings_all_rights_reserved": "Todos los derechos reservados."
 }

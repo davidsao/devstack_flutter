@@ -1,4 +1,4 @@
-import 'package:devtoys_flutter/index.dart';
+import 'package:devstack/index.dart';
 import 'package:get/get.dart';
 
 abstract class AppBindings<T extends BaseController> extends Bindings {

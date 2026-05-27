@@ -119,5 +119,8 @@
   "lbl_color_hex": "16진수 색상",
   "lbl_color_copy": "색상 복사",
   "lbl_color_code": "코드 복사",
-  "lbl_color_components": "구성 요소"
+  "lbl_color_components": "구성 요소",
+  "lbl_settings_copyright": "veler의 오리지널 DevToys 프로젝트에서 영감을 받았습니다.",
+  "lbl_settings_licence": "오픈 소스 라이선스",
+  "lbl_settings_all_rights_reserved": "모든 권리 보유."
 }

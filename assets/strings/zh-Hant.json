@@ -119,5 +119,8 @@
   "lbl_color_hex": "十六進位顏色",
   "lbl_color_copy": "複製顏色",
   "lbl_color_code": "複製代碼",
-  "lbl_color_components": "組件"
+  "lbl_color_components": "組件",
+  "lbl_settings_copyright": "靈感來自 veler 的原創 DevToys 專案。",
+  "lbl_settings_licence": "開源授權條款",
+  "lbl_settings_all_rights_reserved": "保留所有權利。"
 }

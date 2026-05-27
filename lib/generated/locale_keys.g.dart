@@ -124,5 +124,8 @@ abstract class  LocaleKeys {
   static const lbl_color_copy = 'lbl_color_copy';
   static const lbl_color_code = 'lbl_color_code';
   static const lbl_color_components = 'lbl_color_components';
+  static const lbl_settings_copyright = 'lbl_settings_copyright';
+  static const lbl_settings_licence = 'lbl_settings_licence';
+  static const lbl_settings_all_rights_reserved = 'lbl_settings_all_rights_reserved';
 
 }

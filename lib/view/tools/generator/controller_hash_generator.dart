@@ -4,7 +4,7 @@ import 'package:crclib/catalog.dart';
 import 'package:cross_file/cross_file.dart';
 import 'package:crypto/crypto.dart' as crypto;
 import 'package:desktop_drop/desktop_drop.dart';
-import 'package:devtoys_flutter/index.dart';
+import 'package:devstack/index.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

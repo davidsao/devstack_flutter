@@ -1,4 +1,4 @@
-import 'package:devtoys_flutter/index.dart';
+import 'package:devstack/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -55,8 +55,13 @@ class ColorPickerPage
           ),
 
           // 2. HEX COLOR DISPLAYS
-          Text(LocaleKeys.lbl_color_hex.localize(),
-              style: AppTextStyles.b2.bold),
+          Row(
+            children: [
+              Text(LocaleKeys.lbl_color_hex.localize(),
+                  style: AppTextStyles.b2.bold),
+              const Spacer(),
+            ],
+          ),
           kGapTiny,
           Obx(() {
             return Row(
@@ -72,8 +77,13 @@ class ColorPickerPage
           kGapMedium,
 
           // 3. COLOR COPY FORMATTER
-          Text(LocaleKeys.lbl_color_copy.localize(),
-              style: AppTextStyles.b2.bold),
+          Row(
+            children: [
+              Text(LocaleKeys.lbl_color_copy.localize(),
+                  style: AppTextStyles.b2.bold),
+              const Spacer(),
+            ],
+          ),
           kGapTiny,
           Container(
             decoration: BoxDecoration(

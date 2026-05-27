@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:devtoys_flutter/index.dart';
+import 'package:devstack/index.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 

@@ -5,10 +5,10 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:devtoys_flutter/app/app_flavor_values.dart';
-import 'package:devtoys_flutter/app/app_main.dart';
-import 'package:devtoys_flutter/model/enums/flavors.dart';
-import 'package:devtoys_flutter/model/enums/language.dart';
+import 'package:devstack/app/app_flavor_values.dart';
+import 'package:devstack/app/app_main.dart';
+import 'package:devstack/model/enums/flavors.dart';
+import 'package:devstack/model/enums/language.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -135,7 +135,10 @@ class CodegenLoader extends AssetLoader{
   "lbl_color_hex": "16進数カラー",
   "lbl_color_copy": "カラーコピー",
   "lbl_color_code": "コードをコピー",
-  "lbl_color_components": "コンポーネント"
+  "lbl_color_components": "コンポーネント",
+  "lbl_settings_copyright": "velerによるオリジナルのDevToysプロジェクトにインスパイアされています。",
+  "lbl_settings_licence": "オープンソースライセンス",
+  "lbl_settings_all_rights_reserved": "すべての権利を有します。 (or keep as English)"
 };
 static const Map<String,dynamic> _en = {
   "lbl_app_name": "DevStack",
@@ -258,7 +261,10 @@ static const Map<String,dynamic> _en = {
   "lbl_color_hex": "Color Hex",
   "lbl_color_copy": "Color Copy",
   "lbl_color_code": "Copy Code",
-  "lbl_color_components": "Components"
+  "lbl_color_components": "Components",
+  "lbl_settings_copyright": "Inspired by the original DevToys project by veler.",
+  "lbl_settings_licence": "Open Source Licenses",
+  "lbl_settings_all_rights_reserved": "All rights reserved."
 };
 static const Map<String,dynamic> _zh_Hans = {
   "lbl_app_name": "开发栈",
@@ -381,7 +387,10 @@ static const Map<String,dynamic> _zh_Hans = {
   "lbl_color_hex": "十六进制颜色",
   "lbl_color_copy": "复制颜色",
   "lbl_color_code": "复制代码",
-  "lbl_color_components": "组件"
+  "lbl_color_components": "组件",
+  "lbl_settings_copyright": "灵感来自 veler 的原创 DevToys 项目。",
+  "lbl_settings_licence": "开源许可证",
+  "lbl_settings_all_rights_reserved": "保留所有权利。"
 };
 static const Map<String,dynamic> _fr = {
   "lbl_app_name": "Stack Dév",
@@ -504,7 +513,10 @@ static const Map<String,dynamic> _fr = {
   "lbl_color_hex": "Couleur Hex",
   "lbl_color_copy": "Copier la couleur",
   "lbl_color_code": "Copier le code",
-  "lbl_color_components": "Composants"
+  "lbl_color_components": "Composants",
+  "lbl_settings_copyright": "Inspiré par le projet original DevToys de veler.",
+  "lbl_settings_licence": "Licences open source",
+  "lbl_settings_all_rights_reserved": "Tous droits réservés."
 };
 static const Map<String,dynamic> _ko = {
   "lbl_app_name": "DevStack",
@@ -627,7 +639,10 @@ static const Map<String,dynamic> _ko = {
   "lbl_color_hex": "16진수 색상",
   "lbl_color_copy": "색상 복사",
   "lbl_color_code": "코드 복사",
-  "lbl_color_components": "구성 요소"
+  "lbl_color_components": "구성 요소",
+  "lbl_settings_copyright": "veler의 오리지널 DevToys 프로젝트에서 영감을 받았습니다.",
+  "lbl_settings_licence": "오픈 소스 라이선스",
+  "lbl_settings_all_rights_reserved": "모든 권리 보유."
 };
 static const Map<String,dynamic> _es = {
   "lbl_app_name": "Pila Dev",
@@ -750,7 +765,10 @@ static const Map<String,dynamic> _es = {
   "lbl_color_hex": "Color Hex",
   "lbl_color_copy": "Copiar color",
   "lbl_color_code": "Copiar código",
-  "lbl_color_components": "Componentes"
+  "lbl_color_components": "Componentes",
+  "lbl_settings_copyright": "Inspirado en el proyecto original DevToys de veler.",
+  "lbl_settings_licence": "Licencias de código abierto",
+  "lbl_settings_all_rights_reserved": "Todos los derechos reservados."
 };
 static const Map<String,dynamic> _zh_Hant = {
   "lbl_app_name": "DevStack",
@@ -873,7 +891,10 @@ static const Map<String,dynamic> _zh_Hant = {
   "lbl_color_hex": "十六進位顏色",
   "lbl_color_copy": "複製顏色",
   "lbl_color_code": "複製代碼",
-  "lbl_color_components": "組件"
+  "lbl_color_components": "組件",
+  "lbl_settings_copyright": "靈感來自 veler 的原創 DevToys 專案。",
+  "lbl_settings_licence": "開源授權條款",
+  "lbl_settings_all_rights_reserved": "保留所有權利。"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ja": _ja, "en": _en, "zh_Hans": _zh_Hans, "fr": _fr, "ko": _ko, "es": _es, "zh_Hant": _zh_Hant};
 }

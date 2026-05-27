@@ -1,4 +1,4 @@
-name: devtoys_flutter
+name: devstack
 description: "A fork of DevToys written in Flutter"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -61,6 +61,7 @@ dependencies:
   device_info_plus: ^11.3.0
   flutter_js: ^0.8.7
   flutter_colorpicker: ^1.1.0
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:

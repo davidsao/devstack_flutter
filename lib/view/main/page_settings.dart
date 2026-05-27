@@ -1,7 +1,9 @@
-import 'package:devtoys_flutter/index.dart';
+import 'package:devstack/generated/icon_keys.g.dart';
+import 'package:devstack/index.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../generated/locale_keys.g.dart';
 
@@ -35,6 +37,22 @@ class SettingsPage extends BaseView<SettingsController, SettingsState> {
             title: Text(
               LocaleKeys.lbl_settings_title.localize(),
               style: AppTextStyles.b1.bold,
+            ),
+            backgroundColor: Colors.transparent,
+            scrolledUnderElevation: 0.0,
+            automaticallyImplyLeading: false,
+            leading: InkWell(
+              onTap: () => app.back(),
+              child: Container(
+                height: 32,
+                width: 32,
+                margin: const EdgeInsets.all(AppDimens.marginSmaller),
+                child: AppImage(
+                  IconKeys.back,
+                  // fit: BoxFit.scaleDown,
+                  color: AppColors.grey,
+                ),
+              ),
             ),
           ),
           body: SingleChildScrollView(
@@ -123,8 +141,62 @@ class SettingsPage extends BaseView<SettingsController, SettingsState> {
                               ),
                             )),
                         const Divider(height: 32),
+
+                        // --- NEW: DEVTOYS CREDIT ---
                         Text(
-                          '© 2026 DevStack Flutter. All rights reserved.',
+                          LocaleKeys.lbl_settings_copyright.localize(),
+                          style: AppTextStyles.b2
+                              .copyWith(fontWeight: FontWeight.w600),
+                        ),
+                        kGapTiny,
+                        InkWell(
+                          onTap: () {
+                            launchUrl(
+                              Uri.parse('https://github.com/veler/DevToys'),
+                              mode: LaunchMode.externalApplication,
+                            );
+                          },
+                          child: Text(
+                            'https://github.com/veler/DevToys',
+                            style: AppTextStyles.b3.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                        kGapMedium,
+
+                        // --- NEW: OPEN SOURCE LICENSES BUTTON ---
+                        SizedBox(
+                          width: double.infinity,
+                          child: OutlinedButton.icon(
+                            onPressed: () {
+                              showLicensePage(
+                                context: context,
+                                applicationName:
+                                    LocaleKeys.lbl_app_name.localize(),
+                                applicationVersion: state.appVersion.value,
+                                applicationLegalese: '© 2026 DevStack Flutter. '
+                                    '${LocaleKeys.lbl_settings_all_rights_reserved.localize()}',
+                              );
+                            },
+                            icon: const Icon(Icons.description_outlined,
+                                size: 18),
+                            label: Text(
+                                LocaleKeys.lbl_settings_licence.localize()),
+                            style: OutlinedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
+                        ),
+                        kGapLarge,
+
+                        Text(
+                          '© 2026 DevStack Flutter. '
+                          '${LocaleKeys.lbl_settings_all_rights_reserved.localize()}',
                           style: AppTextStyles.b3.copyWith(
                             color: Theme.of(context)
                                 .textTheme

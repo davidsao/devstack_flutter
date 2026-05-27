@@ -1,4 +1,4 @@
-import 'package:devtoys_flutter/index.dart';
+import 'package:devstack/index.dart';
 
 abstract class ILocaleManager {
   List<Language> get supportedLanguages;
