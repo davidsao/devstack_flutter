@@ -80,6 +80,35 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
     List<Widget> menuItems = [];
     final query = state.searchQuery.value;
 
+    // --- 1. INJECT HOME / ALL TOOLS SHORTCUT ---
+    // Check if "All Tools" matches the active search query
+    final bool homeMatches = query.isEmpty ||
+        (Nav.allTools.getName?.toLowerCase().contains(query) ?? false) ||
+        Nav.allTools.searchTerms
+            .any((term) => term.toLowerCase().contains(query));
+
+    if (homeMatches) {
+      final bool isActive = app.state.currentTools.value == Nav.allTools;
+      menuItems.add(
+        InkWell(
+          onTap: () async {
+            app.state.currentTools.value = Nav.allTools;
+            if (isMobile) {
+              app.state.isMenuExpanded.value = false;
+            }
+            await HapticFeedback.heavyImpact();
+          },
+          child: SizedBox(
+            height: 36, // Slightly taller to stand out as a top-level item
+            child: _navItem(context, Nav.allTools, isActive),
+          ),
+        ),
+      );
+      // Add a small divider or spacing before the categories start
+      menuItems.add(const SizedBox(height: 8));
+    }
+
+    // --- 2. GENERATE CATEGORIES ---
     for (final entry in app.state.tools.entries) {
       final categoryKey = entry.key;
 
@@ -199,7 +228,7 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
       );
     }
 
-    // Show a fallback if search yields zero results across all categories
+    // Show a fallback if search yields zero results across all categories AND the home button
     if (query.isNotEmpty && menuItems.isEmpty) {
       return Center(
         child: Text(

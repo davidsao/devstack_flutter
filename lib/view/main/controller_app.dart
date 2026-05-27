@@ -83,7 +83,10 @@ class AppController extends BaseController<AppState> {
         Nav.generatorLoremIpsum,
         Nav.generatorUuid,
         Nav.generatorQr,
+      ],
+      LocaleKeys.lbl_menu_other_tool.localize(): [
         Nav.textRegex,
+        Nav.colorPicker,
       ],
     });
 

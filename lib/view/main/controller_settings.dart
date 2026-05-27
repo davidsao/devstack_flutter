@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:devtoys_flutter/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // REQUIRED for SystemChrome
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 
@@ -28,6 +31,9 @@ class SettingsController extends BaseController<SettingsState> {
     } else {
       state.themeMode.value = ThemeMode.system;
     }
+
+    // Explicitly sync the status bar on app launch
+    _updateStatusBar(state.themeMode.value);
   }
 
   void changeTheme(String modeStr) {
@@ -43,6 +49,28 @@ class SettingsController extends BaseController<SettingsState> {
     state.themeMode.value = mode;
     Get.changeThemeMode(mode); // Actually changes the app theme
     _appManager.setThemeMode(modeStr); // Save preference
+
+    _updateStatusBar(mode);
+  }
+
+  void _updateStatusBar(ThemeMode mode) {
+    SystemUiOverlayStyle overlayStyle;
+
+    if (mode == ThemeMode.light) {
+      // Light background needs dark text/icons
+      overlayStyle = SystemUiOverlayStyle.dark;
+    } else if (mode == ThemeMode.dark) {
+      // Dark background needs light text/icons
+      overlayStyle = SystemUiOverlayStyle.light;
+    } else {
+      // System mode needs to check the actual device settings
+      final brightness = PlatformDispatcher.instance.platformBrightness;
+      overlayStyle = brightness == Brightness.dark
+          ? SystemUiOverlayStyle.light
+          : SystemUiOverlayStyle.dark;
+    }
+
+    SystemChrome.setSystemUIOverlayStyle(overlayStyle);
   }
 
   void setLocale(Language language) {

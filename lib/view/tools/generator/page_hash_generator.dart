@@ -154,6 +154,7 @@ class HashGeneratorPage
                           child: AppImage(
                             IconKeys.textfieldCopy,
                             size: AppDimens.iconSmaller,
+                            color: Theme.of(context).iconTheme.color,
                           ),
                         ),
                       )

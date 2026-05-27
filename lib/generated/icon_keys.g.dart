@@ -7,6 +7,7 @@ class IconKeys {
 	static String calendar = "$_path/icon_calendar.svg";
 	static String checksum = "$_path/icon_checksum.svg";
 	static String close = "$_path/icon_close.svg";
+	static String colorPicker = "$_path/icon_color_picker.svg";
 	static String date = "$_path/icon_date.svg";
 	static String dropDown = "$_path/icon_drop_down.svg";
 	static String hash = "$_path/icon_hash.svg";

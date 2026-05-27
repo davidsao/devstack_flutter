@@ -25,6 +25,7 @@ enum Nav {
   generatorUuid,
   generatorQr,
   textRegex,
+  colorPicker,
 }
 
 class Navigation {
@@ -85,6 +86,8 @@ extension NavigationExtension on Nav {
         return QrGeneratorPage(viewTag: viewTag);
       case Nav.textRegex:
         return RegexTesterPage(viewTag: viewTag);
+      case Nav.colorPicker:
+        return ColorPickerPage(viewTag: viewTag);
       default:
         return const Center(child: Text('ComingSoonPage'));
     }
@@ -99,7 +102,7 @@ extension NavigationExtension on Nav {
 
   String? get getIcon {
     return {
-      Nav.home: IconKeys.home,
+      Nav.allTools: IconKeys.home,
       Nav.converterDate: IconKeys.date,
       Nav.converterJsonYaml: IconKeys.json,
       Nav.converterNumberBase: IconKeys.numberBase,
@@ -116,11 +119,13 @@ extension NavigationExtension on Nav {
       Nav.generatorUuid: IconKeys.uuid,
       Nav.generatorQr: IconKeys.qr,
       Nav.textRegex: IconKeys.regex,
+      Nav.colorPicker: IconKeys.colorPicker,
     }[this];
   }
 
   String? get getName {
     return {
+      Nav.allTools: LocaleKeys.lbl_all_tools.localize(),
       Nav.converterDate: LocaleKeys.nav_date.localize(),
       Nav.converterNumberBase: LocaleKeys.nav_number_base.localize(),
       Nav.converterJsonYaml: LocaleKeys.nav_json_yaml.localize(),
@@ -137,11 +142,13 @@ extension NavigationExtension on Nav {
       Nav.generatorUuid: LocaleKeys.nav_uuid.localize(),
       Nav.generatorQr: LocaleKeys.nav_qr_generator.localize(),
       Nav.textRegex: LocaleKeys.nav_regex.localize(),
+      Nav.colorPicker: LocaleKeys.nav_color_picker.localize(),
     }[this];
   }
 
   List<String> get searchTerms {
     return {
+          Nav.allTools: ['home', 'all tools', 'dashboard', '所有工具', '主页', '主頁'],
           Nav.converterDate: ['date', '日期', '日付', '날짜', 'fecha'],
           Nav.converterNumberBase: [
             'number base',
@@ -280,6 +287,7 @@ extension NavigationExtension on Nav {
             'Expresión regular',
             'Expression régulière',
           ],
+          Nav.colorPicker: ['color picker'],
         }[this] ??
         [];
   }

@@ -60,6 +60,7 @@ dependencies:
   re_highlight: ^0.0.3
   device_info_plus: ^11.3.0
   flutter_js: ^0.8.7
+  flutter_colorpicker: ^1.1.0
 
 dev_dependencies:
   flutter_test:
