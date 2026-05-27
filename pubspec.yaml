@@ -68,6 +68,7 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^5.0.0
+  msix: ^3.16.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -87,3 +88,12 @@ flutter:
     - assets/icons/
     - assets/js/sql-formatter.min.js
     - assets/js/terser.min.js
+
+msix_config:
+  display_name: DevStack
+  publisher_display_name: HK Tech Professional
+  publisher: 'CN=BEE7168B-8EED-4646-8D6B-6AFFA4BCA664'
+  identity_name: HKTechProfessional.DevStack
+  version: 1.0.0
+  logo_path: windows\runner\resources\app_icon.ico
+  capabilities: internetClient
