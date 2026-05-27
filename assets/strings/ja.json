@@ -23,7 +23,7 @@
   "nav_qr_generator": "QRコードジェネレーター",
   "lbl_menu_other_tool": "その他のツール",
   "nav_regex": "正規表現",
-  "nav_color_picker": "Color Picker",
+  "nav_color_picker": "カラーピッカー",
   "btn_add_to_favorite": "お気に入りに追加",
   "btn_remove_from_favorite": "お気に入りから削除",
   "lbl_all_tools": "すべてのツール",
@@ -114,5 +114,10 @@
   "lbl_qr_medium": "中",
   "lbl_qr_quartile": "中高",
   "lbl_qr_high": "高",
-  "input_qr_input": "QRコードを生成するテキストを入力してください"
+  "input_qr_input": "QRコードを生成するテキストを入力してください",
+  "lbl_color_picker_type": "ピッカータイプ",
+  "lbl_color_hex": "16進数カラー",
+  "lbl_color_copy": "カラーコピー",
+  "lbl_color_code": "コードをコピー",
+  "lbl_color_components": "コンポーネント"
 }

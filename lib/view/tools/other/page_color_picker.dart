@@ -23,6 +23,7 @@ class ColorPickerPage
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          kGapSmall,
           // 1. INTERACTIVE COLOR PICKER
           LayoutBuilder(
             builder: (context, constraints) {
@@ -52,10 +53,10 @@ class ColorPickerPage
               );
             },
           ),
-          kGapLarge,
 
           // 2. HEX COLOR DISPLAYS
-          Text('Color Hex', style: AppTextStyles.b2.bold),
+          Text(LocaleKeys.lbl_color_hex.localize(),
+              style: AppTextStyles.b2.bold),
           kGapTiny,
           Obx(() {
             return Row(
@@ -68,10 +69,11 @@ class ColorPickerPage
               ],
             );
           }),
-          kGapLarge,
+          kGapMedium,
 
           // 3. COLOR COPY FORMATTER
-          Text('Color Copy', style: AppTextStyles.b2.bold),
+          Text(LocaleKeys.lbl_color_copy.localize(),
+              style: AppTextStyles.b2.bold),
           kGapTiny,
           Container(
             decoration: BoxDecoration(
@@ -85,9 +87,9 @@ class ColorPickerPage
             ),
             child: Obx(() {
               final Map<String, String> copyChoices = {
-                'Components': 'Components',
+                'Components': LocaleKeys.lbl_color_components.localize(),
                 'iOS UIColor': 'iOS UIColor',
-                'mac NSColor': 'mac NSColor',
+                'mac NSColor': 'macOS NSColor',
                 'SwiftUI HSB Color': 'SwiftUI HSB Color',
                 'SwiftUI RGB Color': 'SwiftUI RGB Color',
                 'Android RGB': 'Android RGB',
@@ -102,7 +104,7 @@ class ColorPickerPage
                 children: [
                   Expanded(
                     child: DropDownWidget(
-                      title: 'Type',
+                      title: LocaleKeys.lbl_color_picker_type.localize(),
                       choices: copyChoices,
                       selectedValue: state.copyType.value,
                       onSelected: controller.updateCopyType,

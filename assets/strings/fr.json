@@ -23,7 +23,7 @@
   "nav_qr_generator": "Générateur de Code QR",
   "lbl_menu_other_tool": "Autres outils",
   "nav_regex": "Expression régulière",
-  "nav_color_picker": "Color Picker",
+  "nav_color_picker": "Sélecteur de couleur",
   "btn_add_to_favorite": "Ajouter aux favoris",
   "btn_remove_from_favorite": "Retirer des favoris",
   "lbl_all_tools": "Tous les outils",
@@ -114,5 +114,10 @@
   "lbl_qr_medium": "Moyen",
   "lbl_qr_quartile": "Quartile",
   "lbl_qr_high": "Élevé",
-  "input_qr_input": "Entrez le texte pour générer le code QR"
+  "input_qr_input": "Entrez le texte pour générer le code QR",
+  "lbl_color_picker_type": "Type de sélecteur",
+  "lbl_color_hex": "Couleur Hex",
+  "lbl_color_copy": "Copier la couleur",
+  "lbl_color_code": "Copier le code",
+  "lbl_color_components": "Composants"
 }

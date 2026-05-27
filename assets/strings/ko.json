@@ -23,7 +23,7 @@
   "nav_qr_generator": "QR 코드 생성기",
   "lbl_menu_other_tool": "기타 도구",
   "nav_regex": "정규식",
-  "nav_color_picker": "Color Picker",
+  "nav_color_picker": "색상 선택기",
   "btn_add_to_favorite": "즐겨찾기에 추가",
   "btn_remove_from_favorite": "즐겨찾기에서 제거",
   "lbl_all_tools": "모든 도구",
@@ -114,5 +114,10 @@
   "lbl_qr_medium": "중간",
   "lbl_qr_quartile": "상중",
   "lbl_qr_high": "높음",
-  "input_qr_input": "QR 코드를 생성할 텍스트를 입력하세요"
+  "input_qr_input": "QR 코드를 생성할 텍스트를 입력하세요",
+  "lbl_color_picker_type": "피커 유형",
+  "lbl_color_hex": "16진수 색상",
+  "lbl_color_copy": "색상 복사",
+  "lbl_color_code": "코드 복사",
+  "lbl_color_components": "구성 요소"
 }

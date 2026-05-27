@@ -23,7 +23,7 @@
   "nav_qr_generator": "二维码生成器",
   "lbl_menu_other_tool": "其他工具",
   "nav_regex": "正则表达式",
-  "nav_color_picker": "Color Picker",
+  "nav_color_picker": "颜色选择器",
   "btn_add_to_favorite": "加入收藏",
   "btn_remove_from_favorite": "取消收藏",
   "lbl_all_tools": "所有工具",
@@ -114,5 +114,10 @@
   "lbl_qr_medium": "中",
   "lbl_qr_quartile": "中高",
   "lbl_qr_high": "高",
-  "input_qr_input": "输入文本以生成二维码"
+  "input_qr_input": "输入文本以生成二维码",
+  "lbl_color_picker_type": "选择器类型",
+  "lbl_color_hex": "十六进制颜色",
+  "lbl_color_copy": "复制颜色",
+  "lbl_color_code": "复制代码",
+  "lbl_color_components": "组件"
 }

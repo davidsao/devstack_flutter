@@ -119,5 +119,10 @@ abstract class  LocaleKeys {
   static const lbl_qr_quartile = 'lbl_qr_quartile';
   static const lbl_qr_high = 'lbl_qr_high';
   static const input_qr_input = 'input_qr_input';
+  static const lbl_color_picker_type = 'lbl_color_picker_type';
+  static const lbl_color_hex = 'lbl_color_hex';
+  static const lbl_color_copy = 'lbl_color_copy';
+  static const lbl_color_code = 'lbl_color_code';
+  static const lbl_color_components = 'lbl_color_components';
 
 }

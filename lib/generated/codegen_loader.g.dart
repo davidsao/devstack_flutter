@@ -39,7 +39,7 @@ class CodegenLoader extends AssetLoader{
   "nav_qr_generator": "QRコードジェネレーター",
   "lbl_menu_other_tool": "その他のツール",
   "nav_regex": "正規表現",
-  "nav_color_picker": "Color Picker",
+  "nav_color_picker": "カラーピッカー",
   "btn_add_to_favorite": "お気に入りに追加",
   "btn_remove_from_favorite": "お気に入りから削除",
   "lbl_all_tools": "すべてのツール",
@@ -130,7 +130,12 @@ class CodegenLoader extends AssetLoader{
   "lbl_qr_medium": "中",
   "lbl_qr_quartile": "中高",
   "lbl_qr_high": "高",
-  "input_qr_input": "QRコードを生成するテキストを入力してください"
+  "input_qr_input": "QRコードを生成するテキストを入力してください",
+  "lbl_color_picker_type": "ピッカータイプ",
+  "lbl_color_hex": "16進数カラー",
+  "lbl_color_copy": "カラーコピー",
+  "lbl_color_code": "コードをコピー",
+  "lbl_color_components": "コンポーネント"
 };
 static const Map<String,dynamic> _en = {
   "lbl_app_name": "DevStack",
@@ -248,7 +253,12 @@ static const Map<String,dynamic> _en = {
   "lbl_qr_medium": "Medium",
   "lbl_qr_quartile": "Quartile",
   "lbl_qr_high": "High",
-  "input_qr_input": "Enter text to generate QR code"
+  "input_qr_input": "Enter text to generate QR code",
+  "lbl_color_picker_type": "Picker Type",
+  "lbl_color_hex": "Color Hex",
+  "lbl_color_copy": "Color Copy",
+  "lbl_color_code": "Copy Code",
+  "lbl_color_components": "Components"
 };
 static const Map<String,dynamic> _zh_Hans = {
   "lbl_app_name": "开发栈",
@@ -275,7 +285,7 @@ static const Map<String,dynamic> _zh_Hans = {
   "nav_qr_generator": "二维码生成器",
   "lbl_menu_other_tool": "其他工具",
   "nav_regex": "正则表达式",
-  "nav_color_picker": "Color Picker",
+  "nav_color_picker": "颜色选择器",
   "btn_add_to_favorite": "加入收藏",
   "btn_remove_from_favorite": "取消收藏",
   "lbl_all_tools": "所有工具",
@@ -366,7 +376,12 @@ static const Map<String,dynamic> _zh_Hans = {
   "lbl_qr_medium": "中",
   "lbl_qr_quartile": "中高",
   "lbl_qr_high": "高",
-  "input_qr_input": "输入文本以生成二维码"
+  "input_qr_input": "输入文本以生成二维码",
+  "lbl_color_picker_type": "选择器类型",
+  "lbl_color_hex": "十六进制颜色",
+  "lbl_color_copy": "复制颜色",
+  "lbl_color_code": "复制代码",
+  "lbl_color_components": "组件"
 };
 static const Map<String,dynamic> _fr = {
   "lbl_app_name": "Stack Dév",
@@ -393,7 +408,7 @@ static const Map<String,dynamic> _fr = {
   "nav_qr_generator": "Générateur de Code QR",
   "lbl_menu_other_tool": "Autres outils",
   "nav_regex": "Expression régulière",
-  "nav_color_picker": "Color Picker",
+  "nav_color_picker": "Sélecteur de couleur",
   "btn_add_to_favorite": "Ajouter aux favoris",
   "btn_remove_from_favorite": "Retirer des favoris",
   "lbl_all_tools": "Tous les outils",
@@ -484,7 +499,12 @@ static const Map<String,dynamic> _fr = {
   "lbl_qr_medium": "Moyen",
   "lbl_qr_quartile": "Quartile",
   "lbl_qr_high": "Élevé",
-  "input_qr_input": "Entrez le texte pour générer le code QR"
+  "input_qr_input": "Entrez le texte pour générer le code QR",
+  "lbl_color_picker_type": "Type de sélecteur",
+  "lbl_color_hex": "Couleur Hex",
+  "lbl_color_copy": "Copier la couleur",
+  "lbl_color_code": "Copier le code",
+  "lbl_color_components": "Composants"
 };
 static const Map<String,dynamic> _ko = {
   "lbl_app_name": "DevStack",
@@ -511,7 +531,7 @@ static const Map<String,dynamic> _ko = {
   "nav_qr_generator": "QR 코드 생성기",
   "lbl_menu_other_tool": "기타 도구",
   "nav_regex": "정규식",
-  "nav_color_picker": "Color Picker",
+  "nav_color_picker": "색상 선택기",
   "btn_add_to_favorite": "즐겨찾기에 추가",
   "btn_remove_from_favorite": "즐겨찾기에서 제거",
   "lbl_all_tools": "모든 도구",
@@ -602,7 +622,12 @@ static const Map<String,dynamic> _ko = {
   "lbl_qr_medium": "중간",
   "lbl_qr_quartile": "상중",
   "lbl_qr_high": "높음",
-  "input_qr_input": "QR 코드를 생성할 텍스트를 입력하세요"
+  "input_qr_input": "QR 코드를 생성할 텍스트를 입력하세요",
+  "lbl_color_picker_type": "피커 유형",
+  "lbl_color_hex": "16진수 색상",
+  "lbl_color_copy": "색상 복사",
+  "lbl_color_code": "코드 복사",
+  "lbl_color_components": "구성 요소"
 };
 static const Map<String,dynamic> _es = {
   "lbl_app_name": "Pila Dev",
@@ -629,7 +654,7 @@ static const Map<String,dynamic> _es = {
   "nav_qr_generator": "Generador de Código QR",
   "lbl_menu_other_tool": "Otras herramientas",
   "nav_regex": "Expresión regular",
-  "nav_color_picker": "Color Picker",
+  "nav_color_picker": "Selector de color",
   "btn_add_to_favorite": "Añadir a favoritos",
   "btn_remove_from_favorite": "Eliminar de favoritos",
   "lbl_all_tools": "Todas las herramientas",
@@ -720,7 +745,12 @@ static const Map<String,dynamic> _es = {
   "lbl_qr_medium": "Medio",
   "lbl_qr_quartile": "Cuartil",
   "lbl_qr_high": "Alto",
-  "input_qr_input": "Ingrese el texto para generar el código QR"
+  "input_qr_input": "Ingrese el texto para generar el código QR",
+  "lbl_color_picker_type": "Tipo de selector",
+  "lbl_color_hex": "Color Hex",
+  "lbl_color_copy": "Copiar color",
+  "lbl_color_code": "Copiar código",
+  "lbl_color_components": "Componentes"
 };
 static const Map<String,dynamic> _zh_Hant = {
   "lbl_app_name": "DevStack",
@@ -747,7 +777,7 @@ static const Map<String,dynamic> _zh_Hant = {
   "nav_qr_generator": "QR碼生成器",
   "lbl_menu_other_tool": "其他工具",
   "nav_regex": "Regex",
-  "nav_color_picker": "Color Picker",
+  "nav_color_picker": "顏色選擇器",
   "btn_add_to_favorite": "加入收藏",
   "btn_remove_from_favorite": "取消收藏",
   "lbl_all_tools": "所有工具",
@@ -838,7 +868,12 @@ static const Map<String,dynamic> _zh_Hant = {
   "lbl_qr_medium": "中",
   "lbl_qr_quartile": "中高",
   "lbl_qr_high": "高",
-  "input_qr_input": "輸入文字以生成 QR Code"
+  "input_qr_input": "輸入文字以生成 QR Code",
+  "lbl_color_picker_type": "選擇器類型",
+  "lbl_color_hex": "十六進位顏色",
+  "lbl_color_copy": "複製顏色",
+  "lbl_color_code": "複製代碼",
+  "lbl_color_components": "組件"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ja": _ja, "en": _en, "zh_Hans": _zh_Hans, "fr": _fr, "ko": _ko, "es": _es, "zh_Hant": _zh_Hant};
 }

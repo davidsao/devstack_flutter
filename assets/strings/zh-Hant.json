@@ -23,7 +23,7 @@
   "nav_qr_generator": "QR碼生成器",
   "lbl_menu_other_tool": "其他工具",
   "nav_regex": "Regex",
-  "nav_color_picker": "Color Picker",
+  "nav_color_picker": "顏色選擇器",
   "btn_add_to_favorite": "加入收藏",
   "btn_remove_from_favorite": "取消收藏",
   "lbl_all_tools": "所有工具",
@@ -114,5 +114,10 @@
   "lbl_qr_medium": "中",
   "lbl_qr_quartile": "中高",
   "lbl_qr_high": "高",
-  "input_qr_input": "輸入文字以生成 QR Code"
+  "input_qr_input": "輸入文字以生成 QR Code",
+  "lbl_color_picker_type": "選擇器類型",
+  "lbl_color_hex": "十六進位顏色",
+  "lbl_color_copy": "複製顏色",
+  "lbl_color_code": "複製代碼",
+  "lbl_color_components": "組件"
 }

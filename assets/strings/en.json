@@ -114,5 +114,10 @@
   "lbl_qr_medium": "Medium",
   "lbl_qr_quartile": "Quartile",
   "lbl_qr_high": "High",
-  "input_qr_input": "Enter text to generate QR code"
+  "input_qr_input": "Enter text to generate QR code",
+  "lbl_color_picker_type": "Picker Type",
+  "lbl_color_hex": "Color Hex",
+  "lbl_color_copy": "Color Copy",
+  "lbl_color_code": "Copy Code",
+  "lbl_color_components": "Components"
 }
