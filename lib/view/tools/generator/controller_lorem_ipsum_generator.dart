@@ -4,13 +4,15 @@ import 'package:devtoys_flutter/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../generated/locale_keys.g.dart';
+
 class LoremIpsumGeneratorState extends ViewState {
   final type = 'paragraphs'.obs; // Words, Sentences, Paragraphs
   final length = 3.obs; // 1 to 1000
   final Map<String, String> choices = {
-    'words': 'Words',
-    'sentences': 'Sentences',
-    'paragraphs': 'Paragraphs',
+    'words': LocaleKeys.lbl_lorem_ipsum_words.localize(),
+    'sentences': LocaleKeys.lbl_lorem_ipsum_sentences.localize(),
+    'paragraphs': LocaleKeys.lbl_lorem_ipsum_paragraphs.localize(),
   };
 }
 

@@ -44,7 +44,7 @@ class LoremIpsumGeneratorPage
               children: [
                 Obx(() {
                   return DropDownWidget(
-                    title: 'Type',
+                    title: LocaleKeys.lbl_lorem_ipsum_type.localize(),
                     choices: state.choices,
                     selectedValue: state.type.value,
                     onSelected: (String val) {
@@ -57,7 +57,10 @@ class LoremIpsumGeneratorPage
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Length (1-999)', style: AppTextStyles.b2.bold),
+                    Text(
+                      LocaleKeys.lbl_lorem_ipsum_length.localize(),
+                      style: AppTextStyles.b2.bold,
+                    ),
                     Container(
                       width: 80,
                       decoration: BoxDecoration(
@@ -91,7 +94,7 @@ class LoremIpsumGeneratorPage
           kGapMedium,
           // Output Area
           Text(
-            'Generated Lorem Ipsum',
+            LocaleKeys.lbl_lorem_ipsum_generated.localize(),
             style: AppTextStyles.b2.bold,
           ),
           kGapTiny,

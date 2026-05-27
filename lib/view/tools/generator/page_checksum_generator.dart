@@ -3,6 +3,9 @@ import 'package:devtoys_flutter/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../generated/icon_keys.g.dart';
+import '../../../generated/locale_keys.g.dart';
+
 class ChecksumPage extends BaseView<ChecksumController, ChecksumState> {
   const ChecksumPage({super.key, super.viewTag});
 
@@ -67,28 +70,12 @@ class ChecksumPage extends BaseView<ChecksumController, ChecksumState> {
             kGapMedium,
 
             // --- FILE ---
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildSectionTitle('File'),
-                ElevatedButton.icon(
-                  onPressed: controller.pickFile,
-                  icon: const Icon(Icons.file_open, size: 16),
-                  label: const Text('Open'),
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor:
-                        Theme.of(context).colorScheme.surfaceVariant,
-                  ),
-                ),
-              ],
-            ),
+            _buildSectionTitle('File'),
             kGapTiny,
             DropTarget(
               onDragDone: controller.handleDrop,
               child: Container(
                 width: double.infinity,
-                height: 150,
                 decoration: BoxDecoration(
                   color: Theme.of(context)
                       .colorScheme
@@ -97,36 +84,48 @@ class ChecksumPage extends BaseView<ChecksumController, ChecksumState> {
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: Theme.of(context).dividerColor),
                 ),
-                child: Obx(() {
-                  if (state.isProcessing.value) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Colors.grey,
-                              style: BorderStyle.solid,
-                              width: 2), // Simulate dashed
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: const Icon(Icons.move_to_inbox,
-                            size: 32, color: Colors.grey),
+                padding: const EdgeInsets.symmetric(
+                  vertical: AppDimens.paddingLarge,
+                ),
+                child: controller.state.isProcessing.value
+                    ? const Center(child: CircularProgressIndicator())
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid,
+                                  width: 2),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: AppImage(IconKeys.upload,
+                                size: AppDimens.iconLarge, color: Colors.grey),
+                          ),
+                          kGapSmall,
+                          Text(
+                            controller.state.currentFile.value != null
+                                ? controller.state.currentFile.value!.name
+                                : LocaleKeys.lbl_hash_drop_file.localize(),
+                            style: const TextStyle(fontWeight: FontWeight.w500),
+                            textAlign: TextAlign.center,
+                          ),
+                          kGapSmall,
+                          ElevatedButton.icon(
+                            onPressed: controller.pickFile,
+                            icon: AppImage(
+                              IconKeys.attach,
+                              size: AppDimens.iconSmaller,
+                              color: Theme.of(context).iconTheme.color,
+                            ),
+                            label: Text(
+                              LocaleKeys.btn_browse_file.localize(),
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        state.currentFile.value != null
-                            ? state.currentFile.value!.name
-                            : 'Drop Files Here',
-                        style: const TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  );
-                }),
               ),
             ),
             kGapMedium,

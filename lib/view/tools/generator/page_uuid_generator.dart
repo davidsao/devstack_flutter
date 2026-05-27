@@ -43,7 +43,10 @@ class UuidGeneratorPage
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Generate'),
+                      Text(
+                        LocaleKeys.lbl_uuid_generate.localize(),
+                        style: AppTextStyles.b2.bold,
+                      ),
                       SizedBox(
                         width: 152,
                         child: Row(
@@ -72,7 +75,7 @@ class UuidGeneratorPage
                               width: 20,
                               child: Text(
                                 '${controller.state.quantity.value}',
-                                style: AppTextStyles.b2,
+                                style: AppTextStyles.b2.bold,
                               ),
                             ),
                           ],
@@ -85,8 +88,8 @@ class UuidGeneratorPage
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Hyphens',
-                        style: AppTextStyles.b2.semiBold,
+                        LocaleKeys.lbl_uuid_hyphens.localize(),
+                        style: AppTextStyles.b2.bold,
                       ),
                       Transform.scale(
                         scale: 0.8,
@@ -104,8 +107,8 @@ class UuidGeneratorPage
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Uppercase',
-                        style: AppTextStyles.b2.semiBold,
+                        LocaleKeys.lbl_uuid_uppercase.localize(),
+                        style: AppTextStyles.b2.bold,
                       ),
                       Transform.scale(
                         scale: 0.8,
@@ -136,7 +139,7 @@ class UuidGeneratorPage
                 style: AppButtonStyle.primary(
                   size: AppButtonStyleSize.small,
                 ),
-                child: const Text('Regenerate'),
+                child: Text(LocaleKeys.btn_regenerate.localize()),
               ),
             ],
           ),

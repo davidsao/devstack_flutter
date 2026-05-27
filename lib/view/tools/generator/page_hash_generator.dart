@@ -68,23 +68,30 @@ class HashGeneratorPage
                                       width: 2),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
-                                child: const Icon(Icons.move_to_inbox,
-                                    size: 32, color: Colors.grey),
+                                child: AppImage(IconKeys.upload,
+                                    size: AppDimens.iconLarge,
+                                    color: Colors.grey),
                               ),
-                              const SizedBox(height: 16),
+                              kGapSmall,
                               Text(
                                 controller.state.currentFile.value != null
                                     ? controller.state.currentFile.value!.name
-                                    : 'Drop a file here',
+                                    : LocaleKeys.lbl_hash_drop_file.localize(),
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w500),
                                 textAlign: TextAlign.center,
                               ),
-                              const SizedBox(height: 16),
+                              kGapSmall,
                               ElevatedButton.icon(
                                 onPressed: controller.pickFile,
-                                icon: const Icon(Icons.file_open, size: 16),
-                                label: const Text('Browse Files'),
+                                icon: AppImage(
+                                  IconKeys.attach,
+                                  size: AppDimens.iconSmaller,
+                                  color: Theme.of(context).iconTheme.color,
+                                ),
+                                label: Text(
+                                  LocaleKeys.btn_browse_file.localize(),
+                                ),
                               ),
                             ],
                           ),
@@ -99,7 +106,7 @@ class HashGeneratorPage
           Container(
             decoration: BoxDecoration(
               border: Border.all(color: Theme.of(context).dividerColor),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(AppDimens.radiusSmall),
               color: Theme.of(context).colorScheme.primary.withAlpha(24),
             ),
             padding: const EdgeInsets.symmetric(
@@ -109,7 +116,10 @@ class HashGeneratorPage
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Uppercase', style: AppTextStyles.b2.bold),
+                Text(
+                  LocaleKeys.lbl_hash_uppercase.localize(),
+                  style: AppTextStyles.b2.bold,
+                ),
                 Obx(
                   () => Transform.scale(
                     scale: 0.8,
@@ -225,7 +235,7 @@ class HashGeneratorPage
                 padding: const EdgeInsets.symmetric(
                     horizontal: AppDimens.paddingSmaller),
                 child: Text(
-                  'Text',
+                  LocaleKeys.tab_hash_text.localize(),
                   style: AppTextStyles.b2.semiBold,
                 ),
               ),
@@ -233,7 +243,7 @@ class HashGeneratorPage
                 padding: const EdgeInsets.symmetric(
                     horizontal: AppDimens.paddingSmaller),
                 child: Text(
-                  'File',
+                  LocaleKeys.tab_hash_file.localize(),
                   style: AppTextStyles.b2.semiBold,
                 ),
               ),

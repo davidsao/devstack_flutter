@@ -2,6 +2,7 @@ class IconKeys {
 
 	static const String _path = "assets/icons";
 
+	static String attach = "$_path/icon_attach.svg";
 	static String base64 = "$_path/icon_base64.svg";
 	static String calendar = "$_path/icon_calendar.svg";
 	static String checksum = "$_path/icon_checksum.svg";
@@ -23,6 +24,7 @@ class IconKeys {
 	static String textfieldPaste = "$_path/icon_textfield_paste.svg";
 	static String textfieldSearch = "$_path/icon_textfield_search.svg";
 	static String textfieldSelect = "$_path/icon_textfield_select.svg";
+	static String upload = "$_path/icon_upload.svg";
 	static String url = "$_path/icon_url.svg";
 	static String uuid = "$_path/icon_uuid.svg";
 	static String xml = "$_path/icon_xml.svg";
