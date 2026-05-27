@@ -110,7 +110,7 @@ extension NavigationExtension on Nav {
       Nav.formatterJson: IconKeys.jsonFormat,
       Nav.formatterXml: IconKeys.xml,
       Nav.formatterSql: IconKeys.sql,
-      Nav.minifier: IconKeys.sql,
+      Nav.minifier: IconKeys.minify,
       Nav.generatorHash: IconKeys.hash,
       Nav.generatorLoremIpsum: IconKeys.loremIpsum,
       Nav.generatorUuid: IconKeys.uuid,
@@ -131,7 +131,7 @@ extension NavigationExtension on Nav {
       Nav.formatterJson: LocaleKeys.nav_json.localize(),
       Nav.formatterXml: LocaleKeys.nav_xml.localize(),
       Nav.formatterSql: LocaleKeys.nav_sql.localize(),
-      Nav.minifier: 'Minifier',
+      Nav.minifier: LocaleKeys.nav_minifier.localize(),
       Nav.generatorHash: LocaleKeys.nav_hash.localize(),
       Nav.generatorLoremIpsum: LocaleKeys.nav_lorem_ipsum.localize(),
       Nav.generatorUuid: LocaleKeys.nav_uuid.localize(),
@@ -220,7 +220,14 @@ extension NavigationExtension on Nav {
             'formateador',
             'formateur'
           ],
-          Nav.minifier: ['minifier'],
+          Nav.minifier: [
+            'minifier',
+            '最小化工具',
+            'ミニファイア',
+            '미니파이어',
+            'Minificador',
+            'Minificateur',
+          ],
           Nav.generatorHash: [
             'hash',
             '哈希',

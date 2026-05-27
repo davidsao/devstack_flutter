@@ -14,6 +14,7 @@ class IconKeys {
 	static String json = "$_path/icon_json.svg";
 	static String jwt = "$_path/icon_jwt.svg";
 	static String loremIpsum = "$_path/icon_lorem_ipsum.svg";
+	static String minify = "$_path/icon_minify.svg";
 	static String numberBase = "$_path/icon_number_base.svg";
 	static String qr = "$_path/icon_qr.svg";
 	static String settings = "$_path/icon_settings.svg";

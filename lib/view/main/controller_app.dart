@@ -94,7 +94,7 @@ class AppController extends BaseController<AppState> {
     final newMap = <String, List<Nav>>{};
 
     if (state.pinnedTools.isNotEmpty) {
-      newMap['Favorites'] = state.pinnedTools.toList();
+      newMap[LocaleKeys.lbl_favorites.localize()] = state.pinnedTools.toList();
     }
 
     newMap.addAll(_baseCategories);

@@ -2,6 +2,8 @@ import 'package:devtoys_flutter/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../generated/locale_keys.g.dart';
+
 class MinifierPage extends BaseView<MinifierController, MinifierState> {
   const MinifierPage({super.key, super.viewTag});
 
@@ -10,7 +12,7 @@ class MinifierPage extends BaseView<MinifierController, MinifierState> {
     // Hardcoded choices for now, but you can move these to LocaleKeys later
     final Map<String, String> choices = {
       'JSON': 'JSON',
-      'JavaScript': 'JavaScript', // <-- ADDED THIS LINE
+      'JavaScript': 'JavaScript',
       'XML': 'XML',
       'SQL': 'SQL',
     };
@@ -26,7 +28,8 @@ class MinifierPage extends BaseView<MinifierController, MinifierState> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Configuration Bar
-          Text('Configuration', style: AppTextStyles.b2.bold),
+          Text(LocaleKeys.lbl_number_configuration.localize(),
+              style: AppTextStyles.b2.bold),
           kGapTiny,
           Obx(() {
             return Container(
@@ -40,7 +43,7 @@ class MinifierPage extends BaseView<MinifierController, MinifierState> {
                 vertical: AppDimens.paddingTiny,
               ),
               child: DropDownWidget(
-                title: 'Language',
+                title: LocaleKeys.lbl_minifier_language.localize(),
                 choices: choices,
                 selectedValue: state.languageOption.value,
                 onSelected: controller.updateLanguage,
@@ -53,7 +56,10 @@ class MinifierPage extends BaseView<MinifierController, MinifierState> {
           Expanded(
             child: ResponsiveSplitLayout(
               firstChildren: [
-                Text('Input', style: AppTextStyles.b2.bold),
+                Text(
+                  LocaleKeys.lbl_input.localize(),
+                  style: AppTextStyles.b2.bold,
+                ),
                 kGapTiny,
                 Expanded(
                   child: CustomTextField(
@@ -65,7 +71,8 @@ class MinifierPage extends BaseView<MinifierController, MinifierState> {
                 ),
               ],
               secondChildren: [
-                Text('Output', style: AppTextStyles.b2.bold),
+                Text(LocaleKeys.lbl_output.localize(),
+                    style: AppTextStyles.b2.bold),
                 kGapTiny,
                 Expanded(
                   child: CustomTextField(

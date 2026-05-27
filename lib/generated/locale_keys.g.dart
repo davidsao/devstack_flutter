@@ -18,6 +18,7 @@ abstract class  LocaleKeys {
   static const nav_json = 'nav_json';
   static const nav_xml = 'nav_xml';
   static const nav_sql = 'nav_sql';
+  static const nav_minifier = 'nav_minifier';
   static const lbl_menu_generator = 'lbl_menu_generator';
   static const nav_hash = 'nav_hash';
   static const nav_uuid = 'nav_uuid';
@@ -77,5 +78,21 @@ abstract class  LocaleKeys {
   static const lbl_encoded_jwt = 'lbl_encoded_jwt';
   static const lbl_decoded_header = 'lbl_decoded_header';
   static const lbl_decoded_payload = 'lbl_decoded_payload';
+  static const lbl_minifier_language = 'lbl_minifier_language';
+  static const tab_hash_text = 'tab_hash_text';
+  static const tab_hash_file = 'tab_hash_file';
+  static const lbl_hash_uppercase = 'lbl_hash_uppercase';
+  static const lbl_hash_drop_file = 'lbl_hash_drop_file';
+  static const btn_browse_file = 'btn_browse_file';
+  static const lbl_lorem_ipsum_type = 'lbl_lorem_ipsum_type';
+  static const lbl_lorem_ipsum_length = 'lbl_lorem_ipsum_length';
+  static const lbl_lorem_ipsum_generated = 'lbl_lorem_ipsum_generated';
+  static const lbl_lorem_ipsum_words = 'lbl_lorem_ipsum_words';
+  static const lbl_lorem_ipsum_sentences = 'lbl_lorem_ipsum_sentences';
+  static const lbl_lorem_ipsum_paragraphs = 'lbl_lorem_ipsum_paragraphs';
+  static const lbl_uuid_generate = 'lbl_uuid_generate';
+  static const lbl_uuid_hyphens = 'lbl_uuid_hyphens';
+  static const lbl_uuid_uppercase = 'lbl_uuid_uppercase';
+  static const btn_regenerate = 'btn_regenerate';
 
 }
