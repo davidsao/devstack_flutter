@@ -70,6 +70,7 @@ class AppController extends BaseController<AppState> {
         Nav.encoderHtml,
         Nav.encoderUrl,
         Nav.encoderBase64,
+        Nav.encoderBase64Image,
         Nav.encoderJwt,
       ],
       LocaleKeys.lbl_menu_formatter.localize(): [

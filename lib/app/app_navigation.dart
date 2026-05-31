@@ -13,6 +13,7 @@ enum Nav {
   converterJsonYaml,
   converterNumberBase,
   encoderBase64,
+  encoderBase64Image,
   encoderHtml,
   encoderJwt,
   encoderUrl,
@@ -62,6 +63,8 @@ extension NavigationExtension on Nav {
         return NumberBasePage(viewTag: viewTag);
       case Nav.encoderBase64:
         return Base64EncoderPage(viewTag: viewTag);
+      case Nav.encoderBase64Image:
+        return Base64ImagePage(viewTag: viewTag);
       case Nav.encoderHtml:
         return HtmlEncoderPage(viewTag: viewTag);
       case Nav.encoderJwt:
@@ -110,6 +113,7 @@ extension NavigationExtension on Nav {
       Nav.encoderUrl: IconKeys.url,
       Nav.encoderHtml: IconKeys.html,
       Nav.encoderBase64: IconKeys.base64,
+      Nav.encoderBase64Image: IconKeys.base64,
       Nav.formatterJson: IconKeys.jsonFormat,
       Nav.formatterXml: IconKeys.xml,
       Nav.formatterSql: IconKeys.sql,
@@ -130,6 +134,7 @@ extension NavigationExtension on Nav {
       Nav.converterNumberBase: LocaleKeys.nav_number_base.localize(),
       Nav.converterJsonYaml: LocaleKeys.nav_json_yaml.localize(),
       Nav.encoderBase64: LocaleKeys.nav_base64.localize(),
+      Nav.encoderBase64Image: "Base64 Image",
       Nav.encoderHtml: LocaleKeys.nav_html.localize(),
       Nav.encoderUrl: LocaleKeys.nav_url.localize(),
       Nav.encoderJwt: LocaleKeys.nav_jwt.localize(),
@@ -161,6 +166,16 @@ extension NavigationExtension on Nav {
           ],
           Nav.converterJsonYaml: ['json', 'yaml', 'converter'],
           Nav.encoderBase64: [
+            'base64',
+            'encoder',
+            '編碼',
+            '编码',
+            'エンコーダ',
+            '인코더',
+            'codificador',
+            'encodeur'
+          ],
+          Nav.encoderBase64Image: [
             'base64',
             'encoder',
             '編碼',

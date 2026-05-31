@@ -73,6 +73,7 @@ class AppConfig extends StatefulWidget {
     Get.lazyPut(() => UrlEncoderController(), fenix: true);
     Get.lazyPut(() => HtmlEncoderController(), fenix: true);
     Get.lazyPut(() => Base64EncoderController(), fenix: true);
+    Get.lazyPut(() => Base64ImageController(), fenix: true);
     Get.lazyPut(() => JwtEncoderController(), fenix: true);
     Get.lazyPut(() => DateConverterController(), fenix: true);
     Get.lazyPut(() => JsonYamlController(), fenix: true);
