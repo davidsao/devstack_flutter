@@ -1,5 +1,6 @@
 import 'dart:async'; // Required for the typing debounce Timer
 
+import 'package:devstack/generated/icon_keys.g.dart';
 import 'package:devstack/index.dart';
 import 'package:flutter/material.dart';
 import 'package:re_editor/re_editor.dart';
@@ -331,9 +332,12 @@ class _MarkdownEditorFieldState extends State<MarkdownEditorField> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).dividerColor.withAlpha(20)),
+        border: Border.all(
+          color: Theme.of(context).dividerColor.withAlpha(10),
+        ),
         borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
-        color: Theme.of(context).inputDecorationTheme.fillColor,
+        color: Colors.transparent,
+        boxShadow: AppColors.textfieldShadow(context),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -373,67 +377,69 @@ class _MarkdownEditorFieldState extends State<MarkdownEditorField> {
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
           _ToolbarBtn(
-              icon: Icons.undo,
+              icon: IconKeys.undo,
               tooltip: "Undo",
               // Pass null if empty to disable the button
               onTap: _undoStack.isNotEmpty ? _undo : null),
           _ToolbarBtn(
-              icon: Icons.redo,
+              icon: IconKeys.redo,
               tooltip: "Redo",
               // Pass null if empty to disable the button
               onTap: _redoStack.isNotEmpty ? _redo : null),
           const _Divider(),
           _ToolbarBtn(
-              icon: Icons.format_bold,
+              icon: IconKeys.textBold,
               tooltip: "Bold",
               onTap: () => _wrapSelection("**")),
           _ToolbarBtn(
-              icon: Icons.format_italic,
+              icon: IconKeys.textItalic,
               tooltip: "Italic",
               onTap: () => _wrapSelection("*")),
           _ToolbarBtn(
-              icon: Icons.strikethrough_s,
+              icon: IconKeys.textStrikethrough,
               tooltip: "Strikethrough",
               onTap: () => _wrapSelection("~~")),
           const _Divider(),
           _ToolbarBtn(
-              icon: Icons.code,
+              icon: IconKeys.codeInline,
               tooltip: "Inline Code",
               onTap: () => _wrapSelection("`")),
           _ToolbarBtn(
-              icon: Icons.integration_instructions,
+              icon: IconKeys.codeBlock,
               tooltip: "Code Block",
               onTap: _insertCodeBlock),
-          _ToolbarBtn(icon: Icons.link, tooltip: "Link", onTap: _insertLink),
+          _ToolbarBtn(
+              icon: IconKeys.textUrl, tooltip: "Link", onTap: _insertLink),
           const _Divider(),
           _ToolbarBtn(
-              icon: Icons.format_size,
+              icon: IconKeys.h1,
               tooltip: "Heading 1",
               onTap: () => _prefixMultiline("#")),
           _ToolbarBtn(
-              icon: Icons.format_size,
+              icon: IconKeys.h2,
               tooltip: "Heading 2",
               onTap: () => _prefixMultiline("##")),
           _ToolbarBtn(
-              icon: Icons.format_size,
+              icon: IconKeys.h3,
               tooltip: "Heading 3",
               onTap: () => _prefixMultiline("###")),
           const _Divider(),
           _ToolbarBtn(
-              icon: Icons.format_quote,
+              icon: IconKeys.quote,
               tooltip: "Quote",
               onTap: () => _prefixMultiline(">")),
           _ToolbarBtn(
-              icon: Icons.format_list_bulleted,
+              icon: IconKeys.unorderedList,
               tooltip: "Unordered List",
               onTap: () => _prefixMultiline("-")),
           _ToolbarBtn(
-              icon: Icons.checklist,
+              icon: IconKeys.checklist,
               tooltip: "Task List",
               onTap: () => _prefixMultiline("- [ ]")),
           const _Divider(),
           _ToolbarBtn(
-            icon: _isWordWrapEnabled ? Icons.wrap_text : Icons.subject,
+            // icon: _isWordWrapEnabled ? IconKeys.textWrap : Icons.subject,
+            icon: IconKeys.textWrap,
             tooltip: "Toggle Word Wrap",
             onTap: () {
               setState(() => _isWordWrapEnabled = !_isWordWrapEnabled);
@@ -450,7 +456,7 @@ class _MarkdownEditorFieldState extends State<MarkdownEditorField> {
 }
 
 class _ToolbarBtn extends StatelessWidget {
-  final IconData icon;
+  final String icon;
   final String tooltip;
   final VoidCallback? onTap; // Nullable to support disabled state
 
@@ -468,9 +474,9 @@ class _ToolbarBtn extends StatelessWidget {
         borderRadius: BorderRadius.circular(4),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Icon(
+          child: AppImage(
             icon,
-            size: 20,
+            size: AppDimens.iconSmaller,
             // Dim the icon if the action is currently disabled (e.g. empty undo stack)
             color: isDisabled
                 ? Theme.of(context).disabledColor

@@ -1,3 +1,4 @@
+import 'package:devstack/generated/icon_keys.g.dart';
 import 'package:devstack/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
@@ -47,11 +48,11 @@ class MarkdownPreviewPage
       decoration: BoxDecoration(
         border: Border.all(color: Theme.of(context).dividerColor),
         borderRadius: BorderRadius.circular(8),
-        color: Theme.of(context).colorScheme.surface,
+        color: Theme.of(context).colorScheme.primary.withAlpha(24),
       ),
       padding: const EdgeInsets.symmetric(
-        horizontal: AppDimens.paddingMedium,
-        vertical: AppDimens.paddingSmall,
+        horizontal: AppDimens.paddingSmaller,
+        vertical: AppDimens.paddingTiny,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -84,22 +85,22 @@ class MarkdownPreviewPage
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Markdown", style: AppTextStyles.b2.bold),
+            Text("Editor", style: AppTextStyles.b2.bold),
             Row(
               children: [
                 IconButton(
-                  icon: const Icon(Icons.paste_rounded, size: 16),
+                  icon: AppImage(IconKeys.textfieldPaste, size: 16),
                   onPressed: controller.pasteText, // UPDATED
                 ),
                 IconButton(
-                  icon: const Icon(Icons.clear_rounded, size: 16),
+                  icon: AppImage(IconKeys.close, size: 16),
                   onPressed: controller.clearText, // UPDATED
                 ),
               ],
             )
           ],
         ),
-        kGapSmall,
+        kGapText,
         Expanded(
           child: MarkdownEditorField(
             controller: controller.textController,

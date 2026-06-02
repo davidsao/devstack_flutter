@@ -127,6 +127,7 @@ extension NavigationExtension on Nav {
       Nav.generatorQr: IconKeys.qr,
       Nav.textRegex: IconKeys.regex,
       Nav.colorPicker: IconKeys.colorPicker,
+      Nav.markdown: IconKeys.markdown,
     }[this];
   }
 
@@ -151,6 +152,7 @@ extension NavigationExtension on Nav {
       Nav.generatorQr: LocaleKeys.nav_qr_generator.localize(),
       Nav.textRegex: LocaleKeys.nav_regex.localize(),
       Nav.colorPicker: LocaleKeys.nav_color_picker.localize(),
+      Nav.markdown: 'Markdown',
     }[this];
   }
 
