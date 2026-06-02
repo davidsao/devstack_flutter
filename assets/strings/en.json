@@ -8,7 +8,6 @@
   "lbl_menu_encoder": "Encoders / Decoders",
   "nav_html": "HTML",
   "nav_url": "URL",
-  "nav_base64": "Base64",
   "nav_jwt": "JWT",
   "lbl_menu_formatter": "Formatters",
   "nav_json": "JSON",
@@ -122,5 +121,16 @@
   "lbl_color_components": "Components",
   "lbl_settings_copyright": "Inspired by the original DevToys project by veler.",
   "lbl_settings_licence": "Open Source Licenses",
-  "lbl_settings_all_rights_reserved": "All rights reserved."
+  "lbl_settings_all_rights_reserved": "All rights reserved.",
+  "lbl_base64_operation": "Operation",
+  "lbl_base64_encode": "Encode",
+  "lbl_base64_decode": "Decode",
+  "lbl_base64_source_image": "Source Image",
+  "lbl_base64_output": "Base64 Output String",
+  "lbl_base64_preview": "Image Render Preview",
+  "lbl_base64_input": "Base64 Input String - Paste your raw Base64 data or Data-URI block here...",
+  "lbl_base64_hint": "A live preview will generate here once valid data is pasted.",
+  "lbl_base64_fail": "Failed to compile image structure. Check for string truncations.",
+  "nav_base64_text": "Base64 (Text)",
+  "nav_base64_image": "Base64 (Image)"
 }

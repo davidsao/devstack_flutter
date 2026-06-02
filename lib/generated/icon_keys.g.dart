@@ -5,6 +5,7 @@ class IconKeys {
 	static String attach = "$_path/icon_attach.svg";
 	static String back = "$_path/icon_back.svg";
 	static String base64 = "$_path/icon_base64.svg";
+	static String bg = "$_path/icon_bg.svg";
 	static String calendar = "$_path/icon_calendar.svg";
 	static String checksum = "$_path/icon_checksum.svg";
 	static String close = "$_path/icon_close.svg";

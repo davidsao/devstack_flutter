@@ -23,6 +23,9 @@ class ResponsiveSplitLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDesktop = MediaQuery.sizeOf(context).width >= breakpoint;
 
+    // 1. Detect if the software keyboard is visible on the screen
+    final isKeyboardVisible = MediaQuery.viewInsetsOf(context).bottom > 0;
+
     // Build the core column for the second children list
     Widget secondContent = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,14 +53,18 @@ class ResponsiveSplitLayout extends StatelessWidget {
           ),
         ),
 
-        // Dynamic adaptive spacing between the two panels
-        kGapSmall,
+        // 2. Hide the bottom panel on mobile when the keyboard is open.
+        // This gives the text field 100% of the remaining screen space.
+        if (isDesktop || !isKeyboardVisible) ...[
+          // Dynamic adaptive spacing between the two panels
+          kGapSmall,
 
-        // RIGHT / BOTTOM PANEL
-        Expanded(
-          flex: secondFlex,
-          child: secondContent,
-        ),
+          // RIGHT / BOTTOM PANEL
+          Expanded(
+            flex: secondFlex,
+            child: secondContent,
+          ),
+        ],
       ],
     );
   }

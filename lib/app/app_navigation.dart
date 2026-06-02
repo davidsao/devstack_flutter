@@ -27,6 +27,7 @@ enum Nav {
   generatorQr,
   textRegex,
   colorPicker,
+  markdown,
 }
 
 class Navigation {
@@ -91,6 +92,8 @@ extension NavigationExtension on Nav {
         return RegexTesterPage(viewTag: viewTag);
       case Nav.colorPicker:
         return ColorPickerPage(viewTag: viewTag);
+      case Nav.markdown:
+        return MarkdownPreviewPage(viewTag: viewTag);
       default:
         return const Center(child: Text('ComingSoonPage'));
     }
@@ -133,8 +136,8 @@ extension NavigationExtension on Nav {
       Nav.converterDate: LocaleKeys.nav_date.localize(),
       Nav.converterNumberBase: LocaleKeys.nav_number_base.localize(),
       Nav.converterJsonYaml: LocaleKeys.nav_json_yaml.localize(),
-      Nav.encoderBase64: LocaleKeys.nav_base64.localize(),
-      Nav.encoderBase64Image: "Base64 Image",
+      Nav.encoderBase64: LocaleKeys.nav_base64_text.localize(),
+      Nav.encoderBase64Image: LocaleKeys.nav_base64_image.localize(),
       Nav.encoderHtml: LocaleKeys.nav_html.localize(),
       Nav.encoderUrl: LocaleKeys.nav_url.localize(),
       Nav.encoderJwt: LocaleKeys.nav_jwt.localize(),

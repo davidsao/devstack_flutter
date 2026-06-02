@@ -8,7 +8,6 @@
   "lbl_menu_encoder": "エンコーダー / デコーダー",
   "nav_html": "HTML",
   "nav_url": "URL",
-  "nav_base64": "Base64",
   "nav_jwt": "JWT",
   "lbl_menu_formatter": "フォーマッター",
   "nav_json": "JSON",
@@ -122,5 +121,16 @@
   "lbl_color_components": "コンポーネント",
   "lbl_settings_copyright": "velerによるオリジナルのDevToysプロジェクトにインスパイアされています。",
   "lbl_settings_licence": "オープンソースライセンス",
-  "lbl_settings_all_rights_reserved": "すべての権利を有します。 (or keep as English)"
+  "lbl_settings_all_rights_reserved": "すべての権利を有します。 (or keep as English)",
+  "lbl_base64_operation": "操作",
+  "lbl_base64_encode": "エンコード",
+  "lbl_base64_decode": "デコード",
+  "lbl_base64_source_image": "ソース画像",
+  "lbl_base64_output": "Base64出力文字列",
+  "lbl_base64_preview": "画像レンダリングプレビュー",
+  "lbl_base64_input": "Base64入力文字列 - ここに生のBase64データまたはData-URIブロックを貼り付けてください...",
+  "lbl_base64_hint": "有効なデータが貼り付けられると、ここにライブプレビューが生成されます。",
+  "lbl_base64_fail": "画像構造のコンパイルに失敗しました。文字列が切り捨てられていないか確認してください。",
+  "nav_base64_text": "Base64 (テキスト)",
+  "nav_base64_image": "Base64 (画像)"
 }

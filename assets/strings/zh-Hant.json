@@ -8,7 +8,6 @@
   "lbl_menu_encoder": "編碼 / 解碼工具",
   "nav_html": "HTML",
   "nav_url": "URL",
-  "nav_base64": "Base64",
   "nav_jwt": "JWT",
   "lbl_menu_formatter": "格式化工具",
   "nav_json": "JSON",
@@ -122,5 +121,16 @@
   "lbl_color_components": "組件",
   "lbl_settings_copyright": "靈感來自 veler 的原創 DevToys 專案。",
   "lbl_settings_licence": "開源授權條款",
-  "lbl_settings_all_rights_reserved": "保留所有權利。"
+  "lbl_settings_all_rights_reserved": "保留所有權利。",
+  "lbl_base64_operation": "操作",
+  "lbl_base64_encode": "編碼",
+  "lbl_base64_decode": "解碼",
+  "lbl_base64_source_image": "來源圖片",
+  "lbl_base64_output": "Base64 輸出字串",
+  "lbl_base64_preview": "圖片渲染預覽",
+  "lbl_base64_input": "Base64 輸入字串 - 在此貼上您的原始 Base64 數據或 Data-URI 區塊...",
+  "lbl_base64_hint": "貼上有效的數據後，此處將生成即時預覽。",
+  "lbl_base64_fail": "無法編譯圖片結構。請檢查字串是否被截斷。",
+  "nav_base64_text": "Base64 (文字)",
+  "nav_base64_image": "Base64 (圖片)"
 }

@@ -24,7 +24,6 @@ class CodegenLoader extends AssetLoader{
   "lbl_menu_encoder": "エンコーダー / デコーダー",
   "nav_html": "HTML",
   "nav_url": "URL",
-  "nav_base64": "Base64",
   "nav_jwt": "JWT",
   "lbl_menu_formatter": "フォーマッター",
   "nav_json": "JSON",
@@ -138,7 +137,18 @@ class CodegenLoader extends AssetLoader{
   "lbl_color_components": "コンポーネント",
   "lbl_settings_copyright": "velerによるオリジナルのDevToysプロジェクトにインスパイアされています。",
   "lbl_settings_licence": "オープンソースライセンス",
-  "lbl_settings_all_rights_reserved": "すべての権利を有します。 (or keep as English)"
+  "lbl_settings_all_rights_reserved": "すべての権利を有します。 (or keep as English)",
+  "lbl_base64_operation": "操作",
+  "lbl_base64_encode": "エンコード",
+  "lbl_base64_decode": "デコード",
+  "lbl_base64_source_image": "ソース画像",
+  "lbl_base64_output": "Base64出力文字列",
+  "lbl_base64_preview": "画像レンダリングプレビュー",
+  "lbl_base64_input": "Base64入力文字列 - ここに生のBase64データまたはData-URIブロックを貼り付けてください...",
+  "lbl_base64_hint": "有効なデータが貼り付けられると、ここにライブプレビューが生成されます。",
+  "lbl_base64_fail": "画像構造のコンパイルに失敗しました。文字列が切り捨てられていないか確認してください。",
+  "nav_base64_text": "Base64 (テキスト)",
+  "nav_base64_image": "Base64 (画像)"
 };
 static const Map<String,dynamic> _en = {
   "lbl_app_name": "DevStack",
@@ -150,7 +160,6 @@ static const Map<String,dynamic> _en = {
   "lbl_menu_encoder": "Encoders / Decoders",
   "nav_html": "HTML",
   "nav_url": "URL",
-  "nav_base64": "Base64",
   "nav_jwt": "JWT",
   "lbl_menu_formatter": "Formatters",
   "nav_json": "JSON",
@@ -264,7 +273,18 @@ static const Map<String,dynamic> _en = {
   "lbl_color_components": "Components",
   "lbl_settings_copyright": "Inspired by the original DevToys project by veler.",
   "lbl_settings_licence": "Open Source Licenses",
-  "lbl_settings_all_rights_reserved": "All rights reserved."
+  "lbl_settings_all_rights_reserved": "All rights reserved.",
+  "lbl_base64_operation": "Operation",
+  "lbl_base64_encode": "Encode",
+  "lbl_base64_decode": "Decode",
+  "lbl_base64_source_image": "Source Image",
+  "lbl_base64_output": "Base64 Output String",
+  "lbl_base64_preview": "Image Render Preview",
+  "lbl_base64_input": "Base64 Input String - Paste your raw Base64 data or Data-URI block here...",
+  "lbl_base64_hint": "A live preview will generate here once valid data is pasted.",
+  "lbl_base64_fail": "Failed to compile image structure. Check for string truncations.",
+  "nav_base64_text": "Base64 (Text)",
+  "nav_base64_image": "Base64 (Image)"
 };
 static const Map<String,dynamic> _zh_Hans = {
   "lbl_app_name": "开发栈",
@@ -276,7 +296,6 @@ static const Map<String,dynamic> _zh_Hans = {
   "lbl_menu_encoder": "编码 / 解码工具",
   "nav_html": "HTML",
   "nav_url": "URL",
-  "nav_base64": "Base64",
   "nav_jwt": "JWT",
   "lbl_menu_formatter": "格式化工具",
   "nav_json": "JSON",
@@ -390,7 +409,18 @@ static const Map<String,dynamic> _zh_Hans = {
   "lbl_color_components": "组件",
   "lbl_settings_copyright": "灵感来自 veler 的原创 DevToys 项目。",
   "lbl_settings_licence": "开源许可证",
-  "lbl_settings_all_rights_reserved": "保留所有权利。"
+  "lbl_settings_all_rights_reserved": "保留所有权利。",
+  "lbl_base64_operation": "操作",
+  "lbl_base64_encode": "编码",
+  "lbl_base64_decode": "解码",
+  "lbl_base64_source_image": "来源图片",
+  "lbl_base64_output": "Base64 输出字符串",
+  "lbl_base64_preview": "图片渲染预览",
+  "lbl_base64_input": "Base64 输入字符串 - 在此粘贴您的原始 Base64 数据或 Data-URI 区块...",
+  "lbl_base64_hint": "粘贴有效的数据后，此处将生成实时预览。",
+  "lbl_base64_fail": "无法编译图片结构。请检查字符串是否被截断。",
+  "nav_base64_text": "Base64 (文本)",
+  "nav_base64_image": "Base64 (图片)"
 };
 static const Map<String,dynamic> _fr = {
   "lbl_app_name": "Stack Dév",
@@ -402,7 +432,6 @@ static const Map<String,dynamic> _fr = {
   "lbl_menu_encoder": "Encodeurs / Décodeurs",
   "nav_html": "HTML",
   "nav_url": "URL",
-  "nav_base64": "Base64",
   "nav_jwt": "JWT",
   "lbl_menu_formatter": "Formateurs",
   "nav_json": "JSON",
@@ -516,7 +545,18 @@ static const Map<String,dynamic> _fr = {
   "lbl_color_components": "Composants",
   "lbl_settings_copyright": "Inspiré par le projet original DevToys de veler.",
   "lbl_settings_licence": "Licences open source",
-  "lbl_settings_all_rights_reserved": "Tous droits réservés."
+  "lbl_settings_all_rights_reserved": "Tous droits réservés.",
+  "lbl_base64_operation": "Opération",
+  "lbl_base64_encode": "Encoder",
+  "lbl_base64_decode": "Décoder",
+  "lbl_base64_source_image": "Image source",
+  "lbl_base64_output": "Chaîne de sortie Base64",
+  "lbl_base64_preview": "Aperçu du rendu de l'image",
+  "lbl_base64_input": "Chaîne d'entrée Base64 - Collez vos données Base64 brutes ou votre bloc Data-URI ici...",
+  "lbl_base64_hint": "Un aperçu en direct sera généré ici une fois que des données valides seront collées.",
+  "lbl_base64_fail": "Échec de la compilation de la structure de l'image. Vérifiez s'il y a des troncatures de chaîne.",
+  "nav_base64_text": "Base64 (Texte)",
+  "nav_base64_image": "Base64 (Image)"
 };
 static const Map<String,dynamic> _ko = {
   "lbl_app_name": "DevStack",
@@ -528,7 +568,6 @@ static const Map<String,dynamic> _ko = {
   "lbl_menu_encoder": "인코더 / 디코더",
   "nav_html": "HTML",
   "nav_url": "URL",
-  "nav_base64": "Base64",
   "nav_jwt": "JWT",
   "lbl_menu_formatter": "포매터",
   "nav_json": "JSON",
@@ -642,7 +681,18 @@ static const Map<String,dynamic> _ko = {
   "lbl_color_components": "구성 요소",
   "lbl_settings_copyright": "veler의 오리지널 DevToys 프로젝트에서 영감을 받았습니다.",
   "lbl_settings_licence": "오픈 소스 라이선스",
-  "lbl_settings_all_rights_reserved": "모든 권리 보유."
+  "lbl_settings_all_rights_reserved": "모든 권리 보유.",
+  "lbl_base64_operation": "작업",
+  "lbl_base64_encode": "인코딩",
+  "lbl_base64_decode": "디코딩",
+  "lbl_base64_source_image": "원본 이미지",
+  "lbl_base64_output": "Base64 출력 문자열",
+  "lbl_base64_preview": "이미지 렌더링 미리보기",
+  "lbl_base64_input": "Base64 입력 문자열 - 원시 Base64 데이터 또는 Data-URI 블록을 여기에 붙여넣으세요...",
+  "lbl_base64_hint": "유효한 데이터가 붙여넣어지면 여기에 실시간 미리보기가 생성됩니다.",
+  "lbl_base64_fail": "이미지 구조를 컴파일하지 못했습니다. 문자열이 잘렸는지 확인하세요.",
+  "nav_base64_text": "Base64 (텍스트)",
+  "nav_base64_image": "Base64 (이미지)"
 };
 static const Map<String,dynamic> _es = {
   "lbl_app_name": "Pila Dev",
@@ -654,7 +704,6 @@ static const Map<String,dynamic> _es = {
   "lbl_menu_encoder": "Codificadores / Decodificadores",
   "nav_html": "HTML",
   "nav_url": "URL",
-  "nav_base64": "Base64",
   "nav_jwt": "JWT",
   "lbl_menu_formatter": "Formateadores",
   "nav_json": "JSON",
@@ -768,7 +817,18 @@ static const Map<String,dynamic> _es = {
   "lbl_color_components": "Componentes",
   "lbl_settings_copyright": "Inspirado en el proyecto original DevToys de veler.",
   "lbl_settings_licence": "Licencias de código abierto",
-  "lbl_settings_all_rights_reserved": "Todos los derechos reservados."
+  "lbl_settings_all_rights_reserved": "Todos los derechos reservados.",
+  "lbl_base64_operation": "Operación",
+  "lbl_base64_encode": "Codificar",
+  "lbl_base64_decode": "Decodificar",
+  "lbl_base64_source_image": "Imagen de origen",
+  "lbl_base64_output": "Cadena de salida Base64",
+  "lbl_base64_preview": "Vista previa de renderizado de imagen",
+  "lbl_base64_input": "Cadena de entrada Base64 - Pegue sus datos Base64 sin procesar o bloque Data-URI aquí...",
+  "lbl_base64_hint": "Se generará una vista previa en vivo aquí una vez que se peguen datos válidos.",
+  "lbl_base64_fail": "Error al compilar la estructura de la imagen. Compruebe si hay truncamientos de cadena.",
+  "nav_base64_text": "Base64 (Texto)",
+  "nav_base64_image": "Base64 (Imagen)"
 };
 static const Map<String,dynamic> _zh_Hant = {
   "lbl_app_name": "DevStack",
@@ -780,7 +840,6 @@ static const Map<String,dynamic> _zh_Hant = {
   "lbl_menu_encoder": "編碼 / 解碼工具",
   "nav_html": "HTML",
   "nav_url": "URL",
-  "nav_base64": "Base64",
   "nav_jwt": "JWT",
   "lbl_menu_formatter": "格式化工具",
   "nav_json": "JSON",
@@ -894,7 +953,18 @@ static const Map<String,dynamic> _zh_Hant = {
   "lbl_color_components": "組件",
   "lbl_settings_copyright": "靈感來自 veler 的原創 DevToys 專案。",
   "lbl_settings_licence": "開源授權條款",
-  "lbl_settings_all_rights_reserved": "保留所有權利。"
+  "lbl_settings_all_rights_reserved": "保留所有權利。",
+  "lbl_base64_operation": "操作",
+  "lbl_base64_encode": "編碼",
+  "lbl_base64_decode": "解碼",
+  "lbl_base64_source_image": "來源圖片",
+  "lbl_base64_output": "Base64 輸出字串",
+  "lbl_base64_preview": "圖片渲染預覽",
+  "lbl_base64_input": "Base64 輸入字串 - 在此貼上您的原始 Base64 數據或 Data-URI 區塊...",
+  "lbl_base64_hint": "貼上有效的數據後，此處將生成即時預覽。",
+  "lbl_base64_fail": "無法編譯圖片結構。請檢查字串是否被截斷。",
+  "nav_base64_text": "Base64 (文字)",
+  "nav_base64_image": "Base64 (圖片)"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ja": _ja, "en": _en, "zh_Hans": _zh_Hans, "fr": _fr, "ko": _ko, "es": _es, "zh_Hant": _zh_Hant};
 }

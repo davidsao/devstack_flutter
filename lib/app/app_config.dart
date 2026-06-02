@@ -88,6 +88,7 @@ class AppConfig extends StatefulWidget {
     Get.lazyPut(() => QrGeneratorController(), fenix: true);
     Get.lazyPut(() => RegexTesterController(), fenix: true);
     Get.lazyPut(() => ColorPickerController(), fenix: true);
+    Get.lazyPut(() => MarkdownPreviewController(), fenix: true);
   }
 }
 

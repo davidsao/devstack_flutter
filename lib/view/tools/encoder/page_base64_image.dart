@@ -1,7 +1,11 @@
+import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
+import 'package:desktop_drop/desktop_drop.dart';
 import 'package:devstack/index.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+
+import '../../../generated/icon_keys.g.dart';
+import '../../../generated/locale_keys.g.dart';
 
 class Base64ImagePage
     extends BaseView<Base64ImageController, Base64ImageState> {
@@ -9,59 +13,140 @@ class Base64ImagePage
 
   @override
   Widget view(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(AppDimens.paddingMedium),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Base64 Image Encoder and Decoder",
-              style: AppTextStyles.b1.bold,
-            ),
-            kGapMedium,
+    return Padding(
+      padding: EdgeInsets.only(
+        left: AppDimens.paddingMedium,
+        right: AppDimens.paddingMedium,
+        top: AppDimens.paddingMedium,
+        bottom: AppDimens.paddingSmall + MediaQuery.paddingOf(context).bottom,
+      ),
+      child: ResponsiveSplitLayout(
+        firstFlex: 1,
+        secondFlex: 1,
+        secondChildrenScrollable: true,
+        breakpoint: 800.0,
 
-            // --- CONFIGURATION CARD ---
-            _buildCard(
-              context,
-              title: "Configuration",
+        // --- LEFT / TOP PANEL CONTENT ---
+        firstChildren: [
+          Text(
+            LocaleKeys.lbl_number_configuration.localize(),
+            style: AppTextStyles.b2.bold,
+          ),
+          kGapTiny,
+          Obx(() {
+            return Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Theme.of(context).dividerColor),
+                borderRadius: BorderRadius.circular(8),
+                color: Theme.of(context).colorScheme.primary.withAlpha(24),
+              ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppDimens.paddingSmaller,
+                vertical: AppDimens.paddingTiny,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Select which operation you want to perform"),
-                  Obx(() => ToggleButtons(
-                        isSelected: [
-                          state.isEncode.value,
-                          !state.isEncode.value
+                  Text(LocaleKeys.lbl_base64_operation.localize(),
+                      style: AppTextStyles.b2.bold),
+                  CustomSlidingSegmentedControl<bool>(
+                    height: 32,
+                    duration: const Duration(seconds: 1),
+                    curve: const ElasticOutCurve(0.9),
+                    padding: 0.0,
+                    innerPadding: const EdgeInsets.all(AppDimens.paddingText),
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 0.2,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withAlpha(20),
+                          blurStyle: BlurStyle.inner,
+                        )
+                      ],
+                      gradient: LinearGradient(
+                        colors: [
+                          Theme.of(context).colorScheme.primary.withAlpha(60),
+                          Theme.of(context).colorScheme.primary.withAlpha(35),
+                          Theme.of(context).colorScheme.primary.withAlpha(40),
+                          Theme.of(context).colorScheme.primary.withAlpha(50),
                         ],
-                        onPressed: (index) =>
-                            controller.setOperation(index == 0),
-                        borderRadius: BorderRadius.circular(8),
-                        children: const [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 24, vertical: 8),
-                            child: Text("Encode"),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 24, vertical: 8),
-                            child: Text("Decode"),
-                          ),
-                        ],
-                      )),
+                        stops: const [0.0, 0.45, 0.6, 1.0],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                      borderRadius:
+                          BorderRadius.circular(AppDimens.radiusMedium),
+                    ),
+                    thumbDecoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      borderRadius:
+                          BorderRadius.circular(AppDimens.radiusSmall),
+                    ),
+                    initialValue: state.isEncode.value,
+                    children: {
+                      true: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: AppDimens.paddingSmaller),
+                        child: Text(
+                          LocaleKeys.lbl_base64_encode.localize(),
+                          style: AppTextStyles.b2.semiBold,
+                        ),
+                      ),
+                      false: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: AppDimens.paddingSmaller),
+                        child: Text(
+                          LocaleKeys.lbl_base64_decode.localize(),
+                          style: AppTextStyles.b2.semiBold,
+                        ),
+                      ),
+                    },
+                    onValueChanged: (bool val) => controller.setOperation(val),
+                  ),
                 ],
               ),
-            ),
-            kGapMedium,
-
-            // --- MAIN DYNAMIC WORKSPACE ---
-            Obx(() => state.isEncode.value
-                ? _buildEncoderWorkspace(context)
-                : _buildDecoderWorkspace(context)),
-          ],
-        ),
+            );
+          }),
+          kGapSmall,
+          Expanded(
+            child: Obx(() {
+              if (state.isEncode.value) {
+                return _buildCard(context,
+                    title: LocaleKeys.lbl_base64_output.localize(),
+                    expand: true,
+                    child: CustomTextField(
+                      key: const ValueKey('encode_output_field'),
+                      controller: controller.outputController,
+                      maxLines: null,
+                      isEditable: false,
+                      isMonoSpace: true,
+                    ));
+              } else {
+                return _buildCard(
+                  context,
+                  title: LocaleKeys.lbl_base64_input.localize(),
+                  expand: true,
+                  child: CustomTextField(
+                    key: const ValueKey('encode_input_field'),
+                    controller: controller.inputController,
+                    onChanged: controller.decodeBase64,
+                    maxLines: null,
+                    isEditable: true,
+                    isMonoSpace: true,
+                  ),
+                );
+              }
+            }),
+          ),
+        ],
+        secondChildren: [
+          Obx(() => state.isEncode.value
+              ? _buildEncoderWorkspace(context)
+              : _buildDecoderWorkspace(context)),
+        ],
       ),
     );
   }
@@ -72,30 +157,56 @@ class Base64ImagePage
       children: [
         _buildCard(
           context,
-          title: "Source Image",
+          title: LocaleKeys.lbl_base64_source_image.localize(),
           child: Column(
             children: [
-              InkWell(
-                onTap: controller.pickImage,
-                borderRadius: BorderRadius.circular(8),
+              DropTarget(
+                onDragDone: controller.handleDrop,
                 child: Container(
                   width: double.infinity,
-                  height: 140,
                   decoration: BoxDecoration(
-                    border: Border.all(
-                        color: Theme.of(context).dividerColor,
-                        style: BorderStyle.solid),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .surfaceVariant
+                        .withOpacity(0.5),
                     borderRadius: BorderRadius.circular(8),
-                    color: Theme.of(context).dividerColor.withOpacity(0.03),
+                    border: Border.all(color: Theme.of(context).dividerColor),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.upload_file_rounded,
-                          size: 36, color: Theme.of(context).disabledColor),
+                      kGapLarge,
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Colors.grey,
+                              style: BorderStyle.solid,
+                              width: 2),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: AppImage(IconKeys.upload,
+                            size: AppDimens.iconLarge, color: Colors.grey),
+                      ),
                       kGapSmall,
-                      Text("Click to browse or drop an image file here",
-                          style: AppTextStyles.b3),
+                      Text(
+                        LocaleKeys.lbl_hash_drop_file.localize(),
+                        style: const TextStyle(fontWeight: FontWeight.w500),
+                        textAlign: TextAlign.center,
+                      ),
+                      kGapSmall,
+                      ElevatedButton.icon(
+                        onPressed: controller.pickImage,
+                        icon: AppImage(
+                          IconKeys.attach,
+                          size: AppDimens.iconSmaller,
+                          color: Theme.of(context).iconTheme.color,
+                        ),
+                        label: Text(
+                          LocaleKeys.btn_browse_file.localize(),
+                        ),
+                      ),
+                      kGapMedium,
                     ],
                   ),
                 ),
@@ -120,34 +231,6 @@ class Base64ImagePage
             ],
           ),
         ),
-        kGapMedium,
-        _buildCard(
-          context,
-          title: "Base64 Output String",
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.copy_rounded, size: 18),
-              onPressed: () {
-                if (state.base64Output.value.isNotEmpty) {
-                  Clipboard.setData(
-                      ClipboardData(text: state.base64Output.value));
-                  Get.snackbar("Copied", "Base64 data assigned to clipboard!");
-                }
-              },
-            )
-          ],
-          child: TextField(
-            controller: TextEditingController(text: state.base64Output.value),
-            maxLines: 6,
-            readOnly: true,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText:
-                  "Your encoded output string will appear here automatically...",
-            ),
-            style: AppTextStyles.monoStyle().copyWith(fontSize: 13),
-          ),
-        ),
       ],
     );
   }
@@ -158,21 +241,7 @@ class Base64ImagePage
       children: [
         _buildCard(
           context,
-          title: "Base64 Input String",
-          child: TextField(
-            maxLines: 6,
-            onChanged: controller.decodeBase64,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: "Paste your raw Base64 data or Data-URI block here...",
-            ),
-            style: AppTextStyles.monoStyle().copyWith(fontSize: 13),
-          ),
-        ),
-        kGapMedium,
-        _buildCard(
-          context,
-          title: "Image Render Preview",
+          title: LocaleKeys.lbl_base64_preview.localize(),
           child: Container(
             width: double.infinity,
             height: 260,
@@ -186,13 +255,13 @@ class Base64ImagePage
                 ? Image.memory(
                     state.imageBytes.value!,
                     fit: BoxFit.contain,
-                    errorBuilder: (context, error, stackTrace) => const Text(
-                      "Failed to compile image structure. Check for string truncations.",
+                    errorBuilder: (context, error, stackTrace) => Text(
+                      LocaleKeys.lbl_base64_fail.localize(),
                       style: TextStyle(color: Colors.redAccent),
                     ),
                   )
                 : Text(
-                    "A live preview will generate here once valid data is pasted.",
+                    LocaleKeys.lbl_base64_hint.localize(),
                     style: AppTextStyles.b3
                         .copyWith(color: Theme.of(context).disabledColor),
                   ),
@@ -204,7 +273,19 @@ class Base64ImagePage
 
   // --- BASE CARD WRAPPER COMPONENT ---
   Widget _buildCard(BuildContext context,
-      {required String title, required Widget child, List<Widget>? actions}) {
+      {required String title, required Widget child, bool expand = false}) {
+    Widget content = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
+      children: [
+        kGapSmall,
+        Text(title, style: AppTextStyles.b2.bold),
+        kGapSmaller,
+        expand ? Expanded(child: child) : child,
+        kGapMedium,
+      ],
+    );
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -212,21 +293,9 @@ class Base64ImagePage
         borderRadius: BorderRadius.circular(8),
         color: Theme.of(context).colorScheme.surface,
       ),
-      padding: const EdgeInsets.all(AppDimens.paddingMedium),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(title, style: AppTextStyles.b2.bold),
-              if (actions != null) Row(children: actions),
-            ],
-          ),
-          const Divider(height: 24),
-          child,
-        ],
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: AppDimens.paddingMedium),
+      // If expand is true, skip the scroll view entirely
+      child: expand ? content : SingleChildScrollView(child: content),
     );
   }
 }

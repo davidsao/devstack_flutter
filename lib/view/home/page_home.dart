@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:devstack/generated/icon_keys.g.dart';
 import 'package:devstack/index.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +29,34 @@ class HomePage extends BaseView<HomeController, HomeState> {
         fit: StackFit.expand,
         children: [
           // 1. Main Content Area
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  AppColors.primaryColor.withAlpha(32),
+                  AppColors.primaryColor.withAlpha(8),
+                  Colors.transparent,
+                ],
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+              ),
+            ),
+            alignment: Alignment.topRight,
+            child: Opacity(
+              opacity: 0.02,
+              child: AppImage(
+                IconKeys.bg,
+                size: min(
+                      MediaQuery.sizeOf(context).height,
+                      MediaQuery.sizeOf(context).width,
+                    ) *
+                    0.5,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : null,
+              ),
+            ),
+          ),
           Obx(() {
             final nav = app.state.currentTools.value;
             return AnimatedContainer(

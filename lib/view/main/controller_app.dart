@@ -88,6 +88,7 @@ class AppController extends BaseController<AppState> {
       LocaleKeys.lbl_menu_other_tool.localize(): [
         Nav.textRegex,
         Nav.colorPicker,
+        Nav.markdown,
       ],
     });
 

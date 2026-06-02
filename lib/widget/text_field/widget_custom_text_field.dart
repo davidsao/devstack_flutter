@@ -136,14 +136,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     });
 
     // 4. Two-way binding: Push standard controller changes to re_editor
-    widget.controller.addListener(() {
-      if (_codeController.text != widget.controller.text) {
-        _isInternalUpdate = true;
-        _codeController.text = widget.controller.text;
-        _lastValue = TextEditingValue(text: widget.controller.text);
-        _isInternalUpdate = false;
-      }
-    });
+    widget.controller.addListener(_syncToCodeController);
   }
 
   // --- HELPER: Convert 2D re_editor selection to 1D Flutter offset ---
@@ -195,7 +188,29 @@ class _CustomTextFieldState extends State<CustomTextField> {
   }
 
   @override
+  void didUpdateWidget(CustomTextField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // If the framework swaps the controller (e.g., toggling Encode/Decode)
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller.removeListener(_syncToCodeController);
+      widget.controller.addListener(_syncToCodeController);
+      _syncToCodeController(); // Force sync text
+    }
+  }
+
+  void _syncToCodeController() {
+    if (_codeController.text != widget.controller.text) {
+      _isInternalUpdate = true;
+      _codeController.text = widget.controller.text;
+      _lastValue = TextEditingValue(text: widget.controller.text);
+      _isInternalUpdate = false;
+    }
+  }
+
+  @override
   void dispose() {
+    widget.controller.removeListener(_syncToCodeController);
     _codeController.dispose();
     _codeScrollController.dispose();
     _codeFindController.dispose();

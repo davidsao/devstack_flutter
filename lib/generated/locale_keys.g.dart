@@ -12,7 +12,6 @@ abstract class  LocaleKeys {
   static const lbl_menu_encoder = 'lbl_menu_encoder';
   static const nav_html = 'nav_html';
   static const nav_url = 'nav_url';
-  static const nav_base64 = 'nav_base64';
   static const nav_jwt = 'nav_jwt';
   static const lbl_menu_formatter = 'lbl_menu_formatter';
   static const nav_json = 'nav_json';
@@ -127,5 +126,16 @@ abstract class  LocaleKeys {
   static const lbl_settings_copyright = 'lbl_settings_copyright';
   static const lbl_settings_licence = 'lbl_settings_licence';
   static const lbl_settings_all_rights_reserved = 'lbl_settings_all_rights_reserved';
+  static const lbl_base64_operation = 'lbl_base64_operation';
+  static const lbl_base64_encode = 'lbl_base64_encode';
+  static const lbl_base64_decode = 'lbl_base64_decode';
+  static const lbl_base64_source_image = 'lbl_base64_source_image';
+  static const lbl_base64_output = 'lbl_base64_output';
+  static const lbl_base64_preview = 'lbl_base64_preview';
+  static const lbl_base64_input = 'lbl_base64_input';
+  static const lbl_base64_hint = 'lbl_base64_hint';
+  static const lbl_base64_fail = 'lbl_base64_fail';
+  static const nav_base64_text = 'nav_base64_text';
+  static const nav_base64_image = 'nav_base64_image';
 
 }

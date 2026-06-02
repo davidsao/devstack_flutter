@@ -8,7 +8,6 @@
   "lbl_menu_encoder": "Encodeurs / Décodeurs",
   "nav_html": "HTML",
   "nav_url": "URL",
-  "nav_base64": "Base64",
   "nav_jwt": "JWT",
   "lbl_menu_formatter": "Formateurs",
   "nav_json": "JSON",
@@ -122,5 +121,16 @@
   "lbl_color_components": "Composants",
   "lbl_settings_copyright": "Inspiré par le projet original DevToys de veler.",
   "lbl_settings_licence": "Licences open source",
-  "lbl_settings_all_rights_reserved": "Tous droits réservés."
+  "lbl_settings_all_rights_reserved": "Tous droits réservés.",
+  "lbl_base64_operation": "Opération",
+  "lbl_base64_encode": "Encoder",
+  "lbl_base64_decode": "Décoder",
+  "lbl_base64_source_image": "Image source",
+  "lbl_base64_output": "Chaîne de sortie Base64",
+  "lbl_base64_preview": "Aperçu du rendu de l'image",
+  "lbl_base64_input": "Chaîne d'entrée Base64 - Collez vos données Base64 brutes ou votre bloc Data-URI ici...",
+  "lbl_base64_hint": "Un aperçu en direct sera généré ici une fois que des données valides seront collées.",
+  "lbl_base64_fail": "Échec de la compilation de la structure de l'image. Vérifiez s'il y a des troncatures de chaîne.",
+  "nav_base64_text": "Base64 (Texte)",
+  "nav_base64_image": "Base64 (Image)"
 }

@@ -8,7 +8,6 @@
   "lbl_menu_encoder": "인코더 / 디코더",
   "nav_html": "HTML",
   "nav_url": "URL",
-  "nav_base64": "Base64",
   "nav_jwt": "JWT",
   "lbl_menu_formatter": "포매터",
   "nav_json": "JSON",
@@ -122,5 +121,16 @@
   "lbl_color_components": "구성 요소",
   "lbl_settings_copyright": "veler의 오리지널 DevToys 프로젝트에서 영감을 받았습니다.",
   "lbl_settings_licence": "오픈 소스 라이선스",
-  "lbl_settings_all_rights_reserved": "모든 권리 보유."
+  "lbl_settings_all_rights_reserved": "모든 권리 보유.",
+  "lbl_base64_operation": "작업",
+  "lbl_base64_encode": "인코딩",
+  "lbl_base64_decode": "디코딩",
+  "lbl_base64_source_image": "원본 이미지",
+  "lbl_base64_output": "Base64 출력 문자열",
+  "lbl_base64_preview": "이미지 렌더링 미리보기",
+  "lbl_base64_input": "Base64 입력 문자열 - 원시 Base64 데이터 또는 Data-URI 블록을 여기에 붙여넣으세요...",
+  "lbl_base64_hint": "유효한 데이터가 붙여넣어지면 여기에 실시간 미리보기가 생성됩니다.",
+  "lbl_base64_fail": "이미지 구조를 컴파일하지 못했습니다. 문자열이 잘렸는지 확인하세요.",
+  "nav_base64_text": "Base64 (텍스트)",
+  "nav_base64_image": "Base64 (이미지)"
 }

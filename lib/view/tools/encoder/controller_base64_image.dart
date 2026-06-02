@@ -1,19 +1,32 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:cross_file/cross_file.dart';
+import 'package:desktop_drop/desktop_drop.dart';
 import 'package:devstack/index.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart' as path;
 
 class Base64ImageController extends BaseController<Base64ImageState> {
   @override
   Base64ImageState initState() => Base64ImageState();
 
+  final outputController = TextEditingController();
+  final inputController = TextEditingController();
+
   // Switch between encoding and decoding modes
   void setOperation(bool isEncode) {
     state.isEncode.value = isEncode;
     clearAll();
+  }
+
+  void handleDrop(DropDoneDetails details) {
+    if (details.files.isNotEmpty) {
+      handleDroppedFile(details.files.first);
+    }
   }
 
   // ENCODE: Browse device and parse selected file to Base64
@@ -33,7 +46,24 @@ class Base64ImageController extends BaseController<Base64ImageState> {
 
         // Formats output string as a valid browser/render Data URI
         state.base64Output.value = "data:image/$extension;base64,$rawBase64";
+        outputController.text = "data:image/$extension;base64,$rawBase64";
       }
+    } catch (e) {
+      Get.snackbar("Error", "Failed to process image file: $e");
+    }
+  }
+
+  void handleDroppedFile(XFile result) async {
+    try {
+      Uint8List fileBytes = await result.readAsBytes();
+      state.imageBytes.value = fileBytes;
+
+      String rawBase64 = base64Encode(fileBytes);
+      String extension = path.extension(result.name);
+
+      // Formats output string as a valid browser/render Data URI
+      state.base64Output.value = "data:image/$extension;base64,$rawBase64";
+      outputController.text = "data:image/$extension;base64,$rawBase64";
     } catch (e) {
       Get.snackbar("Error", "Failed to process image file: $e");
     }
