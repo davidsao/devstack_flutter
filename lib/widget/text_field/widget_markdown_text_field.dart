@@ -7,6 +7,8 @@ import 'package:re_editor/re_editor.dart';
 import 'package:re_highlight/languages/markdown.dart';
 import 'package:re_highlight/styles/googlecode.dart';
 
+import '../../generated/locale_keys.g.dart';
+
 const Map<String, String> _emojiMap = {
   'smile': '😄',
   'heart': '❤️',
@@ -378,69 +380,71 @@ class _MarkdownEditorFieldState extends State<MarkdownEditorField> {
         children: [
           _ToolbarBtn(
               icon: IconKeys.undo,
-              tooltip: "Undo",
+              tooltip: LocaleKeys.lbl_markdown_undo.localize(),
               // Pass null if empty to disable the button
               onTap: _undoStack.isNotEmpty ? _undo : null),
           _ToolbarBtn(
               icon: IconKeys.redo,
-              tooltip: "Redo",
+              tooltip: LocaleKeys.lbl_markdown_redo.localize(),
               // Pass null if empty to disable the button
               onTap: _redoStack.isNotEmpty ? _redo : null),
           const _Divider(),
           _ToolbarBtn(
               icon: IconKeys.textBold,
-              tooltip: "Bold",
+              tooltip: LocaleKeys.lbl_markdown_bold.localize(),
               onTap: () => _wrapSelection("**")),
           _ToolbarBtn(
               icon: IconKeys.textItalic,
-              tooltip: "Italic",
+              tooltip: LocaleKeys.lbl_markdown_italic.localize(),
               onTap: () => _wrapSelection("*")),
           _ToolbarBtn(
               icon: IconKeys.textStrikethrough,
-              tooltip: "Strikethrough",
+              tooltip: LocaleKeys.lbl_markdown_strikethrough.localize(),
               onTap: () => _wrapSelection("~~")),
           const _Divider(),
           _ToolbarBtn(
               icon: IconKeys.codeInline,
-              tooltip: "Inline Code",
+              tooltip: LocaleKeys.lbl_markdown_inline_code.localize(),
               onTap: () => _wrapSelection("`")),
           _ToolbarBtn(
               icon: IconKeys.codeBlock,
-              tooltip: "Code Block",
+              tooltip: LocaleKeys.lbl_markdown_code_block.localize(),
               onTap: _insertCodeBlock),
           _ToolbarBtn(
-              icon: IconKeys.textUrl, tooltip: "Link", onTap: _insertLink),
+              icon: IconKeys.textUrl,
+              tooltip: LocaleKeys.lbl_markdown_link.localize(),
+              onTap: _insertLink),
           const _Divider(),
           _ToolbarBtn(
               icon: IconKeys.h1,
-              tooltip: "Heading 1",
+              tooltip: LocaleKeys.lbl_markdown_h1.localize(),
               onTap: () => _prefixMultiline("#")),
           _ToolbarBtn(
               icon: IconKeys.h2,
-              tooltip: "Heading 2",
+              tooltip: LocaleKeys.lbl_markdown_h2.localize(),
               onTap: () => _prefixMultiline("##")),
           _ToolbarBtn(
               icon: IconKeys.h3,
-              tooltip: "Heading 3",
+              tooltip: LocaleKeys.lbl_markdown_h3.localize(),
               onTap: () => _prefixMultiline("###")),
           const _Divider(),
           _ToolbarBtn(
               icon: IconKeys.quote,
-              tooltip: "Quote",
+              tooltip: LocaleKeys.lbl_markdown_quote.localize(),
               onTap: () => _prefixMultiline(">")),
           _ToolbarBtn(
               icon: IconKeys.unorderedList,
-              tooltip: "Unordered List",
+              tooltip: LocaleKeys.lbl_markdown_list.localize(),
               onTap: () => _prefixMultiline("-")),
           _ToolbarBtn(
               icon: IconKeys.checklist,
-              tooltip: "Task List",
+              tooltip: LocaleKeys.lbl_markdown_task.localize(),
               onTap: () => _prefixMultiline("- [ ]")),
           const _Divider(),
           _ToolbarBtn(
             // icon: _isWordWrapEnabled ? IconKeys.textWrap : Icons.subject,
             icon: IconKeys.textWrap,
-            tooltip: "Toggle Word Wrap",
+            tooltip: LocaleKeys.lbl_markdown_wrap.localize(),
             onTap: () {
               setState(() => _isWordWrapEnabled = !_isWordWrapEnabled);
               _codeScrollController = CodeScrollController(
@@ -476,7 +480,7 @@ class _ToolbarBtn extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: AppImage(
             icon,
-            size: AppDimens.iconSmaller,
+            size: 16,
             // Dim the icon if the action is currently disabled (e.g. empty undo stack)
             color: isDisabled
                 ? Theme.of(context).disabledColor

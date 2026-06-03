@@ -58,7 +58,8 @@ class MarkdownPreviewPage
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            child: Text("Preview Theme", style: AppTextStyles.b2.bold),
+            child: Text(LocaleKeys.lbl_markdown_theme.localize(),
+                style: AppTextStyles.b2.bold),
           ),
           Obx(() {
             return DropDownWidget(
@@ -85,7 +86,8 @@ class MarkdownPreviewPage
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Editor", style: AppTextStyles.b2.bold),
+            Text(LocaleKeys.lbl_markdown_editor.localize(),
+                style: AppTextStyles.b2.bold),
             Row(
               children: [
                 IconButton(
@@ -118,7 +120,8 @@ class MarkdownPreviewPage
         Padding(
           // Aligning the header with the left side
           padding: const EdgeInsets.symmetric(vertical: 12.0),
-          child: Text("Preview", style: AppTextStyles.b2.bold),
+          child: Text(LocaleKeys.lbl_markdown_preview.localize(),
+              style: AppTextStyles.b2.bold),
         ),
         Expanded(
           child: Obx(() {
@@ -142,7 +145,8 @@ class MarkdownPreviewPage
                 data: isDark ? ThemeData.dark() : ThemeData.light(),
                 child: Markdown(
                   data: state.inputText.value.isEmpty
-                      ? "### Nothing to preview\nStart typing on the left!"
+                      ? "### ${LocaleKeys.lbl_markdown_empty_title.localize()}"
+                          "\n${LocaleKeys.lbl_markdown_empty_subtitle.localize()}"
                       : state.inputText.value,
                   selectable:
                       true, // Allows users to highlight and copy the rendered text

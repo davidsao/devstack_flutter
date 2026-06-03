@@ -137,5 +137,26 @@ abstract class  LocaleKeys {
   static const lbl_base64_fail = 'lbl_base64_fail';
   static const nav_base64_text = 'nav_base64_text';
   static const nav_base64_image = 'nav_base64_image';
+  static const nav_markdown = 'nav_markdown';
+  static const lbl_markdown_theme = 'lbl_markdown_theme';
+  static const lbl_markdown_editor = 'lbl_markdown_editor';
+  static const lbl_markdown_preview = 'lbl_markdown_preview';
+  static const lbl_markdown_empty_title = 'lbl_markdown_empty_title';
+  static const lbl_markdown_empty_subtitle = 'lbl_markdown_empty_subtitle';
+  static const lbl_markdown_undo = 'lbl_markdown_undo';
+  static const lbl_markdown_redo = 'lbl_markdown_redo';
+  static const lbl_markdown_bold = 'lbl_markdown_bold';
+  static const lbl_markdown_italic = 'lbl_markdown_italic';
+  static const lbl_markdown_strikethrough = 'lbl_markdown_strikethrough';
+  static const lbl_markdown_inline_code = 'lbl_markdown_inline_code';
+  static const lbl_markdown_code_block = 'lbl_markdown_code_block';
+  static const lbl_markdown_link = 'lbl_markdown_link';
+  static const lbl_markdown_h1 = 'lbl_markdown_h1';
+  static const lbl_markdown_h2 = 'lbl_markdown_h2';
+  static const lbl_markdown_h3 = 'lbl_markdown_h3';
+  static const lbl_markdown_quote = 'lbl_markdown_quote';
+  static const lbl_markdown_list = 'lbl_markdown_list';
+  static const lbl_markdown_task = 'lbl_markdown_task';
+  static const lbl_markdown_wrap = 'lbl_markdown_wrap';
 
 }
