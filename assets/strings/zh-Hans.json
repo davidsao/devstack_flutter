@@ -134,6 +134,7 @@
   "nav_base64_text": "Base64 (文本)",
   "nav_base64_image": "Base64 (图片)",
   "nav_markdown": "Markdown 编辑器",
+  "nav_text_inspector": "文本检查器",
   "lbl_markdown_theme": "预览主题",
   "lbl_markdown_editor": "编辑器",
   "lbl_markdown_preview": "预览",
@@ -153,5 +154,9 @@
   "lbl_markdown_quote": "引用",
   "lbl_markdown_list": "无序列表",
   "lbl_markdown_task": "任务列表",
-  "lbl_markdown_wrap": "切换自动换行"
+  "lbl_markdown_wrap": "切换自动换行",
+  "lbl_text_inspector_chars": "字符",
+  "lbl_text_inspector_words": "单词",
+  "lbl_text_inspector_lines": "行数",
+  "lbl_text_inspector_bytes": "字节"
 }

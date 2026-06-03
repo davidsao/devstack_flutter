@@ -28,6 +28,7 @@ enum Nav {
   textRegex,
   colorPicker,
   markdown,
+  textInspector,
 }
 
 class Navigation {
@@ -94,6 +95,8 @@ extension NavigationExtension on Nav {
         return ColorPickerPage(viewTag: viewTag);
       case Nav.markdown:
         return MarkdownPreviewPage(viewTag: viewTag);
+      case Nav.textInspector:
+        return TextInspectorPage(viewTag: viewTag);
       default:
         return const Center(child: Text('ComingSoonPage'));
     }
@@ -128,6 +131,7 @@ extension NavigationExtension on Nav {
       Nav.textRegex: IconKeys.regex,
       Nav.colorPicker: IconKeys.colorPicker,
       Nav.markdown: IconKeys.markdown,
+      Nav.textInspector: IconKeys.textInspector,
     }[this];
   }
 
@@ -152,7 +156,8 @@ extension NavigationExtension on Nav {
       Nav.generatorQr: LocaleKeys.nav_qr_generator.localize(),
       Nav.textRegex: LocaleKeys.nav_regex.localize(),
       Nav.colorPicker: LocaleKeys.nav_color_picker.localize(),
-      Nav.markdown: 'Markdown',
+      Nav.markdown: LocaleKeys.nav_markdown.localize(),
+      Nav.textInspector: LocaleKeys.nav_text_inspector.localize(),
     }[this];
   }
 

@@ -14,10 +14,7 @@ class AllToolsPage extends BaseView<AllToolsController, AllToolsState> {
       backgroundColor: Colors.transparent,
       body: Padding(
         padding: EdgeInsets.only(
-          left: AppDimens.paddingMedium,
-          right: AppDimens.paddingMedium,
           top: AppDimens.paddingMedium,
-          bottom: AppDimens.paddingSmall,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,6 +22,8 @@ class AllToolsPage extends BaseView<AllToolsController, AllToolsState> {
             Text(
               LocaleKeys.lbl_all_tools.localize(),
               style: AppTextStyles.h2.bold,
+            ).marginSymmetric(
+              horizontal: AppDimens.paddingMedium,
             ),
             kGapMedium,
             Expanded(
@@ -36,6 +35,11 @@ class AllToolsPage extends BaseView<AllToolsController, AllToolsState> {
                   removeTop: true,
                   removeBottom: true,
                   child: ListView.builder(
+                    padding: const EdgeInsets.only(
+                      bottom: AppDimens.paddingMedium,
+                      left: AppDimens.paddingMedium,
+                      right: AppDimens.paddingMedium,
+                    ),
                     itemCount: categories.length,
                     itemBuilder: (context, index) {
                       final categoryName = categories.keys.elementAt(index);

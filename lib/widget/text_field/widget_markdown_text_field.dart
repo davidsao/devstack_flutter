@@ -442,8 +442,7 @@ class _MarkdownEditorFieldState extends State<MarkdownEditorField> {
               onTap: () => _prefixMultiline("- [ ]")),
           const _Divider(),
           _ToolbarBtn(
-            // icon: _isWordWrapEnabled ? IconKeys.textWrap : Icons.subject,
-            icon: IconKeys.textWrap,
+            icon: _isWordWrapEnabled ? IconKeys.textWrap : IconKeys.textUnwrap,
             tooltip: LocaleKeys.lbl_markdown_wrap.localize(),
             onTap: () {
               setState(() => _isWordWrapEnabled = !_isWordWrapEnabled);

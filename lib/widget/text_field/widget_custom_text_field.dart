@@ -347,8 +347,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
           message:
               _isWordWrapEnabled ? 'Disable Word Wrap' : 'Enable Word Wrap',
           child: IconButton(
-            icon: Icon(
-              _isWordWrapEnabled ? Icons.wrap_text : Icons.subject,
+            icon: AppImage(
+              _isWordWrapEnabled ? IconKeys.textWrap : IconKeys.textUnwrap,
               size: 20,
               color: Theme.of(context).iconTheme.color?.withOpacity(0.7),
             ),

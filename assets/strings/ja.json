@@ -134,6 +134,7 @@
   "nav_base64_text": "Base64 (テキスト)",
   "nav_base64_image": "Base64 (画像)",
   "nav_markdown": "Markdown エディタ",
+  "nav_text_inspector": "テキストインスペクター",
   "lbl_markdown_theme": "プレビューテーマ",
   "lbl_markdown_editor": "エディタ",
   "lbl_markdown_preview": "プレビュー",
@@ -153,5 +154,9 @@
   "lbl_markdown_quote": "引用",
   "lbl_markdown_list": "箇条書きリスト",
   "lbl_markdown_task": "タスクリスト",
-  "lbl_markdown_wrap": "折り返しの切り替え"
+  "lbl_markdown_wrap": "折り返しの切り替え",
+  "lbl_text_inspector_chars": "文字数",
+  "lbl_text_inspector_words": "単語数",
+  "lbl_text_inspector_lines": "行数",
+  "lbl_text_inspector_bytes": "バイト数"
 }

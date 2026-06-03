@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:devstack/index.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 
@@ -31,6 +32,7 @@ class AppController extends BaseController<AppState> {
   @override
   Future<void> onInit() async {
     super.onInit();
+    state.isMenuExpanded.value = MediaQuery.sizeOf(Get.context!).width < 800;
     state.isIpad.value = await isIpad();
     state.currentLanguage.value = _localeManager.language;
 
@@ -89,6 +91,7 @@ class AppController extends BaseController<AppState> {
         Nav.textRegex,
         Nav.colorPicker,
         Nav.markdown,
+        Nav.textInspector,
       ],
     });
 
@@ -133,7 +136,7 @@ class AppController extends BaseController<AppState> {
 
 class AppState extends ViewState {
   Rx<Language> currentLanguage = Language.english.obs;
-  RxBool isMenuExpanded = true.obs;
+  RxBool isMenuExpanded = false.obs;
   RxList<Nav> pinnedTools = <Nav>[].obs;
   RxMap<String, List<Nav>> tools = <String, List<Nav>>{}.obs;
   Rx<Nav> currentTools = Nav.allTools.obs;

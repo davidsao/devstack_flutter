@@ -134,6 +134,7 @@
   "nav_base64_text": "Base64 (文字)",
   "nav_base64_image": "Base64 (圖片)",
   "nav_markdown": "Markdown 編輯器",
+  "nav_text_inspector": "文字檢查器",
   "lbl_markdown_theme": "預覽主題",
   "lbl_markdown_editor": "編輯器",
   "lbl_markdown_preview": "預覽",
@@ -153,5 +154,9 @@
   "lbl_markdown_quote": "引用",
   "lbl_markdown_list": "無序清單",
   "lbl_markdown_task": "任務清單",
-  "lbl_markdown_wrap": "切換自動換行"
+  "lbl_markdown_wrap": "切換自動換行",
+  "lbl_text_inspector_chars": "字元",
+  "lbl_text_inspector_words": "單字",
+  "lbl_text_inspector_lines": "行數",
+  "lbl_text_inspector_bytes": "位元組"
 }

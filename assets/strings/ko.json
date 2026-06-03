@@ -134,6 +134,7 @@
   "nav_base64_text": "Base64 (텍스트)",
   "nav_base64_image": "Base64 (이미지)",
   "nav_markdown": "Markdown 편집기",
+  "nav_text_inspector": "텍스트 검사기",
   "lbl_markdown_theme": "프리뷰 테마",
   "lbl_markdown_editor": "편집기",
   "lbl_markdown_preview": "미리보기",
@@ -153,5 +154,9 @@
   "lbl_markdown_quote": "인용구",
   "lbl_markdown_list": "순서 없는 목록",
   "lbl_markdown_task": "작업 목록",
-  "lbl_markdown_wrap": "자동 줄 바꿈 전환"
+  "lbl_markdown_wrap": "자동 줄 바꿈 전환",
+  "lbl_text_inspector_chars": "문자:",
+  "lbl_text_inspector_words": "단어:",
+  "lbl_text_inspector_lines": "줄:",
+  "lbl_text_inspector_bytes": "바이트:"
 }

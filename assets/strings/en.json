@@ -134,6 +134,7 @@
   "nav_base64_text": "Base64 (Text)",
   "nav_base64_image": "Base64 (Image)",
   "nav_markdown": "Markdown Editor",
+  "nav_text_inspector": "Text Inspector",
   "lbl_markdown_theme": "Preview Theme",
   "lbl_markdown_editor": "Editor",
   "lbl_markdown_preview": "Preview",
@@ -153,5 +154,9 @@
   "lbl_markdown_quote": "Quote",
   "lbl_markdown_list": "Unordered List",
   "lbl_markdown_task": "Task List",
-  "lbl_markdown_wrap": "Toggle Word Wrap"
+  "lbl_markdown_wrap": "Toggle Word Wrap",
+  "lbl_text_inspector_chars": "Chars:",
+  "lbl_text_inspector_words": "Words:",
+  "lbl_text_inspector_lines": "Lines:",
+  "lbl_text_inspector_bytes": "Bytes:"
 }

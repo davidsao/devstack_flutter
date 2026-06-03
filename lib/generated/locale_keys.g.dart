@@ -138,6 +138,7 @@ abstract class  LocaleKeys {
   static const nav_base64_text = 'nav_base64_text';
   static const nav_base64_image = 'nav_base64_image';
   static const nav_markdown = 'nav_markdown';
+  static const nav_text_inspector = 'nav_text_inspector';
   static const lbl_markdown_theme = 'lbl_markdown_theme';
   static const lbl_markdown_editor = 'lbl_markdown_editor';
   static const lbl_markdown_preview = 'lbl_markdown_preview';
@@ -158,5 +159,9 @@ abstract class  LocaleKeys {
   static const lbl_markdown_list = 'lbl_markdown_list';
   static const lbl_markdown_task = 'lbl_markdown_task';
   static const lbl_markdown_wrap = 'lbl_markdown_wrap';
+  static const lbl_text_inspector_chars = 'lbl_text_inspector_chars';
+  static const lbl_text_inspector_words = 'lbl_text_inspector_words';
+  static const lbl_text_inspector_lines = 'lbl_text_inspector_lines';
+  static const lbl_text_inspector_bytes = 'lbl_text_inspector_bytes';
 
 }

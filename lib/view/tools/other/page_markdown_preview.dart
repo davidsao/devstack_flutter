@@ -130,9 +130,6 @@ class MarkdownPreviewPage
             if (state.previewTheme.value == 'light') isDark = false;
             if (state.previewTheme.value == 'dark') isDark = true;
 
-            // Optional: Create a custom MarkdownStyleSheet if you want specific fonts
-            // Otherwise, it inherits nicely from the App's text themes
-
             return Container(
               decoration: BoxDecoration(
                 border: Border.all(color: Theme.of(context).dividerColor),
@@ -140,16 +137,13 @@ class MarkdownPreviewPage
                 color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
               ),
               child: Theme(
-                // Wrap the Markdown widget in a specific theme block so it forces
-                // the typography colors to match the selected light/dark dropdown
                 data: isDark ? ThemeData.dark() : ThemeData.light(),
                 child: Markdown(
                   data: state.inputText.value.isEmpty
                       ? "### ${LocaleKeys.lbl_markdown_empty_title.localize()}"
                           "\n${LocaleKeys.lbl_markdown_empty_subtitle.localize()}"
                       : state.inputText.value,
-                  selectable:
-                      true, // Allows users to highlight and copy the rendered text
+                  selectable: true,
                   onTapLink: (text, href, title) async {
                     if (href != null) {
                       final url = Uri.parse(href);

@@ -28,7 +28,6 @@ class HomePage extends BaseView<HomeController, HomeState> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // 1. Main Content Area
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -57,6 +56,7 @@ class HomePage extends BaseView<HomeController, HomeState> {
               ),
             ),
           ),
+          // 1. Main Content Area
           Obx(() {
             final nav = app.state.currentTools.value;
             return AnimatedContainer(
@@ -120,7 +120,9 @@ class HomePage extends BaseView<HomeController, HomeState> {
                   Row(
                     children: [
                       const Spacer(),
-                      if (isMobile)
+                      if (isMobile ||
+                          (!app.state.isMenuExpanded.value &&
+                              app.state.currentTools.value != Nav.allTools))
                         Text(
                           app.state.currentTools.value.getName ??
                               LocaleKeys.lbl_app_name.localize(),

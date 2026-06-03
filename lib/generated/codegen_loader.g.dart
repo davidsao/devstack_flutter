@@ -150,6 +150,7 @@ class CodegenLoader extends AssetLoader{
   "nav_base64_text": "Base64 (テキスト)",
   "nav_base64_image": "Base64 (画像)",
   "nav_markdown": "Markdown エディタ",
+  "nav_text_inspector": "テキストインスペクター",
   "lbl_markdown_theme": "プレビューテーマ",
   "lbl_markdown_editor": "エディタ",
   "lbl_markdown_preview": "プレビュー",
@@ -169,7 +170,11 @@ class CodegenLoader extends AssetLoader{
   "lbl_markdown_quote": "引用",
   "lbl_markdown_list": "箇条書きリスト",
   "lbl_markdown_task": "タスクリスト",
-  "lbl_markdown_wrap": "折り返しの切り替え"
+  "lbl_markdown_wrap": "折り返しの切り替え",
+  "lbl_text_inspector_chars": "文字数",
+  "lbl_text_inspector_words": "単語数",
+  "lbl_text_inspector_lines": "行数",
+  "lbl_text_inspector_bytes": "バイト数"
 };
 static const Map<String,dynamic> _en = {
   "lbl_app_name": "DevStack",
@@ -307,6 +312,7 @@ static const Map<String,dynamic> _en = {
   "nav_base64_text": "Base64 (Text)",
   "nav_base64_image": "Base64 (Image)",
   "nav_markdown": "Markdown Editor",
+  "nav_text_inspector": "Text Inspector",
   "lbl_markdown_theme": "Preview Theme",
   "lbl_markdown_editor": "Editor",
   "lbl_markdown_preview": "Preview",
@@ -326,7 +332,11 @@ static const Map<String,dynamic> _en = {
   "lbl_markdown_quote": "Quote",
   "lbl_markdown_list": "Unordered List",
   "lbl_markdown_task": "Task List",
-  "lbl_markdown_wrap": "Toggle Word Wrap"
+  "lbl_markdown_wrap": "Toggle Word Wrap",
+  "lbl_text_inspector_chars": "Chars:",
+  "lbl_text_inspector_words": "Words:",
+  "lbl_text_inspector_lines": "Lines:",
+  "lbl_text_inspector_bytes": "Bytes:"
 };
 static const Map<String,dynamic> _zh_Hans = {
   "lbl_app_name": "开发栈",
@@ -464,6 +474,7 @@ static const Map<String,dynamic> _zh_Hans = {
   "nav_base64_text": "Base64 (文本)",
   "nav_base64_image": "Base64 (图片)",
   "nav_markdown": "Markdown 编辑器",
+  "nav_text_inspector": "文本检查器",
   "lbl_markdown_theme": "预览主题",
   "lbl_markdown_editor": "编辑器",
   "lbl_markdown_preview": "预览",
@@ -483,7 +494,11 @@ static const Map<String,dynamic> _zh_Hans = {
   "lbl_markdown_quote": "引用",
   "lbl_markdown_list": "无序列表",
   "lbl_markdown_task": "任务列表",
-  "lbl_markdown_wrap": "切换自动换行"
+  "lbl_markdown_wrap": "切换自动换行",
+  "lbl_text_inspector_chars": "字符",
+  "lbl_text_inspector_words": "单词",
+  "lbl_text_inspector_lines": "行数",
+  "lbl_text_inspector_bytes": "字节"
 };
 static const Map<String,dynamic> _fr = {
   "lbl_app_name": "Stack Dév",
@@ -621,6 +636,7 @@ static const Map<String,dynamic> _fr = {
   "nav_base64_text": "Base64 (Texte)",
   "nav_base64_image": "Base64 (Image)",
   "nav_markdown": "Markdown Éditeur",
+  "nav_text_inspector": "Inspecteur de texte",
   "lbl_markdown_theme": "Thème d'aperçu",
   "lbl_markdown_editor": "Éditeur",
   "lbl_markdown_preview": "Aperçu",
@@ -640,7 +656,11 @@ static const Map<String,dynamic> _fr = {
   "lbl_markdown_quote": "Citation",
   "lbl_markdown_list": "Liste à puces",
   "lbl_markdown_task": "Liste de tâches",
-  "lbl_markdown_wrap": "Activer/Désactiver le retour à la ligne"
+  "lbl_markdown_wrap": "Activer/Désactiver le retour à la ligne",
+  "lbl_text_inspector_chars": "Caracts.:",
+  "lbl_text_inspector_words": "Mots:",
+  "lbl_text_inspector_lines": "Lignes:",
+  "lbl_text_inspector_bytes": "Octets:"
 };
 static const Map<String,dynamic> _ko = {
   "lbl_app_name": "DevStack",
@@ -778,6 +798,7 @@ static const Map<String,dynamic> _ko = {
   "nav_base64_text": "Base64 (텍스트)",
   "nav_base64_image": "Base64 (이미지)",
   "nav_markdown": "Markdown 편집기",
+  "nav_text_inspector": "텍스트 검사기",
   "lbl_markdown_theme": "프리뷰 테마",
   "lbl_markdown_editor": "편집기",
   "lbl_markdown_preview": "미리보기",
@@ -797,7 +818,11 @@ static const Map<String,dynamic> _ko = {
   "lbl_markdown_quote": "인용구",
   "lbl_markdown_list": "순서 없는 목록",
   "lbl_markdown_task": "작업 목록",
-  "lbl_markdown_wrap": "자동 줄 바꿈 전환"
+  "lbl_markdown_wrap": "자동 줄 바꿈 전환",
+  "lbl_text_inspector_chars": "문자:",
+  "lbl_text_inspector_words": "단어:",
+  "lbl_text_inspector_lines": "줄:",
+  "lbl_text_inspector_bytes": "바이트:"
 };
 static const Map<String,dynamic> _es = {
   "lbl_app_name": "Pila Dev",
@@ -935,6 +960,7 @@ static const Map<String,dynamic> _es = {
   "nav_base64_text": "Base64 (Texto)",
   "nav_base64_image": "Base64 (Imagen)",
   "nav_markdown": "Markdown Editor",
+  "nav_text_inspector": "Inspector de texto",
   "lbl_markdown_theme": "Tema de vista previa",
   "lbl_markdown_editor": "Editor",
   "lbl_markdown_preview": "Vista previa",
@@ -954,7 +980,11 @@ static const Map<String,dynamic> _es = {
   "lbl_markdown_quote": "Cita",
   "lbl_markdown_list": "Lista desordenada",
   "lbl_markdown_task": "Lista de tareas",
-  "lbl_markdown_wrap": "Alternar ajuste de línea"
+  "lbl_markdown_wrap": "Alternar ajuste de línea",
+  "lbl_text_inspector_chars": "Cracts.:",
+  "lbl_text_inspector_words": "Palabras:",
+  "lbl_text_inspector_lines": "Líneas:",
+  "lbl_text_inspector_bytes": "Bytes:"
 };
 static const Map<String,dynamic> _zh_Hant = {
   "lbl_app_name": "DevStack",
@@ -1092,6 +1122,7 @@ static const Map<String,dynamic> _zh_Hant = {
   "nav_base64_text": "Base64 (文字)",
   "nav_base64_image": "Base64 (圖片)",
   "nav_markdown": "Markdown 編輯器",
+  "nav_text_inspector": "文字檢查器",
   "lbl_markdown_theme": "預覽主題",
   "lbl_markdown_editor": "編輯器",
   "lbl_markdown_preview": "預覽",
@@ -1111,7 +1142,11 @@ static const Map<String,dynamic> _zh_Hant = {
   "lbl_markdown_quote": "引用",
   "lbl_markdown_list": "無序清單",
   "lbl_markdown_task": "任務清單",
-  "lbl_markdown_wrap": "切換自動換行"
+  "lbl_markdown_wrap": "切換自動換行",
+  "lbl_text_inspector_chars": "字元",
+  "lbl_text_inspector_words": "單字",
+  "lbl_text_inspector_lines": "行數",
+  "lbl_text_inspector_bytes": "位元組"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ja": _ja, "en": _en, "zh_Hans": _zh_Hans, "fr": _fr, "ko": _ko, "es": _es, "zh_Hant": _zh_Hant};
 }
