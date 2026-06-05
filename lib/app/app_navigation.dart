@@ -29,6 +29,7 @@ enum Nav {
   colorPicker,
   markdown,
   textInspector,
+  codeToImage,
 }
 
 class Navigation {
@@ -97,6 +98,8 @@ extension NavigationExtension on Nav {
         return MarkdownPreviewPage(viewTag: viewTag);
       case Nav.textInspector:
         return TextInspectorPage(viewTag: viewTag);
+      case Nav.codeToImage:
+        return CodeToImagePage(viewTag: viewTag);
       default:
         return const Center(child: Text('ComingSoonPage'));
     }
@@ -132,6 +135,7 @@ extension NavigationExtension on Nav {
       Nav.colorPicker: IconKeys.colorPicker,
       Nav.markdown: IconKeys.markdown,
       Nav.textInspector: IconKeys.textInspector,
+      Nav.codeToImage: IconKeys.textInspector,
     }[this];
   }
 
@@ -158,6 +162,7 @@ extension NavigationExtension on Nav {
       Nav.colorPicker: LocaleKeys.nav_color_picker.localize(),
       Nav.markdown: LocaleKeys.nav_markdown.localize(),
       Nav.textInspector: LocaleKeys.nav_text_inspector.localize(),
+      Nav.codeToImage: 'Code Visualizer',
     }[this];
   }
 

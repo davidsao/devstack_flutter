@@ -1,7 +1,9 @@
+export 'controller_code_to_image.dart';
 export 'controller_color_picker.dart';
 export 'controller_markdown_preview.dart';
 export 'controller_regex_text.dart';
 export 'controller_text_inspector.dart';
+export 'page_code_to_image.dart';
 export 'page_color_picker.dart';
 export 'page_markdown_preview.dart';
 export 'page_regex_text.dart';

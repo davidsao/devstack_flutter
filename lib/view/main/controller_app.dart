@@ -92,6 +92,7 @@ class AppController extends BaseController<AppState> {
         Nav.colorPicker,
         Nav.markdown,
         Nav.textInspector,
+        Nav.codeToImage,
       ],
     });
 

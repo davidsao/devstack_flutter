@@ -90,6 +90,7 @@ class AppConfig extends StatefulWidget {
     Get.lazyPut(() => ColorPickerController(), fenix: true);
     Get.lazyPut(() => MarkdownPreviewController(), fenix: true);
     Get.lazyPut(() => TextInspectorController(), fenix: true);
+    Get.lazyPut(() => CodeToImageController(), fenix: true);
   }
 }
 
