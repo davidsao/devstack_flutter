@@ -163,5 +163,27 @@ abstract class  LocaleKeys {
   static const lbl_text_inspector_words = 'lbl_text_inspector_words';
   static const lbl_text_inspector_lines = 'lbl_text_inspector_lines';
   static const lbl_text_inspector_bytes = 'lbl_text_inspector_bytes';
+  static const lbl_code2image_code_input = 'lbl_code2image_code_input';
+  static const lbl_code2image_configuration = 'lbl_code2image_configuration';
+  static const lbl_code2image_language = 'lbl_code2image_language';
+  static const lbl_code2image_theme = 'lbl_code2image_theme';
+  static const lbl_code2image_background = 'lbl_code2image_background';
+  static const lbl_code2image_window_control = 'lbl_code2image_window_control';
+  static const lbl_code2image_line_number = 'lbl_code2image_line_number';
+  static const lbl_code2image_preview = 'lbl_code2image_preview';
+  static const btn_export_image = 'btn_export_image';
+  static const lbl_code2image_placeholder = 'lbl_code2image_placeholder';
+  static const lbl_code2image_auto_detect = 'lbl_code2image_auto_detect';
+  static const lbl_code2image_transparent = 'lbl_code2image_transparent';
+  static const lbl_code2image_blue = 'lbl_code2image_blue';
+  static const lbl_code2image_green = 'lbl_code2image_green';
+  static const lbl_code2image_red = 'lbl_code2image_red';
+  static const lbl_code2image_yellow = 'lbl_code2image_yellow';
+  static const lbl_code2image_pink = 'lbl_code2image_pink';
+  static const lbl_code2image_brown = 'lbl_code2image_brown';
+  static const lbl_code2image_grey = 'lbl_code2image_grey';
+  static const lbl_code2image_save_success = 'lbl_code2image_save_success';
+  static const lbl_code2image_save_fail = 'lbl_code2image_save_fail';
+  static const lbl_code2image_limit_reached = 'lbl_code2image_limit_reached';
 
 }

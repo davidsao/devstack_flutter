@@ -54,11 +54,14 @@ class CodeToImagePage
         Text("Configuration", style: AppTextStyles.b2.bold),
         kGapSmall,
         Container(
-          padding: const EdgeInsets.all(AppDimens.paddingMedium),
           decoration: BoxDecoration(
             border: Border.all(color: Theme.of(context).dividerColor),
             borderRadius: BorderRadius.circular(8),
-            color: Theme.of(context).colorScheme.surface,
+            color: Theme.of(context).colorScheme.primary.withAlpha(24),
+          ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppDimens.paddingSmaller,
+            vertical: AppDimens.paddingTiny,
           ),
           child: Column(
             children: [
@@ -67,32 +70,37 @@ class CodeToImagePage
                 controller.supportedLanguages,
                 state.selectedLanguage,
               ),
-              const Divider(height: 24),
+              kGapTiny,
               _buildDropdownRow(
                 "Code Theme",
                 controller.supportedThemes,
                 state.selectedTheme,
               ),
-              const Divider(height: 24),
-              Obx(() => SwitchListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: const Text("Show Window Controls (macOS style)"),
-                    value: state.showWindowFrame.value,
-                    onChanged: (v) => state.showWindowFrame.value = v,
-                  )),
-              Obx(() => SwitchListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: const Text("Solid Background (vs Gradient)"),
-                    value: state.backgroundType.value == 'solid',
-                    onChanged: (v) =>
-                        state.backgroundType.value = v ? 'solid' : 'gradient',
-                  )),
-              Obx(() => SwitchListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: const Text("Show Line Numbers"),
-                    value: state.showLineNumbers.value,
-                    onChanged: (v) => state.showLineNumbers.value = v,
-                  )),
+              kGapTiny,
+              _buildDropdownRow(
+                "Background",
+                controller.supportedBackgrounds,
+                state.selectedBackground,
+              ),
+              kGapText,
+              Obx(() {
+                return SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text("Show Window Controls",
+                      style: AppTextStyles.b2.bold),
+                  value: state.showWindowFrame.value,
+                  onChanged: (v) => state.showWindowFrame.value = v,
+                );
+              }),
+              Obx(() {
+                return SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title:
+                      Text("Show Line Numbers", style: AppTextStyles.b2.bold),
+                  value: state.showLineNumbers.value,
+                  onChanged: (v) => state.showLineNumbers.value = v,
+                );
+              }),
             ],
           ),
         ),
@@ -101,25 +109,14 @@ class CodeToImagePage
   }
 
   Widget _buildDropdownRow(
-      String label, List<String> options, RxString rxValue) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(label),
-        Obx(() => DropdownButton<String>(
-              value: rxValue.value,
-              underline: const SizedBox(),
-              items: options.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                if (newValue != null) rxValue.value = newValue;
-              },
-            )),
-      ],
+      String label, Map<String, String> options, RxString rxValue) {
+    return DropDownWidget(
+      title: label,
+      choices: options,
+      selectedValue: rxValue.value,
+      onSelected: (String? newValue) {
+        if (newValue != null) rxValue.value = newValue;
+      },
     );
   }
 
@@ -149,41 +146,32 @@ class CodeToImagePage
               borderRadius: BorderRadius.circular(8),
               color: Theme.of(context).colorScheme.surface.withOpacity(0.5),
             ),
-            clipBehavior:
-                Clip.hardEdge, // Prevents the panning view from bleeding out
-            // NEW: InteractiveViewer allows panning/zooming and UNCONSTRAINED width
+            clipBehavior: Clip.hardEdge,
             child: InteractiveViewer(
-              constrained:
-                  false, // MAGIC FIX: Allows the child to grow to its true width, stopping word-wrap!
-              boundaryMargin: const EdgeInsets.all(
-                  200), // Gives the user room to pan around
               minScale: 0.1,
-              maxScale: 3.0,
-              child: Screenshot(
-                controller: controller.screenshotController,
-                child: Obx(() => Container(
-                      // Set a minimum width so super short code blocks don't look weirdly compressed
-                      constraints: const BoxConstraints(minWidth: 400),
-                      padding: const EdgeInsets.all(
-                          40), // The padding around the code window
-                      decoration: BoxDecoration(
-                        gradient: state.backgroundType.value == 'gradient'
-                            ? LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  state.gradientColor1.value,
-                                  state.gradientColor2.value
-                                ],
-                              )
-                            : null,
-                        color: state.backgroundType.value == 'solid'
-                            ? state.solidColor.value
-                            : null,
-                      ),
-                      alignment: Alignment.center,
-                      child: _buildCodeWindow(context),
-                    )),
+              maxScale: 4.0,
+              child: Padding(
+                padding: const EdgeInsets.all(AppDimens.marginMedium),
+                child: Center(
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Screenshot(
+                      controller: controller.screenshotController,
+                      child: Obx(() {
+                        return Container(
+                          constraints: const BoxConstraints(minWidth: 400),
+                          padding: const EdgeInsets.all(40),
+                          decoration: BoxDecoration(
+                            color: controller.getBackgroundColor(
+                                state.selectedBackground.value),
+                          ),
+                          alignment: Alignment.center,
+                          child: _buildCodeWindow(context),
+                        );
+                      }),
+                    ),
+                  ),
+                ),
               ),
             ),
           ),

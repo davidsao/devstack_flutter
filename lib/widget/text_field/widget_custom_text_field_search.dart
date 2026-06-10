@@ -3,17 +3,19 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:re_editor/re_editor.dart';
 
+import '../../app/app_colors.dart';
+import '../../app/app_dimens.dart';
+
 const EdgeInsetsGeometry _kDefaultFindMargin = EdgeInsets.only(right: 10);
 const double _kDefaultFindPanelWidth = 360;
-const double _kDefaultFindPanelHeight = 36;
+const double _kDefaultFindPanelHeight = 40;
 const double _kDefaultReplacePanelHeight = _kDefaultFindPanelHeight * 2;
 const double _kDefaultFindIconSize = 16;
 const double _kDefaultFindIconWidth = 30;
 const double _kDefaultFindIconHeight = 30;
 const double _kDefaultFindInputFontSize = 13;
 const double _kDefaultFindResultFontSize = 12;
-const EdgeInsetsGeometry _kDefaultFindPadding =
-    EdgeInsets.only(left: 5, right: 5, top: 2.5, bottom: 2.5);
+const EdgeInsetsGeometry _kDefaultFindPadding = EdgeInsets.all(5);
 const EdgeInsetsGeometry _kDefaultFindInputContentPadding = EdgeInsets.only(
   left: 5,
   right: 5,
@@ -69,12 +71,25 @@ class CodeFindPanelView extends StatelessWidget implements PreferredSizeWidget {
       return const SizedBox(width: 0, height: 0);
     }
     return Container(
-        margin: margin,
-        alignment: Alignment.topRight,
-        height: preferredSize.height,
+      margin: margin,
+      alignment: Alignment.topRight,
+      height: preferredSize.height,
+      child: ConstrainedBox(
+        // CRITICAL FIX: Forces the viewport to never exceed the intended width
+        // preventing the background color bleed on the first frame.
+        constraints: const BoxConstraints(maxWidth: _kDefaultFindPanelWidth),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: SizedBox(
+          physics: const BouncingScrollPhysics(), // Smoother scrolling behavior
+          child: Container(
+            decoration: BoxDecoration(
+              // UPDATED: Now respects Dark Mode instead of hardcoded white
+              color: Theme.of(context).colorScheme.surface,
+              boxShadow: AppColors.toolbarShadow(context),
+              borderRadius: BorderRadius.circular(
+                AppDimens.radiusSmall,
+              ),
+            ),
             width: _kDefaultFindPanelWidth,
             child: Column(
               children: [
@@ -84,7 +99,9 @@ class CodeFindPanelView extends StatelessWidget implements PreferredSizeWidget {
               ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   Widget _buildFindInputView(BuildContext context) {
@@ -104,10 +121,11 @@ class CodeFindPanelView extends StatelessWidget implements PreferredSizeWidget {
               alignment: Alignment.center,
               children: [
                 _buildTextField(
-                    context: context,
-                    controller: controller.findInputController,
-                    focusNode: controller.findInputFocusNode,
-                    iconsWidth: _kDefaultFindIconWidth * 1.5),
+                  context: context,
+                  controller: controller.findInputController,
+                  focusNode: controller.findInputFocusNode,
+                  iconsWidth: _kDefaultFindIconWidth * 1.5,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -203,15 +221,23 @@ class CodeFindPanelView extends StatelessWidget implements PreferredSizeWidget {
     required FocusNode focusNode,
     double iconsWidth = 0,
   }) {
-    return Padding(
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Theme.of(context).dividerColor),
+        borderRadius: BorderRadius.circular(8),
+        color: Theme.of(context).colorScheme.surface,
+      ),
+      margin: const EdgeInsets.all(AppDimens.marginText),
       padding: padding,
       child: TextField(
         maxLines: 1,
         focusNode: focusNode,
         style: TextStyle(color: inputTextColor, fontSize: inputFontSize),
-        decoration: decoration.copyWith(
-            contentPadding: (decoration.contentPadding ?? EdgeInsets.zero)
-                .add(EdgeInsets.only(right: iconsWidth))),
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+          isDense: true,
+          contentPadding: EdgeInsets.symmetric(vertical: 8),
+        ),
         controller: controller,
       ),
     );

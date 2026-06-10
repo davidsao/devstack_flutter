@@ -8,39 +8,98 @@ import 'package:screenshot/screenshot.dart';
 
 class CodeToImageState extends ViewState {
   final inputText = ''.obs;
-  final selectedLanguage = 'Auto detect'.obs; // Default dropdown value
-  final detectedLanguage = 'dart'.obs; // The actual language rendered
+  final selectedLanguage = 'Auto detect'.obs;
+  final detectedLanguage = 'dart'.obs;
   final selectedTheme = 'github-dark'.obs;
   final showWindowFrame = true.obs;
   final showLineNumbers = true.obs;
 
-  // Background customization
-  final backgroundType = 'gradient'.obs;
-  final solidColor = const Color(0xFF8B5CF6).obs;
-  final gradientColor1 = const Color(0xFF00C6FF).obs;
-  final gradientColor2 = const Color(0xFF0072FF).obs;
+  // NEW: Pre-defined background selection
+  final selectedBackground = 'Blue'.obs;
 }
 
 class CodeToImageController extends BaseController<CodeToImageState> {
   final TextEditingController inputController = TextEditingController();
   final ScreenshotController screenshotController = ScreenshotController();
 
-  final List<String> supportedLanguages = [
-    'Auto detect', // NEW: Added to the top of the list
-    'dart', 'javascript', 'typescript', 'python', 'cpp', 'c', 'csharp',
-    'vbnet', 'swift', 'objectivec', 'json', 'xml', 'html', 'css',
-    'yaml', 'sql', 'php', 'rust', 'go', 'r', 'dockerfile', 'kotlin', 'java'
-  ];
+  final Map<String, String> supportedLanguages = {
+    'Auto detect': 'Auto detect',
+    'dart': 'dart',
+    'javascript': 'javascript',
+    'typescript': 'typescript',
+    'python': 'python',
+    'cpp': 'cpp',
+    'c': 'c',
+    'csharp': 'csharp',
+    'vbnet': 'vbnet',
+    'swift': 'swift',
+    'objectivec': 'objectivec',
+    'json': 'json',
+    'xml': 'xml',
+    'html': 'html',
+    'css': 'css',
+    'yaml': 'yaml',
+    'sql': 'sql',
+    'php': 'php',
+    'rust': 'rust',
+    'go': 'go',
+    'r': 'r',
+    'dockerfile': 'dockerfile',
+    'kotlin': 'kotlin',
+    'java': 'java',
+  };
 
-  final List<String> supportedThemes = [
-    'github-dark',
-    'github',
-    'monokai',
-    'dracula',
-    'nord',
-    'ocean',
-    'a11y-dark'
-  ];
+  final Map<String, String> supportedThemes = {
+    'github-dark': 'github-dark',
+    'github': 'github',
+    'monokai': 'monokai',
+    'dracula': 'dracula',
+    'nord': 'nord',
+    'ocean': 'ocean',
+    'a11y-dark': 'a11y-dark',
+  };
+
+  // NEW: List of supported backgrounds for the dropdown
+  final Map<String, String> supportedBackgrounds = {
+    'Blue': 'Blue',
+    'Green': 'Green',
+    'Red': 'Red',
+    'Yellow': 'Yellow',
+    'Black': 'Black',
+    'White': 'White',
+    'Pink': 'Pink',
+    'Brown': 'Brown',
+    'Grey': 'Grey',
+    'Transparent': 'Transparent',
+  };
+
+  // NEW: Helper to get the actual color based on the selected string
+  Color getBackgroundColor(String colorName) {
+    switch (colorName) {
+      case 'Blue':
+        return Colors.blue;
+      case 'Green':
+        return Colors.green;
+      case 'Red':
+        return Colors.redAccent;
+      case 'Yellow':
+        return Colors.amber;
+      case 'Black':
+        return const Color(0xFF1E1E1E); // Slightly softer than pure black
+      case 'White':
+        return Colors.white;
+      case 'Pink':
+        return Colors.pinkAccent;
+      case 'Brown':
+        return Colors.brown;
+      case 'Grey':
+        return Colors.blueGrey;
+      case 'Transparent':
+        return Colors.transparent;
+      default:
+        return Colors.blue;
+    }
+  }
 
   @override
   CodeToImageState initState() => CodeToImageState();
@@ -48,7 +107,6 @@ class CodeToImageController extends BaseController<CodeToImageState> {
   @override
   void onInit() {
     super.onInit();
-    // Listen to manual dropdown changes
     ever(state.selectedLanguage, (lang) {
       if (lang == 'Auto detect') {
         state.detectedLanguage.value =
@@ -70,15 +128,10 @@ class CodeToImageController extends BaseController<CodeToImageState> {
     String newText = text;
 
     if (lines.length > 40) {
-      // Cut off at exactly 40 lines
       newText = lines.take(40).join('\n');
-
-      // Save current cursor position so typing isn't interrupted
       final selection = inputController.selection;
-
       inputController.text = newText;
 
-      // Restore cursor position safely
       if (selection.baseOffset <= newText.length) {
         inputController.selection = selection;
       } else {
@@ -86,7 +139,6 @@ class CodeToImageController extends BaseController<CodeToImageState> {
             TextSelection.collapsed(offset: newText.length);
       }
 
-      // Show warning message
       Get.snackbar(
         "Limit Reached",
         "Code snippets are restricted to at most 40 lines. Overflowing lines have been removed.",
@@ -98,16 +150,13 @@ class CodeToImageController extends BaseController<CodeToImageState> {
 
     state.inputText.value = newText;
 
-    // Run the lightning-fast auto-detect if the user is in Auto mode
     if (state.selectedLanguage.value == 'Auto detect') {
       state.detectedLanguage.value = _autoDetectLanguage(newText);
     }
   }
 
-  // --- NEW: Lightweight, blazing-fast heuristic engine ---
   String _autoDetectLanguage(String code) {
     if (code.isEmpty) return 'dart';
-
     final lower = code.toLowerCase();
 
     if (lower.contains('<?php')) return 'php';
@@ -136,7 +185,7 @@ class CodeToImageController extends BaseController<CodeToImageState> {
         lower.contains('margin:') ||
         lower.contains('padding:')) return 'css';
 
-    return 'dart'; // Fallback
+    return 'dart';
   }
 
   Future<void> exportImage() async {
