@@ -16,6 +16,11 @@ class HomePage extends BaseView<HomeController, HomeState> {
     final screenWidth = MediaQuery.sizeOf(context).width;
     final isMobile = screenWidth < 800;
 
+    // The macOS window controls take up roughly 28 pixels of height.
+    final double macOsOffset = GetPlatform.isMacOS ? 28.0 : 0.0;
+    final double safeTopPadding =
+        MediaQuery.paddingOf(context).top + macOsOffset;
+
     // 2. Safely trigger the responsive check after the current build phase completes
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.updateResponsiveState(screenWidth);
@@ -65,11 +70,12 @@ class HomePage extends BaseView<HomeController, HomeState> {
               // On mobile, the menu floats OVER the content, so we remove the margin push
               margin: EdgeInsets.only(
                 left: app.state.isMenuExpanded.value && !isMobile ? 224.0 : 0.0,
+                // UPDATED: Used safeTopPadding instead of raw padding
                 top: app.state.isMenuExpanded.value && app.state.isIpad.value
-                    ? MediaQuery.paddingOf(context).top + 44.0
+                    ? safeTopPadding + 44.0
                     : (app.state.isMenuExpanded.value && !isMobile
-                        ? MediaQuery.paddingOf(context).top
-                        : kToolbarHeight + MediaQuery.paddingOf(context).top),
+                        ? safeTopPadding
+                        : kToolbarHeight + safeTopPadding),
               ),
               child: nav.getWidget(null),
             );
@@ -98,9 +104,8 @@ class HomePage extends BaseView<HomeController, HomeState> {
               curve: Curves.easeOutQuint,
               left: app.state.isMenuExpanded.value ? 0.0 : -224.0,
               width: 224.0,
-              top: AppDimens.marginSmaller +
-                  kToolbarHeight +
-                  MediaQuery.paddingOf(context).top,
+              // UPDATED: Used safeTopPadding instead of raw padding
+              top: AppDimens.marginSmaller + kToolbarHeight + safeTopPadding,
               bottom: MediaQuery.paddingOf(context).bottom +
                   AppDimens.marginSmaller,
               child: HomeSideMenu(),
@@ -110,7 +115,8 @@ class HomePage extends BaseView<HomeController, HomeState> {
           // 4. Toggle Button
           Obx(() {
             return Positioned(
-              top: MediaQuery.paddingOf(context).top +
+              // UPDATED: Used safeTopPadding instead of raw padding
+              top: safeTopPadding +
                   (app.state.isIpad.value ? 0.0 : AppDimens.marginSmaller),
               left:
                   AppDimens.marginSmaller + (app.state.isIpad.value ? 64 : 0.0),

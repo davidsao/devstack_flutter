@@ -194,6 +194,8 @@ class CodegenLoader extends AssetLoader{
   "lbl_code2image_pink": "ピンク",
   "lbl_code2image_brown": "ブラウン",
   "lbl_code2image_grey": "グレー",
+  "lbl_code2image_black": "黒",
+  "lbl_code2image_white": "白",
   "lbl_code2image_save_success": "成功 / 画像が正常に保存されました！",
   "lbl_code2image_save_fail": "エラー / まずコードを入力してください。",
   "lbl_code2image_limit_reached": "制限に達しました / コードスニペットは最大40行に制限されています。超過した行は削除されました。"
@@ -378,6 +380,8 @@ static const Map<String,dynamic> _en = {
   "lbl_code2image_pink": "Pink",
   "lbl_code2image_brown": "Brown",
   "lbl_code2image_grey": "Grey",
+  "lbl_code2image_black": "Black",
+  "lbl_code2image_white": "White",
   "lbl_code2image_save_success": "Success / Image saved successfully!",
   "lbl_code2image_save_fail": "Error / Please enter some code first.",
   "lbl_code2image_limit_reached": "Limit Reached / Code snippets are restricted to at most 40 lines. Overflowing lines have been removed."
@@ -562,6 +566,8 @@ static const Map<String,dynamic> _zh_Hans = {
   "lbl_code2image_pink": "粉红色",
   "lbl_code2image_brown": "棕色",
   "lbl_code2image_grey": "灰色",
+  "lbl_code2image_black": "黑色",
+  "lbl_code2image_white": "白色",
   "lbl_code2image_save_success": "成功 / 图片保存成功！",
   "lbl_code2image_save_fail": "错误 / 请先输入一些代码。",
   "lbl_code2image_limit_reached": "达到限制 / 代码片段最多限制为 40 行，多余的行数已被移除。"
@@ -746,6 +752,8 @@ static const Map<String,dynamic> _fr = {
   "lbl_code2image_pink": "Rose",
   "lbl_code2image_brown": "Marron",
   "lbl_code2image_grey": "Gris",
+  "lbl_code2image_black": "Noir",
+  "lbl_code2image_white": "Blanc",
   "lbl_code2image_save_success": "Succès / Image enregistrée avec succès !",
   "lbl_code2image_save_fail": "Erreur / Veuillez d'abord entrer du code.",
   "lbl_code2image_limit_reached": "Limite atteinte / Les extraits de code sont limités à 40 lignes maximum. Les lignes excédentaires ont été supprimées."
@@ -930,6 +938,8 @@ static const Map<String,dynamic> _ko = {
   "lbl_code2image_pink": "분홍색",
   "lbl_code2image_brown": "갈색",
   "lbl_code2image_grey": "회색",
+  "lbl_code2image_black": "검은색",
+  "lbl_code2image_white": "하얀색",
   "lbl_code2image_save_success": "성공 / 이미지가 성공적으로 저장되었습니다!",
   "lbl_code2image_save_fail": "오류 / 먼저 코드를 입력해 주세요.",
   "lbl_code2image_limit_reached": "한도 도달 / 코드 스니펫은 최대 40줄로 제한됩니다. 초과된 줄은 제거되었습니다."
@@ -1114,6 +1124,8 @@ static const Map<String,dynamic> _es = {
   "lbl_code2image_pink": "Rosa",
   "lbl_code2image_brown": "Marrón",
   "lbl_code2image_grey": "Gris",
+  "lbl_code2image_black": "Negro",
+  "lbl_code2image_white": "Blanco",
   "lbl_code2image_save_success": "Éxito / ¡Imagen guardada con éxito!",
   "lbl_code2image_save_fail": "Error / Por favor, introduzca algún código primero.",
   "lbl_code2image_limit_reached": "Límite alcanzado / Los fragmentos de código están restringidos a un máximo de 40 líneas. Se han eliminado las líneas sobrantes."
@@ -1298,6 +1310,8 @@ static const Map<String,dynamic> _zh_Hant = {
   "lbl_code2image_pink": "粉紅色",
   "lbl_code2image_brown": "棕色",
   "lbl_code2image_grey": "灰色",
+  "lbl_code2image_black": "黑色",
+  "lbl_code2image_white": "白色",
   "lbl_code2image_save_success": "成功 / 圖片儲存成功！",
   "lbl_code2image_save_fail": "錯誤 / 請先輸入一些程式碼。",
   "lbl_code2image_limit_reached": "達到限制 / 程式碼片段最多限制為 40 行，多餘的行數已被移除。"

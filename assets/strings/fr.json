@@ -178,6 +178,8 @@
   "lbl_code2image_pink": "Rose",
   "lbl_code2image_brown": "Marron",
   "lbl_code2image_grey": "Gris",
+  "lbl_code2image_black": "Noir",
+  "lbl_code2image_white": "Blanc",
   "lbl_code2image_save_success": "Succès / Image enregistrée avec succès !",
   "lbl_code2image_save_fail": "Erreur / Veuillez d'abord entrer du code.",
   "lbl_code2image_limit_reached": "Limite atteinte / Les extraits de code sont limités à 40 lignes maximum. Les lignes excédentaires ont été supprimées."

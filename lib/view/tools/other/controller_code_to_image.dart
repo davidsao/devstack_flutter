@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
 
+import '../../../generated/locale_keys.g.dart';
+
 class CodeToImageState extends ViewState {
   final inputText = ''.obs;
   final selectedLanguage = 'Auto detect'.obs;
@@ -23,30 +25,30 @@ class CodeToImageController extends BaseController<CodeToImageState> {
   final ScreenshotController screenshotController = ScreenshotController();
 
   final Map<String, String> supportedLanguages = {
-    'Auto detect': 'Auto detect',
-    'dart': 'dart',
-    'javascript': 'javascript',
-    'typescript': 'typescript',
-    'python': 'python',
-    'cpp': 'cpp',
-    'c': 'c',
-    'csharp': 'csharp',
-    'vbnet': 'vbnet',
-    'swift': 'swift',
-    'objectivec': 'objectivec',
-    'json': 'json',
-    'xml': 'xml',
-    'html': 'html',
-    'css': 'css',
-    'yaml': 'yaml',
-    'sql': 'sql',
-    'php': 'php',
-    'rust': 'rust',
-    'go': 'go',
-    'r': 'r',
-    'dockerfile': 'dockerfile',
-    'kotlin': 'kotlin',
-    'java': 'java',
+    'Auto detect': LocaleKeys.lbl_code2image_auto_detect.localize(),
+    'dart': 'Dart',
+    'javascript': 'Javascript',
+    'typescript': 'Typescript',
+    'python': 'Python',
+    'cpp': 'C++',
+    'c': 'C',
+    'csharp': 'C#',
+    'vbnet': 'VB.NET',
+    'swift': 'Swift',
+    'objectivec': 'Objective C',
+    'json': 'JSON',
+    'xml': 'XML',
+    'html': 'HTML',
+    'css': 'CSS',
+    'yaml': 'Yaml',
+    'sql': 'SQL',
+    'php': 'PHP',
+    'rust': 'Rust',
+    'go': 'Go',
+    'r': 'R',
+    'dockerfile': 'Dockerfile',
+    'kotlin': 'Kotlin',
+    'java': 'Java',
   };
 
   final Map<String, String> supportedThemes = {
@@ -61,16 +63,16 @@ class CodeToImageController extends BaseController<CodeToImageState> {
 
   // NEW: List of supported backgrounds for the dropdown
   final Map<String, String> supportedBackgrounds = {
-    'Blue': 'Blue',
-    'Green': 'Green',
-    'Red': 'Red',
-    'Yellow': 'Yellow',
-    'Black': 'Black',
-    'White': 'White',
-    'Pink': 'Pink',
-    'Brown': 'Brown',
-    'Grey': 'Grey',
-    'Transparent': 'Transparent',
+    'Blue': LocaleKeys.lbl_code2image_blue.localize(),
+    'Green': LocaleKeys.lbl_code2image_green.localize(),
+    'Red': LocaleKeys.lbl_code2image_red.localize(),
+    'Yellow': LocaleKeys.lbl_code2image_yellow.localize(),
+    'Black': LocaleKeys.lbl_code2image_black.localize(),
+    'White': LocaleKeys.lbl_code2image_white.localize(),
+    'Pink': LocaleKeys.lbl_code2image_pink.localize(),
+    'Brown': LocaleKeys.lbl_code2image_brown.localize(),
+    'Grey': LocaleKeys.lbl_code2image_grey.localize(),
+    'Transparent': LocaleKeys.lbl_code2image_transparent.localize(),
   };
 
   // NEW: Helper to get the actual color based on the selected string

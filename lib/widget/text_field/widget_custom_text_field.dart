@@ -284,54 +284,63 @@ class _CustomTextFieldState extends State<CustomTextField> {
           _toolbar,
 
           // NATIVE RE_EDITOR INTEGRATION
+          // NATIVE RE_EDITOR INTEGRATION
           Expanded(
-            child: CodeEditor(
-              focusNode: _focusNode,
-              controller: _codeController,
-              scrollController: _codeScrollController,
-              findController: _codeFindController,
-              readOnly: !widget.isEditable,
-              style: CodeEditorStyle(
-                fontFamily: textStyle.fontFamily,
-                codeTheme: CodeHighlightTheme(
-                  languages: {
-                    if (widget.isJsonFormatted)
-                      'json': CodeHighlightThemeMode(mode: langJson),
-                    if (widget.isXMLFormatted)
-                      'xml': CodeHighlightThemeMode(mode: langXml),
-                    if (widget.isYamlFormatted)
-                      'yaml': CodeHighlightThemeMode(mode: langYaml),
-                    if (widget.isSqlFormatted)
-                      'sql': CodeHighlightThemeMode(mode: langSql),
-                  },
-                  theme: googlecodeTheme,
+            child: Builder(builder: (context) {
+              // 1. Evaluate active languages safely
+              final activeLanguages = <String, CodeHighlightThemeMode>{
+                if (widget.isJsonFormatted)
+                  'json': CodeHighlightThemeMode(mode: langJson),
+                if (widget.isXMLFormatted)
+                  'xml': CodeHighlightThemeMode(mode: langXml),
+                if (widget.isYamlFormatted)
+                  'yaml': CodeHighlightThemeMode(mode: langYaml),
+                if (widget.isSqlFormatted)
+                  'sql': CodeHighlightThemeMode(mode: langSql),
+              };
+
+              return CodeEditor(
+                focusNode: _focusNode,
+                controller: _codeController,
+                scrollController: _codeScrollController,
+                findController: _codeFindController,
+                readOnly: !widget.isEditable,
+                style: CodeEditorStyle(
+                  fontFamily: textStyle.fontFamily,
+                  // 2. CRITICAL FIX: Only apply the theme if the map is NOT empty
+                  codeTheme: activeLanguages.isNotEmpty
+                      ? CodeHighlightTheme(
+                          languages: activeLanguages,
+                          theme: googlecodeTheme,
+                        )
+                      : null,
                 ),
-              ),
-              wordWrap: _isWordWrapEnabled,
-              indicatorBuilder: widget.showLineNumbers
-                  ? (context, editingController, chunkController, notifier) {
-                      return Row(
-                        children: [
-                          DefaultCodeLineNumber(
-                            controller: editingController,
-                            notifier: notifier,
-                          ),
-                          DefaultCodeChunkIndicator(
-                            width: 20,
-                            controller: chunkController,
-                            notifier: notifier,
-                          ),
-                        ],
-                      );
-                    }
-                  : null,
-              findBuilder: (context, controller, readOnly) {
-                return CodeFindPanelView(
-                  controller: controller,
-                  readOnly: readOnly,
-                );
-              },
-            ),
+                wordWrap: _isWordWrapEnabled,
+                indicatorBuilder: widget.showLineNumbers
+                    ? (context, editingController, chunkController, notifier) {
+                        return Row(
+                          children: [
+                            DefaultCodeLineNumber(
+                              controller: editingController,
+                              notifier: notifier,
+                            ),
+                            DefaultCodeChunkIndicator(
+                              width: 20,
+                              controller: chunkController,
+                              notifier: notifier,
+                            ),
+                          ],
+                        );
+                      }
+                    : null,
+                findBuilder: (context, controller, readOnly) {
+                  return CodeFindPanelView(
+                    controller: controller,
+                    readOnly: readOnly,
+                  );
+                },
+              );
+            }),
           ),
         ],
       ),

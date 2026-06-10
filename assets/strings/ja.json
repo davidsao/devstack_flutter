@@ -178,6 +178,8 @@
   "lbl_code2image_pink": "ピンク",
   "lbl_code2image_brown": "ブラウン",
   "lbl_code2image_grey": "グレー",
+  "lbl_code2image_black": "黒",
+  "lbl_code2image_white": "白",
   "lbl_code2image_save_success": "成功 / 画像が正常に保存されました！",
   "lbl_code2image_save_fail": "エラー / まずコードを入力してください。",
   "lbl_code2image_limit_reached": "制限に達しました / コードスニペットは最大40行に制限されています。超過した行は削除されました。"

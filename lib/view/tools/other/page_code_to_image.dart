@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:re_highlight/styles/all.dart';
 import 'package:screenshot/screenshot.dart';
 
+import '../../../generated/locale_keys.g.dart';
+
 class CodeToImagePage
     extends BaseView<CodeToImageController, CodeToImageState> {
   const CodeToImagePage({super.key, super.viewTag});
@@ -40,8 +42,11 @@ class CodeToImagePage
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Code Input", style: AppTextStyles.b2.bold),
-        kGapSmall,
+        Text(
+          LocaleKeys.lbl_code2image_code_input.localize(),
+          style: AppTextStyles.b2.bold,
+        ),
+        kGapTiny,
         Expanded(
           child: CustomTextField(
             controller: controller.inputController,
@@ -50,9 +55,12 @@ class CodeToImagePage
             maxLines: 50,
           ),
         ),
-        kGapMedium,
-        Text("Configuration", style: AppTextStyles.b2.bold),
         kGapSmall,
+        Text(
+          LocaleKeys.lbl_code2image_configuration.localize(),
+          style: AppTextStyles.b2.bold,
+        ),
+        kGapTiny,
         Container(
           decoration: BoxDecoration(
             border: Border.all(color: Theme.of(context).dividerColor),
@@ -66,19 +74,19 @@ class CodeToImagePage
           child: Column(
             children: [
               _buildDropdownRow(
-                "Language",
+                LocaleKeys.lbl_code2image_language.localize(),
                 controller.supportedLanguages,
                 state.selectedLanguage,
               ),
               kGapTiny,
               _buildDropdownRow(
-                "Code Theme",
+                LocaleKeys.lbl_code2image_theme.localize(),
                 controller.supportedThemes,
                 state.selectedTheme,
               ),
               kGapTiny,
               _buildDropdownRow(
-                "Background",
+                LocaleKeys.lbl_code2image_background.localize(),
                 controller.supportedBackgrounds,
                 state.selectedBackground,
               ),
@@ -86,8 +94,10 @@ class CodeToImagePage
               Obx(() {
                 return SwitchListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: Text("Show Window Controls",
-                      style: AppTextStyles.b2.bold),
+                  title: Text(
+                    LocaleKeys.lbl_code2image_window_control.localize(),
+                    style: AppTextStyles.b2.bold,
+                  ),
                   value: state.showWindowFrame.value,
                   onChanged: (v) => state.showWindowFrame.value = v,
                 );
@@ -95,8 +105,10 @@ class CodeToImagePage
               Obx(() {
                 return SwitchListTile(
                   contentPadding: EdgeInsets.zero,
-                  title:
-                      Text("Show Line Numbers", style: AppTextStyles.b2.bold),
+                  title: Text(
+                    LocaleKeys.lbl_code2image_line_number.localize(),
+                    style: AppTextStyles.b2.bold,
+                  ),
                   value: state.showLineNumbers.value,
                   onChanged: (v) => state.showLineNumbers.value = v,
                 );
@@ -130,15 +142,18 @@ class CodeToImagePage
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Image Preview", style: AppTextStyles.b2.bold),
+            Text(
+              LocaleKeys.lbl_code2image_preview.localize(),
+              style: AppTextStyles.b2.bold,
+            ),
             ElevatedButton.icon(
               onPressed: controller.exportImage,
               icon: const Icon(Icons.download_rounded, size: 18),
-              label: const Text("Export Image"),
+              label: Text(LocaleKeys.btn_export_image.localize()),
             )
           ],
         ),
-        kGapSmall,
+        // kGapSmall,
         Expanded(
           child: Container(
             decoration: BoxDecoration(
@@ -255,7 +270,7 @@ class CodeToImagePage
                 // REMOVED: Expanded. We don't want it forced to the screen boundaries anymore!
                 HighlightView(
                   state.inputText.value.isEmpty
-                      ? "// Type code on the left..."
+                      ? LocaleKeys.lbl_code2image_placeholder.localize()
                       : state.inputText.value,
                   language: state.detectedLanguage.value,
                   theme: builtinAllThemes[state.selectedTheme.value] ??

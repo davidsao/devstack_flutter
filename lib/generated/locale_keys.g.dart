@@ -182,6 +182,8 @@ abstract class  LocaleKeys {
   static const lbl_code2image_pink = 'lbl_code2image_pink';
   static const lbl_code2image_brown = 'lbl_code2image_brown';
   static const lbl_code2image_grey = 'lbl_code2image_grey';
+  static const lbl_code2image_black = 'lbl_code2image_black';
+  static const lbl_code2image_white = 'lbl_code2image_white';
   static const lbl_code2image_save_success = 'lbl_code2image_save_success';
   static const lbl_code2image_save_fail = 'lbl_code2image_save_fail';
   static const lbl_code2image_limit_reached = 'lbl_code2image_limit_reached';

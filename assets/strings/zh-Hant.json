@@ -178,6 +178,8 @@
   "lbl_code2image_pink": "粉紅色",
   "lbl_code2image_brown": "棕色",
   "lbl_code2image_grey": "灰色",
+  "lbl_code2image_black": "黑色",
+  "lbl_code2image_white": "白色",
   "lbl_code2image_save_success": "成功 / 圖片儲存成功！",
   "lbl_code2image_save_fail": "錯誤 / 請先輸入一些程式碼。",
   "lbl_code2image_limit_reached": "達到限制 / 程式碼片段最多限制為 40 行，多餘的行數已被移除。"

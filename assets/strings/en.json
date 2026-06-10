@@ -178,6 +178,8 @@
   "lbl_code2image_pink": "Pink",
   "lbl_code2image_brown": "Brown",
   "lbl_code2image_grey": "Grey",
+  "lbl_code2image_black": "Black",
+  "lbl_code2image_white": "White",
   "lbl_code2image_save_success": "Success / Image saved successfully!",
   "lbl_code2image_save_fail": "Error / Please enter some code first.",
   "lbl_code2image_limit_reached": "Limit Reached / Code snippets are restricted to at most 40 lines. Overflowing lines have been removed."
