@@ -176,14 +176,9 @@ class AllToolsPage extends BaseView<AllToolsController, AllToolsState> {
                         height: 6,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.greenAccent.shade400,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.greenAccent.withOpacity(0.4),
-                              blurRadius: 4,
-                              spreadRadius: 1,
-                            ),
-                          ],
+                          color: Get.isDarkMode
+                              ? AppColors.white
+                              : Theme.of(context).primaryColor,
                         ),
                       ),
                     );

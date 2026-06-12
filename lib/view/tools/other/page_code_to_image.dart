@@ -20,11 +20,12 @@ class CodeToImagePage
         top: AppDimens.paddingMedium,
         bottom: AppDimens.paddingSmall + MediaQuery.paddingOf(context).bottom,
       ),
-      child: ResponsiveSplitLayout(
+      child: ResponsiveExpandableLayout(
         firstFlex: 1,
         secondFlex: 1,
-        secondChildrenScrollable: false,
         breakpoint: 900.0,
+        expandTitle: LocaleKeys.lbl_code2image_preview.localize(),
+        expandIcon: Icons.image_outlined,
         firstChildren: [
           Expanded(child: _buildConfigPane(context)),
         ],
@@ -156,7 +157,7 @@ class CodeToImagePage
             ),
           ],
         ),
-        // kGapSmall,
+        kGapSmall,
         Expanded(
           child: Container(
             decoration: BoxDecoration(
@@ -209,7 +210,6 @@ class CodeToImagePage
         : state.inputText.value.split('\n').length;
 
     return Container(
-      // REMOVED: width: double.infinity. We want it to shrink-wrap the intrinsic code size!
       decoration: BoxDecoration(
         color: themeBg,
         borderRadius: BorderRadius.circular(12),
@@ -223,7 +223,7 @@ class CodeToImagePage
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min, // NEW: Shrink-wrap vertical height
+        mainAxisSize: MainAxisSize.min,
         children: [
           // Optional Window Controls
           if (state.showWindowFrame.value)
@@ -251,8 +251,7 @@ class CodeToImagePage
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize:
-                  MainAxisSize.min, // NEW: Shrink-wrap horizontal width
+              mainAxisSize: MainAxisSize.min,
               children: [
                 if (state.showLineNumbers.value) ...[
                   Column(
@@ -270,7 +269,6 @@ class CodeToImagePage
                   ),
                   const SizedBox(width: 16),
                 ],
-                // REMOVED: Expanded. We don't want it forced to the screen boundaries anymore!
                 HighlightView(
                   state.inputText.value.isEmpty
                       ? LocaleKeys.lbl_code2image_placeholder.localize()

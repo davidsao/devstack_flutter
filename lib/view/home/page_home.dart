@@ -291,6 +291,7 @@ class HomePage extends BaseView<HomeController, HomeState> {
           color: Colors.transparent,
           boxShadow: AppColors.textfieldShadow(context),
         ),
+        clipBehavior: Clip.hardEdge,
         child: ListView.separated(
           controller: _tabScrollController,
           padding: const EdgeInsets.symmetric(
@@ -322,7 +323,9 @@ class HomePage extends BaseView<HomeController, HomeState> {
                   horizontal: AppDimens.paddingSmaller,
                 ),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
+                  color: isActive
+                      ? Theme.of(context).colorScheme.surface
+                      : Colors.transparent,
                   boxShadow: isActive ? AppColors.cardShadow(context) : null,
                   borderRadius: BorderRadius.circular(AppDimens.radiusSmaller),
                   border: Border(
