@@ -44,3 +44,10 @@ class MarkdownPreviewController extends BaseController<MarkdownPreviewState> {
     // }
   }
 }
+
+class MarkdownPreviewBinding extends AppBindings<MarkdownPreviewController> {
+  MarkdownPreviewBinding({required super.tag});
+
+  @override
+  get controller => MarkdownPreviewController();
+}

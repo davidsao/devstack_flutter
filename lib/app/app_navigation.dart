@@ -162,7 +162,7 @@ extension NavigationExtension on Nav {
       Nav.colorPicker: LocaleKeys.nav_color_picker.localize(),
       Nav.markdown: LocaleKeys.nav_markdown.localize(),
       Nav.textInspector: LocaleKeys.nav_text_inspector.localize(),
-      Nav.codeToImage: 'Code Visualizer',
+      Nav.codeToImage: LocaleKeys.nav_code_to_image.localize(),
     }[this];
   }
 

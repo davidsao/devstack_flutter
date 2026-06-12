@@ -210,7 +210,8 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
 
                     return InkWell(
                       onTap: () async {
-                        app.state.currentTools.value = nav;
+                        app.openTool(nav);
+                        // app.state.currentTools.value = nav;
                         if (isMobile) {
                           app.state.isMenuExpanded.value = false;
                         }

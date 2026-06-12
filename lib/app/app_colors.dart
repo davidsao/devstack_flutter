@@ -154,4 +154,14 @@ class AppColors {
       ),
     ];
   }
+
+  static List<BoxShadow> tabShadow(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final shadowColor =
+        isDark ? Colors.black.withAlpha(48) : const Color(0x10000000);
+
+    return [
+      BoxShadow(color: shadowColor, blurRadius: 2, offset: const Offset(0, 0)),
+    ];
+  }
 }

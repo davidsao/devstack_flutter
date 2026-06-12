@@ -198,7 +198,10 @@ class CodegenLoader extends AssetLoader{
   "lbl_code2image_white": "白",
   "lbl_code2image_save_success": "成功 / 画像が正常に保存されました！",
   "lbl_code2image_save_fail": "エラー / まずコードを入力してください。",
-  "lbl_code2image_limit_reached": "制限に達しました / コードスニペットは最大40行に制限されています。超過した行は削除されました。"
+  "lbl_code2image_limit_reached": "制限に達しました / コードスニペットは最大40行に制限されています。超過した行は削除されました。",
+  "lbl_pin": "ツールをピン留め",
+  "lbl_unpin": "ピン留めを解除",
+  "nav_code_to_image": "コードを画像化"
 };
 static const Map<String,dynamic> _en = {
   "lbl_app_name": "DevStack",
@@ -384,7 +387,10 @@ static const Map<String,dynamic> _en = {
   "lbl_code2image_white": "White",
   "lbl_code2image_save_success": "Success / Image saved successfully!",
   "lbl_code2image_save_fail": "Error / Please enter some code first.",
-  "lbl_code2image_limit_reached": "Limit Reached / Code snippets are restricted to at most 40 lines. Overflowing lines have been removed."
+  "lbl_code2image_limit_reached": "Limit Reached / Code snippets are restricted to at most 40 lines. Overflowing lines have been removed.",
+  "lbl_pin": "Pin tool",
+  "lbl_unpin": "Unpin tool",
+  "nav_code_to_image": "Code to Image"
 };
 static const Map<String,dynamic> _zh_Hans = {
   "lbl_app_name": "开发栈",
@@ -570,7 +576,10 @@ static const Map<String,dynamic> _zh_Hans = {
   "lbl_code2image_white": "白色",
   "lbl_code2image_save_success": "成功 / 图片保存成功！",
   "lbl_code2image_save_fail": "错误 / 请先输入一些代码。",
-  "lbl_code2image_limit_reached": "达到限制 / 代码片段最多限制为 40 行，多余的行数已被移除。"
+  "lbl_code2image_limit_reached": "达到限制 / 代码片段最多限制为 40 行，多余的行数已被移除。",
+  "lbl_pin": "固定工具",
+  "lbl_unpin": "取消固定工具",
+  "nav_code_to_image": "代码转图片"
 };
 static const Map<String,dynamic> _fr = {
   "lbl_app_name": "Stack Dév",
@@ -756,7 +765,10 @@ static const Map<String,dynamic> _fr = {
   "lbl_code2image_white": "Blanc",
   "lbl_code2image_save_success": "Succès / Image enregistrée avec succès !",
   "lbl_code2image_save_fail": "Erreur / Veuillez d'abord entrer du code.",
-  "lbl_code2image_limit_reached": "Limite atteinte / Les extraits de code sont limités à 40 lignes maximum. Les lignes excédentaires ont été supprimées."
+  "lbl_code2image_limit_reached": "Limite atteinte / Les extraits de code sont limités à 40 lignes maximum. Les lignes excédentaires ont été supprimées.",
+  "lbl_pin": "Épingler l'outil",
+  "lbl_unpin": "Désépingler l'outil",
+  "nav_code_to_image": "Code en image"
 };
 static const Map<String,dynamic> _ko = {
   "lbl_app_name": "DevStack",
@@ -942,7 +954,10 @@ static const Map<String,dynamic> _ko = {
   "lbl_code2image_white": "하얀색",
   "lbl_code2image_save_success": "성공 / 이미지가 성공적으로 저장되었습니다!",
   "lbl_code2image_save_fail": "오류 / 먼저 코드를 입력해 주세요.",
-  "lbl_code2image_limit_reached": "한도 도달 / 코드 스니펫은 최대 40줄로 제한됩니다. 초과된 줄은 제거되었습니다."
+  "lbl_code2image_limit_reached": "한도 도달 / 코드 스니펫은 최대 40줄로 제한됩니다. 초과된 줄은 제거되었습니다.",
+  "lbl_pin": "도구 고정",
+  "lbl_unpin": "도구 고정 해제",
+  "nav_code_to_image": "코드를 이미지로 변환"
 };
 static const Map<String,dynamic> _es = {
   "lbl_app_name": "Pila Dev",
@@ -1128,7 +1143,10 @@ static const Map<String,dynamic> _es = {
   "lbl_code2image_white": "Blanco",
   "lbl_code2image_save_success": "Éxito / ¡Imagen guardada con éxito!",
   "lbl_code2image_save_fail": "Error / Por favor, introduzca algún código primero.",
-  "lbl_code2image_limit_reached": "Límite alcanzado / Los fragmentos de código están restringidos a un máximo de 40 líneas. Se han eliminado las líneas sobrantes."
+  "lbl_code2image_limit_reached": "Límite alcanzado / Los fragmentos de código están restringidos a un máximo de 40 líneas. Se han eliminado las líneas sobrantes.",
+  "lbl_pin": "Anclar herramienta",
+  "lbl_unpin": "Desanclar herramienta",
+  "nav_code_to_image": "Código a imagen"
 };
 static const Map<String,dynamic> _zh_Hant = {
   "lbl_app_name": "DevStack",
@@ -1314,7 +1332,10 @@ static const Map<String,dynamic> _zh_Hant = {
   "lbl_code2image_white": "白色",
   "lbl_code2image_save_success": "成功 / 圖片儲存成功！",
   "lbl_code2image_save_fail": "錯誤 / 請先輸入一些程式碼。",
-  "lbl_code2image_limit_reached": "達到限制 / 程式碼片段最多限制為 40 行，多餘的行數已被移除。"
+  "lbl_code2image_limit_reached": "達到限制 / 程式碼片段最多限制為 40 行，多餘的行數已被移除。",
+  "lbl_pin": "釘選工具",
+  "lbl_unpin": "取消釘選工具",
+  "nav_code_to_image": "程式碼轉圖片"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ja": _ja, "en": _en, "zh_Hans": _zh_Hans, "fr": _fr, "ko": _ko, "es": _es, "zh_Hant": _zh_Hant};
 }

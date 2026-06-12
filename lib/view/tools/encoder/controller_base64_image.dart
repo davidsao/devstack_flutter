@@ -107,3 +107,10 @@ class Base64ImageState extends ViewState {
   final base64Output = ''.obs;
   final imageBytes = Rxn<Uint8List>();
 }
+
+class Base64ImageBinding extends AppBindings<Base64ImageController> {
+  Base64ImageBinding({required super.tag});
+
+  @override
+  get controller => Base64ImageController();
+}

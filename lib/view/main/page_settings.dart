@@ -45,7 +45,7 @@ class SettingsPage extends BaseView<SettingsController, SettingsState> {
               onTap: () => app.back(),
               child: Container(
                 height: 32,
-                width: 32,
+                // width: 32,
                 margin: const EdgeInsets.all(AppDimens.marginSmaller),
                 child: AppImage(
                   IconKeys.back,

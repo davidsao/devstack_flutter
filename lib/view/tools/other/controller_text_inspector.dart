@@ -138,3 +138,10 @@ class TextInspectorController extends BaseController<TextInspectorState> {
     }
   }
 }
+
+class TextInspectorBinding extends AppBindings<TextInspectorController> {
+  TextInspectorBinding({required super.tag});
+
+  @override
+  get controller => TextInspectorController();
+}

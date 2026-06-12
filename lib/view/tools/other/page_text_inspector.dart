@@ -21,9 +21,8 @@ class TextInspectorPage
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          kGapTiny,
           _buildFormatChips(context),
-          kGapMedium,
+          kGapSmaller,
 
           // --- INPUT / OUTPUT SPLIT PANE ---
           Expanded(
@@ -48,35 +47,38 @@ class TextInspectorPage
   }
 
   Widget _buildFormatChips(BuildContext context) {
-    return Obx(() => Wrap(
-          spacing: 8.0,
-          runSpacing: 8.0,
-          children: controller.caseOptions.map((caseType) {
-            final isSelected = state.selectedCase.value == caseType;
-            return ChoiceChip(
-              label: Text(caseType),
-              selected: isSelected,
-              showCheckmark: false,
-              onSelected: (_) => controller.setCase(caseType),
-              labelStyle: AppTextStyles.b3.copyWith(
+    return Obx(() {
+      return Wrap(
+        spacing: 8.0,
+        children: controller.caseOptions.map((caseType) {
+          final isSelected = state.selectedCase.value == caseType;
+          return ChoiceChip(
+            visualDensity: VisualDensity.compact,
+            labelPadding: EdgeInsets.zero,
+            label: Text(caseType),
+            selected: isSelected,
+            showCheckmark: false,
+            onSelected: (_) => controller.setCase(caseType),
+            labelStyle: AppTextStyles.b3.copyWith(
+              color: isSelected
+                  ? Theme.of(context).colorScheme.onPrimary
+                  : Theme.of(context).textTheme.bodyMedium?.color,
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            ),
+            selectedColor: Theme.of(context).colorScheme.primary,
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(6),
+              side: BorderSide(
                 color: isSelected
-                    ? Theme.of(context).colorScheme.onPrimary
-                    : Theme.of(context).textTheme.bodyMedium?.color,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                    ? Theme.of(context).colorScheme.primary
+                    : Theme.of(context).dividerColor,
               ),
-              selectedColor: Theme.of(context).colorScheme.primary,
-              backgroundColor: Theme.of(context).colorScheme.surface,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6),
-                side: BorderSide(
-                  color: isSelected
-                      ? Theme.of(context).colorScheme.primary
-                      : Theme.of(context).dividerColor,
-                ),
-              ),
-            );
-          }).toList(),
-        ));
+            ),
+          );
+        }).toList(),
+      );
+    });
   }
 
   Widget _buildInputPane(BuildContext context) {

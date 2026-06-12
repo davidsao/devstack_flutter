@@ -182,5 +182,8 @@
   "lbl_code2image_white": "Blanco",
   "lbl_code2image_save_success": "Éxito / ¡Imagen guardada con éxito!",
   "lbl_code2image_save_fail": "Error / Por favor, introduzca algún código primero.",
-  "lbl_code2image_limit_reached": "Límite alcanzado / Los fragmentos de código están restringidos a un máximo de 40 líneas. Se han eliminado las líneas sobrantes."
+  "lbl_code2image_limit_reached": "Límite alcanzado / Los fragmentos de código están restringidos a un máximo de 40 líneas. Se han eliminado las líneas sobrantes.",
+  "lbl_pin": "Anclar herramienta",
+  "lbl_unpin": "Desanclar herramienta",
+  "nav_code_to_image": "Código a imagen"
 }

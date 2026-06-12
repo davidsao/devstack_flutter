@@ -8,7 +8,9 @@ import 'package:get/get.dart';
 import '../../generated/locale_keys.g.dart';
 
 class HomePage extends BaseView<HomeController, HomeState> {
-  const HomePage({super.key, super.viewTag});
+  HomePage({super.key, super.viewTag});
+
+  final ScrollController _tabScrollController = ScrollController();
 
   @override
   Widget view(BuildContext context) {
@@ -17,9 +19,9 @@ class HomePage extends BaseView<HomeController, HomeState> {
     final isMobile = screenWidth < 800;
 
     // The macOS window controls take up roughly 28 pixels of height.
-    final double macOsOffset = GetPlatform.isMacOS ? 28.0 : 0.0;
+    final double desktopOffset = isMobile ? 0.0 : 32.0;
     final double safeTopPadding =
-        MediaQuery.paddingOf(context).top + macOsOffset;
+        MediaQuery.paddingOf(context).top + desktopOffset;
 
     // 2. Safely trigger the responsive check after the current build phase completes
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -61,23 +63,28 @@ class HomePage extends BaseView<HomeController, HomeState> {
               ),
             ),
           ),
+
           // 1. Main Content Area
           Obx(() {
-            final nav = app.state.currentTools.value;
+            final activeNav = app.state.currentTools.value;
             return AnimatedContainer(
               duration: 500.milliseconds,
               curve: Curves.easeOutQuint,
-              // On mobile, the menu floats OVER the content, so we remove the margin push
               margin: EdgeInsets.only(
                 left: app.state.isMenuExpanded.value && !isMobile ? 224.0 : 0.0,
-                // UPDATED: Used safeTopPadding instead of raw padding
-                top: app.state.isMenuExpanded.value && app.state.isIpad.value
-                    ? safeTopPadding + 44.0
-                    : (app.state.isMenuExpanded.value && !isMobile
-                        ? safeTopPadding
-                        : kToolbarHeight + safeTopPadding),
+                top: safeTopPadding +
+                    (app.state.isMenuExpanded.value && !isMobile
+                        ? AppDimens.marginTiny
+                        : 44.0),
               ),
-              child: nav.getWidget(null),
+              child: Column(
+                children: [
+                  // --- THE TOOL CONTENT ---
+                  Expanded(
+                    child: activeNav.getWidget(null),
+                  ),
+                ],
+              ),
             );
           }),
 
@@ -100,11 +107,10 @@ class HomePage extends BaseView<HomeController, HomeState> {
           // 3. Side Menu
           Obx(() {
             return AnimatedPositioned(
-              duration: 500.milliseconds, // Snappier duration for mobile
+              duration: 500.milliseconds,
               curve: Curves.easeOutQuint,
               left: app.state.isMenuExpanded.value ? 0.0 : -224.0,
               width: 224.0,
-              // UPDATED: Used safeTopPadding instead of raw padding
               top: AppDimens.marginSmaller + kToolbarHeight + safeTopPadding,
               bottom: MediaQuery.paddingOf(context).bottom +
                   AppDimens.marginSmaller,
@@ -115,11 +121,9 @@ class HomePage extends BaseView<HomeController, HomeState> {
           // 4. Toggle Button
           Obx(() {
             return Positioned(
-              // UPDATED: Used safeTopPadding instead of raw padding
-              top: safeTopPadding +
-                  (app.state.isIpad.value ? 0.0 : AppDimens.marginSmaller),
-              left:
-                  AppDimens.marginSmaller + (app.state.isIpad.value ? 64 : 0.0),
+              top: safeTopPadding + AppDimens.marginSmaller,
+              left: (app.state.isIpad.value && isMobile ? 64.0 : 0.0) +
+                  AppDimens.marginSmaller,
               right: AppDimens.marginSmaller,
               child: Stack(
                 children: [
@@ -135,6 +139,28 @@ class HomePage extends BaseView<HomeController, HomeState> {
                           style: AppTextStyles.h4.bold,
                         ).marginOnly(top: AppDimens.marginTiny),
                       const Spacer(),
+                      if (isMobile)
+                        Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular(AppDimens.radiusMedium),
+                            color: Theme.of(context).cardColor,
+                            boxShadow: AppColors.cardShadow(context),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              app.state.currentTools.value = Nav.allTools;
+                            },
+                            child: AppImage(
+                              IconKeys.home,
+                              size: AppDimens.iconSmall,
+                              color: AppColors.grey,
+                              fit: BoxFit.scaleDown,
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                   Row(
@@ -215,8 +241,144 @@ class HomePage extends BaseView<HomeController, HomeState> {
               ),
             );
           }),
+
+          // 5. The Tab Bar
+          if (!isMobile)
+            Obx(() {
+              return AnimatedPositioned(
+                duration: 500.milliseconds,
+                curve: Curves.easeOutQuint,
+                // Properly offset below macOS traffic lights
+                top: MediaQuery.paddingOf(context).top,
+                right: AppDimens.paddingMedium,
+                // CRITICAL FIX: Dynamically adjust width constraints based on menu/mobile state!
+                left: (app.state.isMenuExpanded.value && !isMobile)
+                    ? 240.0
+                    : 64.0,
+                height: 44.0,
+                child: _tabBar,
+              );
+            }),
         ],
       ),
     );
+  }
+
+  Widget get _tabBar {
+    return Obx(() {
+      final activeNav = app.state.currentTools.value;
+      final openTabs = app.state.openTabs;
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_tabScrollController.hasClients &&
+            openTabs.isNotEmpty &&
+            activeNav == openTabs.last) {
+          Future.delayed(const Duration(milliseconds: 50), () {
+            if (_tabScrollController.hasClients) {
+              _tabScrollController.animateTo(
+                _tabScrollController.position.maxScrollExtent,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeOutQuint,
+              );
+            }
+          });
+        }
+      });
+
+      return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AppDimens.radiusSmall),
+          color: Colors.transparent,
+          boxShadow: AppColors.textfieldShadow(context),
+        ),
+        child: ListView.separated(
+          controller: _tabScrollController,
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppDimens.paddingText,
+          ),
+          scrollDirection: Axis.horizontal,
+          itemCount: app.state.openTabs.length,
+          separatorBuilder: (context, index) {
+            return Container(
+              width: 1,
+              margin: const EdgeInsets.symmetric(
+                vertical: AppDimens.marginTiny,
+                horizontal: 2,
+              ),
+              color: AppColors.divider.withAlpha(128),
+            );
+          },
+          itemBuilder: (context, index) {
+            final tabTool = app.state.openTabs[index];
+            final isActive = activeNav == tabTool;
+
+            return GestureDetector(
+              onTap: () => app.openTool(tabTool),
+              child: Container(
+                margin: const EdgeInsets.symmetric(
+                  vertical: AppDimens.marginText,
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppDimens.paddingSmaller,
+                ),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                  boxShadow: isActive ? AppColors.cardShadow(context) : null,
+                  borderRadius: BorderRadius.circular(AppDimens.radiusSmaller),
+                  border: Border(
+                    bottom: BorderSide(
+                      color: isActive ? AppColors.primary : Colors.transparent,
+                      width: 2,
+                    ),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    if (tabTool.getIcon != null) ...[
+                      AppImage(
+                        tabTool.getIcon!,
+                        size: 14,
+                        color: isActive
+                            ? Theme.of(context).colorScheme.primary
+                            : (Theme.of(context).textTheme.bodyMedium?.color ??
+                                    AppColors.black)
+                                .withAlpha(200),
+                      ),
+                      kGapSmaller,
+                    ],
+                    Text(
+                      tabTool.getName ?? "Tool",
+                      style: AppTextStyles.b2.copyWith(
+                        color: isActive
+                            ? Theme.of(context).colorScheme.primary
+                            : (Theme.of(context).textTheme.bodyMedium?.color ??
+                                    AppColors.black)
+                                .withAlpha(200),
+                        fontWeight:
+                            isActive ? FontWeight.bold : FontWeight.normal,
+                      ),
+                    ),
+                    kGapText,
+                    // Close button (hide for the All Tools dashboard)
+                    if (tabTool != Nav.allTools) ...[
+                      kGapTiny,
+                      InkWell(
+                        onTap: () => app.closeTool(tabTool),
+                        borderRadius: BorderRadius.circular(12),
+                        child: Icon(
+                          Icons.close,
+                          size: 14,
+                          color: AppColors.grey,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    });
   }
 }

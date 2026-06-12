@@ -187,5 +187,8 @@ abstract class  LocaleKeys {
   static const lbl_code2image_save_success = 'lbl_code2image_save_success';
   static const lbl_code2image_save_fail = 'lbl_code2image_save_fail';
   static const lbl_code2image_limit_reached = 'lbl_code2image_limit_reached';
+  static const lbl_pin = 'lbl_pin';
+  static const lbl_unpin = 'lbl_unpin';
+  static const nav_code_to_image = 'nav_code_to_image';
 
 }

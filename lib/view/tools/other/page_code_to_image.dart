@@ -146,11 +146,14 @@ class CodeToImagePage
               LocaleKeys.lbl_code2image_preview.localize(),
               style: AppTextStyles.b2.bold,
             ),
-            ElevatedButton.icon(
-              onPressed: controller.exportImage,
-              icon: const Icon(Icons.download_rounded, size: 18),
-              label: Text(LocaleKeys.btn_export_image.localize()),
-            )
+            AppButton(
+              controller.exportImage,
+              leading: const Icon(Icons.download_rounded),
+              style: AppButtonStyle.primary(
+                size: AppButtonStyleSize.small,
+              ),
+              child: Text(LocaleKeys.btn_export_image.localize()),
+            ),
           ],
         ),
         // kGapSmall,

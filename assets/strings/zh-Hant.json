@@ -182,5 +182,8 @@
   "lbl_code2image_white": "白色",
   "lbl_code2image_save_success": "成功 / 圖片儲存成功！",
   "lbl_code2image_save_fail": "錯誤 / 請先輸入一些程式碼。",
-  "lbl_code2image_limit_reached": "達到限制 / 程式碼片段最多限制為 40 行，多餘的行數已被移除。"
+  "lbl_code2image_limit_reached": "達到限制 / 程式碼片段最多限制為 40 行，多餘的行數已被移除。",
+  "lbl_pin": "釘選工具",
+  "lbl_unpin": "取消釘選工具",
+  "nav_code_to_image": "程式碼轉圖片"
 }

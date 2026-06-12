@@ -133,6 +133,29 @@ class AppController extends BaseController<AppState> {
     }
     return false;
   }
+
+  void openTool(Nav tool) {
+    // If it's not already open, add it to the tab bar
+    if (!state.openTabs.contains(tool)) {
+      state.openTabs.add(tool);
+    }
+    // Switch focus to this tool
+    state.currentTools.value = tool;
+  }
+
+  void closeTool(Nav tool) {
+    state.openTabs.remove(tool);
+
+    // If we closed the tool we were currently looking at, automatically
+    // switch to the last open tab, or back to 'All Tools' if none are left.
+    if (state.currentTools.value == tool) {
+      if (state.openTabs.isNotEmpty) {
+        state.currentTools.value = state.openTabs.last;
+      } else {
+        openTool(Nav.allTools); // Always keep at least the dashboard open
+      }
+    }
+  }
 }
 
 class AppState extends ViewState {
@@ -142,6 +165,7 @@ class AppState extends ViewState {
   RxMap<String, List<Nav>> tools = <String, List<Nav>>{}.obs;
   Rx<Nav> currentTools = Nav.allTools.obs;
   RxBool isIpad = false.obs;
+  RxList<Nav> openTabs = <Nav>[Nav.allTools].obs;
 }
 
 class AppBinding extends AppBindings<AppController> {

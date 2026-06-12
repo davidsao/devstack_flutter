@@ -182,5 +182,8 @@
   "lbl_code2image_white": "白色",
   "lbl_code2image_save_success": "成功 / 图片保存成功！",
   "lbl_code2image_save_fail": "错误 / 请先输入一些代码。",
-  "lbl_code2image_limit_reached": "达到限制 / 代码片段最多限制为 40 行，多余的行数已被移除。"
+  "lbl_code2image_limit_reached": "达到限制 / 代码片段最多限制为 40 行，多余的行数已被移除。",
+  "lbl_pin": "固定工具",
+  "lbl_unpin": "取消固定工具",
+  "nav_code_to_image": "代码转图片"
 }

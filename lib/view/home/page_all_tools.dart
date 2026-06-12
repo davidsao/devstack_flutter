@@ -93,7 +93,7 @@ class AllToolsPage extends BaseView<AllToolsController, AllToolsState> {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () {
-          app.state.currentTools.value = nav;
+          app.openTool(nav);
           // If you are on a mobile device, auto-close the menu after selecting a tool
           if (MediaQuery.sizeOf(context).width < 800) {
             app.state.isMenuExpanded.value = false;
@@ -102,57 +102,94 @@ class AllToolsPage extends BaseView<AllToolsController, AllToolsState> {
         child: GlassContainer(
           borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: AppDimens.paddingSmall,
-                vertical: AppDimens.paddingTiny),
-            child: Row(
+            padding: const EdgeInsets.all(
+              AppDimens.paddingTiny,
+            ),
+            child: Stack(
+              alignment: Alignment.center,
               children: [
-                AppImage(
-                  nav.getIcon ?? "",
-                  size: AppDimens.iconSmall,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Text(
-                    nav.getName ?? '',
-                    style: AppTextStyles.b2.semiBold.copyWith(height: 1.1),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                Obx(() {
-                  final isPinned = app.state.pinnedTools.contains(nav);
-                  return Tooltip(
-                    message: isPinned ? 'Unpin Tool' : 'Pin Tool',
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () => app.togglePin(nav),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .withAlpha(64),
-                          ),
-                          shape: BoxShape.circle,
-                          color: Theme.of(context).cardColor,
-                        ),
-                        padding: const EdgeInsets.all(4.0),
-                        child: Icon(
-                          isPinned ? Icons.push_pin : Icons.push_pin_outlined,
-                          size: 18,
-                          color: isPinned
-                              ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context)
-                                  .iconTheme
-                                  .color
-                                  ?.withAlpha(72),
-                        ),
+                Row(
+                  children: [
+                    kGapText,
+                    AppImage(
+                      nav.getIcon ?? "",
+                      size: AppDimens.iconSmall,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Text(
+                        nav.getName ?? '',
+                        style: AppTextStyles.b2.semiBold.copyWith(height: 1.1),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                  );
+                    Obx(() {
+                      final isPinned = app.state.pinnedTools.contains(nav);
+                      return Tooltip(
+                        message: isPinned
+                            ? LocaleKeys.lbl_unpin.localize()
+                            : LocaleKeys.lbl_pin.localize(),
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () => app.togglePin(nav),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withAlpha(64),
+                              ),
+                              shape: BoxShape.circle,
+                              color: Theme.of(context).cardColor,
+                            ),
+                            padding: const EdgeInsets.all(4.0),
+                            child: Icon(
+                              isPinned
+                                  ? Icons.push_pin
+                                  : Icons.push_pin_outlined,
+                              size: 18,
+                              color: isPinned
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Theme.of(context)
+                                      .iconTheme
+                                      .color
+                                      ?.withAlpha(72),
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+                    kGapText,
+                  ],
+                ),
+                Obx(() {
+                  final isOpen = app.state.openTabs.contains(nav);
+                  if (isOpen) {
+                    return Positioned(
+                      top: 4,
+                      right: 0,
+                      child: Container(
+                        width: 6,
+                        height: 6,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.greenAccent.shade400,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.greenAccent.withOpacity(0.4),
+                              blurRadius: 4,
+                              spreadRadius: 1,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
                 }),
               ],
             ),

@@ -220,3 +220,10 @@ class CodeToImageController extends BaseController<CodeToImageState> {
     }
   }
 }
+
+class CodeToImageBinding extends AppBindings<CodeToImageController> {
+  CodeToImageBinding({required super.tag});
+
+  @override
+  get controller => CodeToImageController();
+}

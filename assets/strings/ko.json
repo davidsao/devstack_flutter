@@ -182,5 +182,8 @@
   "lbl_code2image_white": "하얀색",
   "lbl_code2image_save_success": "성공 / 이미지가 성공적으로 저장되었습니다!",
   "lbl_code2image_save_fail": "오류 / 먼저 코드를 입력해 주세요.",
-  "lbl_code2image_limit_reached": "한도 도달 / 코드 스니펫은 최대 40줄로 제한됩니다. 초과된 줄은 제거되었습니다."
+  "lbl_code2image_limit_reached": "한도 도달 / 코드 스니펫은 최대 40줄로 제한됩니다. 초과된 줄은 제거되었습니다.",
+  "lbl_pin": "도구 고정",
+  "lbl_unpin": "도구 고정 해제",
+  "nav_code_to_image": "코드를 이미지로 변환"
 }
