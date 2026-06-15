@@ -185,5 +185,22 @@
   "lbl_code2image_limit_reached": "达到限制 / 代码片段最多限制为 40 行，多余的行数已被移除。",
   "lbl_pin": "固定工具",
   "lbl_unpin": "取消固定工具",
-  "nav_code_to_image": "代码转图片"
+  "nav_code_to_image": "代码转图片",
+  "lbl_tooltip_duplicate_tool": "此工具已在另一个窗格中打开。一次只能打开一个实例。",
+  "lbl_code2image_limit_reached_title": "已达上限",
+  "lbl_code2image_limit_reached_description": "代码片段最多限制为 40 行。超出的行数已被移除。",
+  "lbl_code2image_save_fail_title": "错误",
+  "lbl_code2image_save_fail_empty_description": "请先输入一些代码。",
+  "lbl_code2image_save_dialog_title": "保存代码图片",
+  "lbl_code2image_save_success_title": "成功",
+  "lbl_code2image_save_success_description": "图片保存成功！",
+  "lbl_code2image_save_fail_export_description": "导出失败",
+  "lbl_base64_process_error_title": "错误",
+  "lbl_base64_process_error_description": "处理图片文件失败。",
+  "lbl_qr_download_started": "二维码下载已开始。",
+  "lbl_qr_save_success_description": "二维码保存成功！",
+  "lbl_qr_save_failed_description": "导出二维码失败。",
+  "lbl_qr_save_dialog_title": "保存二维码",
+  "lbl_qr_save_success_title": "成功",
+  "lbl_qr_save_failed_title": "错误"
 }

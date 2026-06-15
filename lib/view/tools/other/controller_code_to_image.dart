@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:devstack/index.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../generated/locale_keys.g.dart';
 
@@ -141,12 +144,12 @@ class CodeToImageController extends BaseController<CodeToImageState> {
             TextSelection.collapsed(offset: newText.length);
       }
 
-      Get.snackbar(
-        "Limit Reached",
-        "Code snippets are restricted to at most 40 lines. Overflowing lines have been removed.",
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.orange.withOpacity(0.9),
-        colorText: Colors.white,
+      showTopSnackBar(
+        Overlay.of(Get.overlayContext!),
+        CustomSnackBar.info(
+          message:
+              LocaleKeys.lbl_code2image_limit_reached_description.localize(),
+        ),
       );
     }
 
@@ -192,7 +195,13 @@ class CodeToImageController extends BaseController<CodeToImageState> {
 
   Future<void> exportImage() async {
     if (state.inputText.value.isEmpty) {
-      Get.snackbar("Error", "Please enter some code first.");
+      showTopSnackBar(
+        Overlay.of(Get.overlayContext!),
+        CustomSnackBar.error(
+          message:
+              LocaleKeys.lbl_code2image_save_fail_empty_description.localize(),
+        ),
+      );
       return;
     }
 
@@ -204,19 +213,32 @@ class CodeToImageController extends BaseController<CodeToImageState> {
 
       if (imageBytes != null) {
         String? outputFile = await FilePicker.saveFile(
-          dialogTitle: 'Save Snippet Image',
-          fileName: 'code_snippet.png',
+          dialogTitle: LocaleKeys.lbl_code2image_save_dialog_title.localize(),
+          fileName:
+              'code_snippet_${DateFormat('yyyy_MM_dd_hh_mm_ss').format(DateTime.now().toLocal())}.png',
           type: FileType.image,
         );
 
         if (outputFile != null) {
           final file = File(outputFile);
           await file.writeAsBytes(imageBytes);
-          Get.snackbar("Success", "Image saved successfully!");
+          showTopSnackBar(
+            Overlay.of(Get.overlayContext!),
+            CustomSnackBar.success(
+              message:
+                  LocaleKeys.lbl_code2image_save_success_description.localize(),
+            ),
+          );
         }
       }
     } catch (e) {
-      Get.snackbar("Export Failed", e.toString());
+      showTopSnackBar(
+        Overlay.of(Get.overlayContext!),
+        CustomSnackBar.error(
+          message:
+              LocaleKeys.lbl_code2image_save_fail_export_description.localize(),
+        ),
+      );
     }
   }
 }

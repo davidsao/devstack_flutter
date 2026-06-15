@@ -185,5 +185,22 @@
   "lbl_code2image_limit_reached": "制限に達しました / コードスニペットは最大40行に制限されています。超過した行は削除されました。",
   "lbl_pin": "ツールをピン留め",
   "lbl_unpin": "ピン留めを解除",
-  "nav_code_to_image": "コードを画像化"
+  "nav_code_to_image": "コードを画像化",
+  "lbl_tooltip_duplicate_tool": "このツールはすでに別のペインで開かれています。同時に開くことができるインスタンスは1つだけです。",
+  "lbl_code2image_limit_reached_title": "制限に達しました",
+  "lbl_code2image_limit_reached_description": "コードスニペットは最大40行に制限されています。超過した行は削除されました。",
+  "lbl_code2image_save_fail_title": "エラー",
+  "lbl_code2image_save_fail_empty_description": "まずコードを入力してください。",
+  "lbl_code2image_save_dialog_title": "スニペット画像を保存",
+  "lbl_code2image_save_success_title": "成功",
+  "lbl_code2image_save_success_description": "画像が正常に保存されました！",
+  "lbl_code2image_save_fail_export_description": "エクスポートに失敗しました",
+  "lbl_base64_process_error_title": "エラー",
+  "lbl_base64_process_error_description": "画像ファイルの処理に失敗しました。",
+  "lbl_qr_download_started": "QRコードのダウンロードが開始されました。",
+  "lbl_qr_save_success_description": "QRコードが正常に保存されました。",
+  "lbl_qr_save_failed_description": "QRコードのエクスポートに失敗しました。",
+  "lbl_qr_save_dialog_title": "QRコードを保存",
+  "lbl_qr_save_success_title": "成功",
+  "lbl_qr_save_failed_title": "エラー"
 }

@@ -185,5 +185,22 @@
   "lbl_code2image_limit_reached": "Limite atteinte / Les extraits de code sont limités à 40 lignes maximum. Les lignes excédentaires ont été supprimées.",
   "lbl_pin": "Épingler l'outil",
   "lbl_unpin": "Désépingler l'outil",
-  "nav_code_to_image": "Code en image"
+  "nav_code_to_image": "Code en image",
+  "lbl_tooltip_duplicate_tool": "Cet outil est déjà ouvert dans l'autre volet. Une seule instance peut être ouverte à la fois.",
+  "lbl_code2image_limit_reached_title": "Limite atteinte",
+  "lbl_code2image_limit_reached_description": "Les extraits de code sont limités à 40 lignes maximum. Les lignes en trop ont été supprimées.",
+  "lbl_code2image_save_fail_title": "Erreur",
+  "lbl_code2image_save_fail_empty_description": "Veuillez d'abord saisir du code.",
+  "lbl_code2image_save_dialog_title": "Enregistrer l'image de l'extrait",
+  "lbl_code2image_save_success_title": "Succès",
+  "lbl_code2image_save_success_description": "Image enregistrée avec succès !",
+  "lbl_code2image_save_fail_export_description": "Échec de l'exportation",
+  "lbl_base64_process_error_title": "Erreur",
+  "lbl_base64_process_error_description": "Échec du traitement du fichier image.",
+  "lbl_qr_download_started": "Le téléchargement du code QR a commencé.",
+  "lbl_qr_save_success_description": "Code QR enregistré avec succès.",
+  "lbl_qr_save_failed_description": "Échec de l'exportation du code QR.",
+  "lbl_qr_save_dialog_title": "Enregistrer le code QR",
+  "lbl_qr_save_success_title": "Succès",
+  "lbl_qr_save_failed_title": "Erreur"
 }

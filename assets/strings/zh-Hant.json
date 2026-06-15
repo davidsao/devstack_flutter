@@ -185,5 +185,22 @@
   "lbl_code2image_limit_reached": "達到限制 / 程式碼片段最多限制為 40 行，多餘的行數已被移除。",
   "lbl_pin": "釘選工具",
   "lbl_unpin": "取消釘選工具",
-  "nav_code_to_image": "程式碼轉圖片"
+  "nav_code_to_image": "程式碼轉圖片",
+  "lbl_tooltip_duplicate_tool": "此工具已在另一個窗格中開啟。一次只能開啟一個實例。",
+  "lbl_code2image_limit_reached_title": "已達上限",
+  "lbl_code2image_limit_reached_description": "程式碼片段最多限制為 40 行。超出的行數已被移除。",
+  "lbl_code2image_save_fail_title": "錯誤",
+  "lbl_code2image_save_fail_empty_description": "請先輸入一些程式碼。",
+  "lbl_code2image_save_dialog_title": "儲存程式碼圖片",
+  "lbl_code2image_save_success_title": "成功",
+  "lbl_code2image_save_success_description": "圖片儲存成功！",
+  "lbl_code2image_save_fail_export_description": "匯出失敗",
+  "lbl_base64_process_error_title": "錯誤",
+  "lbl_base64_process_error_description": "處理圖片檔案失敗。",
+  "lbl_qr_download_started": "QR Code 下載已開始。",
+  "lbl_qr_save_success_description": "QR Code 儲存成功！",
+  "lbl_qr_save_failed_description": "匯出 QR Code 失敗。",
+  "lbl_qr_save_dialog_title": "儲存 QR Code",
+  "lbl_qr_save_success_title": "成功",
+  "lbl_qr_save_failed_title": "錯誤"
 }

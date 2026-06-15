@@ -185,5 +185,22 @@
   "lbl_code2image_limit_reached": "Límite alcanzado / Los fragmentos de código están restringidos a un máximo de 40 líneas. Se han eliminado las líneas sobrantes.",
   "lbl_pin": "Anclar herramienta",
   "lbl_unpin": "Desanclar herramienta",
-  "nav_code_to_image": "Código a imagen"
+  "nav_code_to_image": "Código a imagen",
+  "lbl_tooltip_duplicate_tool": "Esta herramienta ya está abierta en el otro panel. Solo se puede abrir una instancia a la vez.",
+  "lbl_code2image_limit_reached_title": "Límite alcanzado",
+  "lbl_code2image_limit_reached_description": "Los fragmentos de código están restringidos a un máximo de 40 líneas. Se han eliminado las líneas sobrantes.",
+  "lbl_code2image_save_fail_title": "Error",
+  "lbl_code2image_save_fail_empty_description": "Por favor, introduzca algún código primero.",
+  "lbl_code2image_save_dialog_title": "Guardar imagen del fragmento",
+  "lbl_code2image_save_success_title": "Éxito",
+  "lbl_code2image_save_success_description": "¡Imagen guardada con éxito!",
+  "lbl_code2image_save_fail_export_description": "Error al exportar",
+  "lbl_base64_process_error_title": "Error",
+  "lbl_base64_process_error_description": "Error al procesar el archivo de imagen.",
+  "lbl_qr_download_started": "Descarga de código QR iniciada.",
+  "lbl_qr_save_success_description": "Código QR guardado con éxito.",
+  "lbl_qr_save_failed_description": "Error al exportar el código QR.",
+  "lbl_qr_save_dialog_title": "Guardar código QR",
+  "lbl_qr_save_success_title": "Éxito",
+  "lbl_qr_save_failed_title": "Error"
 }

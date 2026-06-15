@@ -23,7 +23,6 @@ class CodeToImagePage
       child: ResponsiveExpandableLayout(
         firstFlex: 1,
         secondFlex: 1,
-        breakpoint: 900.0,
         expandTitle: LocaleKeys.lbl_code2image_preview.localize(),
         expandIcon: Icons.image_outlined,
         firstChildren: [

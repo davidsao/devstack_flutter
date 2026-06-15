@@ -12,185 +12,205 @@ class AllToolsPage extends BaseView<AllToolsController, AllToolsState> {
     // Access the HomeController to get the master list of tools and categories
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Padding(
-        padding: EdgeInsets.only(
-          top: AppDimens.paddingMedium,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              LocaleKeys.lbl_all_tools.localize(),
-              style: AppTextStyles.h2.bold,
-            ).marginSymmetric(
-              horizontal: AppDimens.paddingMedium,
-            ),
-            kGapMedium,
-            Expanded(
-              child: Obx(() {
-                final categories = app.state.tools.value;
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          kGapMedium,
+          Expanded(
+            child: Obx(() {
+              final categories = app.state.tools.value;
 
-                return MediaQuery.removePadding(
-                  context: context,
-                  removeTop: true,
-                  removeBottom: true,
-                  child: ListView.builder(
-                    padding: const EdgeInsets.only(
-                      bottom: AppDimens.paddingMedium,
-                      left: AppDimens.paddingMedium,
-                      right: AppDimens.paddingMedium,
-                    ),
-                    itemCount: categories.length,
-                    itemBuilder: (context, index) {
-                      final categoryName = categories.keys.elementAt(index);
-                      final tools = categories[categoryName]!;
-
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Category Header
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: AppDimens.paddingTiny),
-                            child: Text(
-                              categoryName,
-                              style: AppTextStyles.t3,
-                            ),
-                          ),
-                          // Responsive Grid of Tool Cards
-                          GridView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                const SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: 240, // Max width of a card
-                              mainAxisExtent: 64, // Fixed height of a card
-                              crossAxisSpacing: AppDimens.marginSmaller,
-                              mainAxisSpacing: AppDimens.marginSmaller,
-                            ),
-                            itemCount: tools.length,
-                            itemBuilder: (context, toolIndex) {
-                              final nav = tools[toolIndex];
-                              return _buildToolCard(context, nav);
-                            },
-                          ),
-                          kGapSmall,
-                        ],
-                      );
-                    },
+              return MediaQuery.removePadding(
+                context: context,
+                removeTop: true,
+                removeBottom: true,
+                child: ListView.builder(
+                  padding: const EdgeInsets.only(
+                    bottom: AppDimens.paddingMedium,
+                    left: AppDimens.paddingMedium,
+                    right: AppDimens.paddingMedium,
                   ),
-                );
-              }),
-            ),
-          ],
-        ),
+                  itemCount: categories.length,
+                  itemBuilder: (context, index) {
+                    final categoryName = categories.keys.elementAt(index);
+                    final tools = categories[categoryName]!;
+
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Category Header
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: AppDimens.paddingTiny),
+                          child: Text(
+                            categoryName,
+                            style: AppTextStyles.t3,
+                          ),
+                        ),
+                        // Responsive Grid of Tool Cards
+                        GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 240, // Max width of a card
+                            mainAxisExtent: 64, // Fixed height of a card
+                            crossAxisSpacing: AppDimens.marginSmaller,
+                            mainAxisSpacing: AppDimens.marginSmaller,
+                          ),
+                          itemCount: tools.length,
+                          itemBuilder: (context, toolIndex) {
+                            final nav = tools[toolIndex];
+                            return _buildToolCard(context, nav);
+                          },
+                        ),
+                        kGapSmall,
+                      ],
+                    );
+                  },
+                ),
+              );
+            }),
+          ),
+        ],
       ),
     );
   }
 
   Widget _buildToolCard(BuildContext context, Nav nav) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () {
-          app.openTool(nav);
-          // If you are on a mobile device, auto-close the menu after selecting a tool
-          if (MediaQuery.sizeOf(context).width < 800) {
-            app.state.isMenuExpanded.value = false;
-          }
-        },
-        child: GlassContainer(
-          borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
-          child: Padding(
-            padding: const EdgeInsets.all(
-              AppDimens.paddingTiny,
-            ),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Row(
+    // NEW: Get the exact pane this specific All Tools page is rendered inside!
+    // (If it fails to find it, it safely falls back to the globally active pane).
+    final targetPane =
+        ActivePaneProvider.of(context) ?? app.state.activePane.value;
+
+    return Obx(() {
+      // NEW: Pass the targetPane so the left and right pages calculate differently
+      final bool isEnabled = app.canOpenTool(nav, targetPane: targetPane);
+
+      return MouseRegion(
+        cursor:
+            isEnabled ? SystemMouseCursors.click : SystemMouseCursors.forbidden,
+        child: GestureDetector(
+          onTap: isEnabled
+              ? () {
+                  // NEW: Tell the app explicitly which pane to open this in
+                  app.openTool(nav, targetPane: targetPane);
+                  if (MediaQuery.sizeOf(context).width < 800) {
+                    app.state.isMenuExpanded.value = false;
+                  }
+                }
+              : null,
+          child: Opacity(
+            opacity: isEnabled ? 1.0 : 0.4,
+            child: GlassContainer(
+              borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
+              child: Padding(
+                padding: const EdgeInsets.all(
+                  AppDimens.paddingTiny,
+                ),
+                child: Stack(
+                  alignment: Alignment.center,
                   children: [
-                    kGapText,
-                    AppImage(
-                      nav.getIcon ?? "",
-                      size: AppDimens.iconSmall,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Text(
-                        nav.getName ?? '',
-                        style: AppTextStyles.b2.semiBold.copyWith(height: 1.1),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    Obx(() {
-                      final isPinned = app.state.pinnedTools.contains(nav);
-                      return Tooltip(
-                        message: isPinned
-                            ? LocaleKeys.lbl_unpin.localize()
-                            : LocaleKeys.lbl_pin.localize(),
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onTap: () => app.togglePin(nav),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primary
-                                    .withAlpha(64),
-                              ),
-                              shape: BoxShape.circle,
-                              color: Theme.of(context).cardColor,
-                            ),
-                            padding: const EdgeInsets.all(4.0),
-                            child: Icon(
-                              isPinned
-                                  ? Icons.push_pin
-                                  : Icons.push_pin_outlined,
-                              size: 18,
-                              color: isPinned
-                                  ? Theme.of(context).colorScheme.primary
-                                  : Theme.of(context)
-                                      .iconTheme
-                                      .color
-                                      ?.withAlpha(72),
-                            ),
+                    Row(
+                      children: [
+                        kGapText,
+                        AppImage(
+                          nav.getIcon ?? "",
+                          size: AppDimens.iconSmall,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Text(
+                            nav.getName ?? '',
+                            style:
+                                AppTextStyles.b2.semiBold.copyWith(height: 1.1),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                      );
+                        Obx(() {
+                          final isPinned = app.state.pinnedTools.contains(nav);
+                          return Tooltip(
+                            message: isPinned
+                                ? LocaleKeys.lbl_unpin.localize()
+                                : LocaleKeys.lbl_pin.localize(),
+                            child: GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () => app.togglePin(nav),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primary
+                                        .withAlpha(64),
+                                  ),
+                                  shape: BoxShape.circle,
+                                  color: Theme.of(context).cardColor,
+                                ),
+                                padding: const EdgeInsets.all(4.0),
+                                child: Icon(
+                                  isPinned
+                                      ? Icons.push_pin
+                                      : Icons.push_pin_outlined,
+                                  size: 18,
+                                  color: isPinned
+                                      ? Theme.of(context).colorScheme.primary
+                                      : Theme.of(context)
+                                          .iconTheme
+                                          .color
+                                          ?.withAlpha(72),
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
+                        kGapText,
+                      ],
+                    ),
+                    Obx(() {
+                      final isOpen = app.state.openTabs.contains(nav) ||
+                          app.state.openTabsRight.contains(nav);
+                      if (isOpen) {
+                        return Positioned(
+                          top: 4,
+                          right: 0,
+                          child: Container(
+                            width: 6,
+                            height: 6,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Get.isDarkMode
+                                  ? AppColors.white
+                                  : Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        );
+                      } else {
+                        return const SizedBox.shrink();
+                      }
                     }),
-                    kGapText,
-                  ],
-                ),
-                Obx(() {
-                  final isOpen = app.state.openTabs.contains(nav);
-                  if (isOpen) {
-                    return Positioned(
-                      top: 4,
-                      right: 0,
-                      child: Container(
-                        width: 6,
-                        height: 6,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Get.isDarkMode
-                              ? AppColors.white
-                              : Theme.of(context).primaryColor,
+                    if (!isEnabled)
+                      Tooltip(
+                        message:
+                            LocaleKeys.lbl_tooltip_duplicate_tool.localize(),
+                        child: Icon(
+                          Icons.lock_outline,
+                          size: 32,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withAlpha(72),
                         ),
                       ),
-                    );
-                  } else {
-                    return const SizedBox.shrink();
-                  }
-                }),
-              ],
+                  ],
+                ),
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

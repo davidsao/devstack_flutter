@@ -33,7 +33,7 @@ class AppController extends BaseController<AppState> {
   Future<void> onInit() async {
     super.onInit();
     state.isMenuExpanded.value = MediaQuery.sizeOf(Get.context!).width < 800;
-    state.isIpad.value = await isIpad();
+    state.platform.value = await _checkPlatform();
     state.currentLanguage.value = _localeManager.language;
 
     state.currentLanguage.listen((e) {
@@ -124,36 +124,76 @@ class AppController extends BaseController<AppState> {
     _updateNavigationMap();
   }
 
-  Future<bool> isIpad() async {
+  Future<DevicePlatform> _checkPlatform() async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     // Ensure we are on iOS before checking iOS-specific info
     if (GetPlatform.isIOS) {
       IosDeviceInfo info = await deviceInfo.iosInfo;
-      return info.model.toLowerCase().contains('ipad');
-    }
-    return false;
-  }
-
-  void openTool(Nav tool) {
-    // If it's not already open, add it to the tab bar
-    if (!state.openTabs.contains(tool)) {
-      state.openTabs.add(tool);
-    }
-    // Switch focus to this tool
-    state.currentTools.value = tool;
-  }
-
-  void closeTool(Nav tool) {
-    state.openTabs.remove(tool);
-
-    // If we closed the tool we were currently looking at, automatically
-    // switch to the last open tab, or back to 'All Tools' if none are left.
-    if (state.currentTools.value == tool) {
-      if (state.openTabs.isNotEmpty) {
-        state.currentTools.value = state.openTabs.last;
+      if (info.model.toLowerCase().contains('ipad')) {
+        return DevicePlatform.ipados;
       } else {
-        openTool(Nav.allTools); // Always keep at least the dashboard open
+        return DevicePlatform.ios;
       }
+    } else if (GetPlatform.isAndroid) {
+      return DevicePlatform.android;
+    } else if (GetPlatform.isMacOS) {
+      return DevicePlatform.macos;
+    } else if (GetPlatform.isWindows) {
+      return DevicePlatform.windows;
+    }
+    return DevicePlatform.none;
+  }
+
+  void toggleSplitScreen() {
+    state.isSplitScreen.toggle();
+    if (state.isSplitScreen.value) {
+      state.activePane.value = 'right';
+      if (state.openTabsRight.isEmpty) state.openTabsRight.add(Nav.allTools);
+    } else {
+      state.activePane.value = 'left';
+    }
+  }
+
+  void openTool(Nav tool, {String? targetPane}) {
+    final pane = targetPane ?? state.activePane.value;
+
+    if (pane == 'left') {
+      if (!state.openTabs.contains(tool)) state.openTabs.add(tool);
+      state.currentTools.value = tool;
+    } else {
+      if (!state.openTabsRight.contains(tool)) state.openTabsRight.add(tool);
+      state.currentToolsRight.value = tool;
+    }
+  }
+
+  void closeTool(Nav tool, {required String pane}) {
+    if (pane == 'left') {
+      state.openTabs.remove(tool);
+      if (state.currentTools.value == tool) {
+        state.currentTools.value =
+            state.openTabs.isNotEmpty ? state.openTabs.last : Nav.allTools;
+        if (state.openTabs.isEmpty) state.openTabs.add(Nav.allTools);
+      }
+    } else {
+      state.openTabsRight.remove(tool);
+      if (state.currentToolsRight.value == tool) {
+        state.currentToolsRight.value = state.openTabsRight.isNotEmpty
+            ? state.openTabsRight.last
+            : Nav.allTools;
+        if (state.openTabsRight.isEmpty) state.openTabsRight.add(Nav.allTools);
+      }
+    }
+  }
+
+  // --- SINGLETON PROTECTION ---
+  bool canOpenTool(Nav tool, {String? targetPane}) {
+    if (tool == Nav.allTools) return true;
+    final pane = targetPane ?? state.activePane.value;
+
+    if (pane == 'left') {
+      return !state.openTabsRight.contains(tool);
+    } else {
+      return !state.openTabs.contains(tool);
     }
   }
 }
@@ -163,9 +203,20 @@ class AppState extends ViewState {
   RxBool isMenuExpanded = false.obs;
   RxList<Nav> pinnedTools = <Nav>[].obs;
   RxMap<String, List<Nav>> tools = <String, List<Nav>>{}.obs;
+
+  Rx<DevicePlatform> platform = DevicePlatform.none.obs;
+
+  // LEFT / MAIN PANE
   Rx<Nav> currentTools = Nav.allTools.obs;
-  RxBool isIpad = false.obs;
   RxList<Nav> openTabs = <Nav>[Nav.allTools].obs;
+
+  // RIGHT PANE
+  Rx<Nav> currentToolsRight = Nav.allTools.obs;
+  RxList<Nav> openTabsRight = <Nav>[Nav.allTools].obs;
+
+  // SPLIT SCREEN METADATA
+  RxBool isSplitScreen = false.obs;
+  RxString activePane = 'left'.obs;
 }
 
 class AppBinding extends AppBindings<AppController> {
@@ -178,5 +229,26 @@ class AppBinding extends AppBindings<AppController> {
       getIt(),
       getIt(),
     );
+  }
+}
+
+class ActivePaneProvider extends InheritedWidget {
+  final String pane;
+
+  const ActivePaneProvider({
+    super.key,
+    required this.pane,
+    required super.child,
+  });
+
+  static String? of(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<ActivePaneProvider>()
+        ?.pane;
+  }
+
+  @override
+  bool updateShouldNotify(ActivePaneProvider oldWidget) {
+    return pane != oldWidget.pane;
   }
 }

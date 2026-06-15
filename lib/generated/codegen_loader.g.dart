@@ -201,7 +201,24 @@ class CodegenLoader extends AssetLoader{
   "lbl_code2image_limit_reached": "制限に達しました / コードスニペットは最大40行に制限されています。超過した行は削除されました。",
   "lbl_pin": "ツールをピン留め",
   "lbl_unpin": "ピン留めを解除",
-  "nav_code_to_image": "コードを画像化"
+  "nav_code_to_image": "コードを画像化",
+  "lbl_tooltip_duplicate_tool": "このツールはすでに別のペインで開かれています。同時に開くことができるインスタンスは1つだけです。",
+  "lbl_code2image_limit_reached_title": "制限に達しました",
+  "lbl_code2image_limit_reached_description": "コードスニペットは最大40行に制限されています。超過した行は削除されました。",
+  "lbl_code2image_save_fail_title": "エラー",
+  "lbl_code2image_save_fail_empty_description": "まずコードを入力してください。",
+  "lbl_code2image_save_dialog_title": "スニペット画像を保存",
+  "lbl_code2image_save_success_title": "成功",
+  "lbl_code2image_save_success_description": "画像が正常に保存されました！",
+  "lbl_code2image_save_fail_export_description": "エクスポートに失敗しました",
+  "lbl_base64_process_error_title": "エラー",
+  "lbl_base64_process_error_description": "画像ファイルの処理に失敗しました。",
+  "lbl_qr_download_started": "QRコードのダウンロードが開始されました。",
+  "lbl_qr_save_success_description": "QRコードが正常に保存されました。",
+  "lbl_qr_save_failed_description": "QRコードのエクスポートに失敗しました。",
+  "lbl_qr_save_dialog_title": "QRコードを保存",
+  "lbl_qr_save_success_title": "成功",
+  "lbl_qr_save_failed_title": "エラー"
 };
 static const Map<String,dynamic> _en = {
   "lbl_app_name": "DevStack",
@@ -390,7 +407,24 @@ static const Map<String,dynamic> _en = {
   "lbl_code2image_limit_reached": "Limit Reached / Code snippets are restricted to at most 40 lines. Overflowing lines have been removed.",
   "lbl_pin": "Pin tool",
   "lbl_unpin": "Unpin tool",
-  "nav_code_to_image": "Code to Image"
+  "nav_code_to_image": "Code to Image",
+  "lbl_tooltip_duplicate_tool": "This tool is already open in the other pane. Only one instance can be open at a time.",
+  "lbl_code2image_limit_reached_title": "Limit Reached",
+  "lbl_code2image_limit_reached_description": "Code snippets are restricted to at most 40 lines. Overflowing lines have been removed.",
+  "lbl_code2image_save_fail_title": "Error",
+  "lbl_code2image_save_fail_empty_description": "Please enter some code first.",
+  "lbl_code2image_save_dialog_title": "Save Snippet Image",
+  "lbl_code2image_save_success_title": "Success",
+  "lbl_code2image_save_success_description": "Image saved successfully!",
+  "lbl_code2image_save_fail_export_description": "Export Failed",
+  "lbl_base64_process_error_title": "Error",
+  "lbl_base64_process_error_description": "Failed to process image file.",
+  "lbl_qr_download_started": "QR Code download started.",
+  "lbl_qr_save_success_description": "QR Code saved successfully.",
+  "lbl_qr_save_failed_description": "Failed to export QR Code.",
+  "lbl_qr_save_dialog_title": "Save QR Code",
+  "lbl_qr_save_success_title": "Success",
+  "lbl_qr_save_failed_title": "Error"
 };
 static const Map<String,dynamic> _zh_Hans = {
   "lbl_app_name": "开发栈",
@@ -579,7 +613,24 @@ static const Map<String,dynamic> _zh_Hans = {
   "lbl_code2image_limit_reached": "达到限制 / 代码片段最多限制为 40 行，多余的行数已被移除。",
   "lbl_pin": "固定工具",
   "lbl_unpin": "取消固定工具",
-  "nav_code_to_image": "代码转图片"
+  "nav_code_to_image": "代码转图片",
+  "lbl_tooltip_duplicate_tool": "此工具已在另一个窗格中打开。一次只能打开一个实例。",
+  "lbl_code2image_limit_reached_title": "已达上限",
+  "lbl_code2image_limit_reached_description": "代码片段最多限制为 40 行。超出的行数已被移除。",
+  "lbl_code2image_save_fail_title": "错误",
+  "lbl_code2image_save_fail_empty_description": "请先输入一些代码。",
+  "lbl_code2image_save_dialog_title": "保存代码图片",
+  "lbl_code2image_save_success_title": "成功",
+  "lbl_code2image_save_success_description": "图片保存成功！",
+  "lbl_code2image_save_fail_export_description": "导出失败",
+  "lbl_base64_process_error_title": "错误",
+  "lbl_base64_process_error_description": "处理图片文件失败。",
+  "lbl_qr_download_started": "二维码下载已开始。",
+  "lbl_qr_save_success_description": "二维码保存成功！",
+  "lbl_qr_save_failed_description": "导出二维码失败。",
+  "lbl_qr_save_dialog_title": "保存二维码",
+  "lbl_qr_save_success_title": "成功",
+  "lbl_qr_save_failed_title": "错误"
 };
 static const Map<String,dynamic> _fr = {
   "lbl_app_name": "Stack Dév",
@@ -768,7 +819,24 @@ static const Map<String,dynamic> _fr = {
   "lbl_code2image_limit_reached": "Limite atteinte / Les extraits de code sont limités à 40 lignes maximum. Les lignes excédentaires ont été supprimées.",
   "lbl_pin": "Épingler l'outil",
   "lbl_unpin": "Désépingler l'outil",
-  "nav_code_to_image": "Code en image"
+  "nav_code_to_image": "Code en image",
+  "lbl_tooltip_duplicate_tool": "Cet outil est déjà ouvert dans l'autre volet. Une seule instance peut être ouverte à la fois.",
+  "lbl_code2image_limit_reached_title": "Limite atteinte",
+  "lbl_code2image_limit_reached_description": "Les extraits de code sont limités à 40 lignes maximum. Les lignes en trop ont été supprimées.",
+  "lbl_code2image_save_fail_title": "Erreur",
+  "lbl_code2image_save_fail_empty_description": "Veuillez d'abord saisir du code.",
+  "lbl_code2image_save_dialog_title": "Enregistrer l'image de l'extrait",
+  "lbl_code2image_save_success_title": "Succès",
+  "lbl_code2image_save_success_description": "Image enregistrée avec succès !",
+  "lbl_code2image_save_fail_export_description": "Échec de l'exportation",
+  "lbl_base64_process_error_title": "Erreur",
+  "lbl_base64_process_error_description": "Échec du traitement du fichier image.",
+  "lbl_qr_download_started": "Le téléchargement du code QR a commencé.",
+  "lbl_qr_save_success_description": "Code QR enregistré avec succès.",
+  "lbl_qr_save_failed_description": "Échec de l'exportation du code QR.",
+  "lbl_qr_save_dialog_title": "Enregistrer le code QR",
+  "lbl_qr_save_success_title": "Succès",
+  "lbl_qr_save_failed_title": "Erreur"
 };
 static const Map<String,dynamic> _ko = {
   "lbl_app_name": "DevStack",
@@ -957,7 +1025,24 @@ static const Map<String,dynamic> _ko = {
   "lbl_code2image_limit_reached": "한도 도달 / 코드 스니펫은 최대 40줄로 제한됩니다. 초과된 줄은 제거되었습니다.",
   "lbl_pin": "도구 고정",
   "lbl_unpin": "도구 고정 해제",
-  "nav_code_to_image": "코드를 이미지로 변환"
+  "nav_code_to_image": "코드를 이미지로 변환",
+  "lbl_tooltip_duplicate_tool": "이 도구는 다른 창에서 이미 열려 있습니다. 한 번에 하나의 인스턴스만 열 수 있습니다.",
+  "lbl_code2image_limit_reached_title": "제한 도달",
+  "lbl_code2image_limit_reached_description": "코드 스니펫은 최대 40줄로 제한됩니다. 초과된 줄은 제거되었습니다.",
+  "lbl_code2image_save_fail_title": "오류",
+  "lbl_code2image_save_fail_empty_description": "먼저 코드를 입력해 주세요.",
+  "lbl_code2image_save_dialog_title": "스니펫 이미지 저장",
+  "lbl_code2image_save_success_title": "성공",
+  "lbl_code2image_save_success_description": "이미지가 성공적으로 저장되었습니다!",
+  "lbl_code2image_save_fail_export_description": "내보내기 실패",
+  "lbl_base64_process_error_title": "오류",
+  "lbl_base64_process_error_description": "이미지 파일 처리에 실패했습니다.",
+  "lbl_qr_download_started": "QR 코드 다운로드가 시작되었습니다.",
+  "lbl_qr_save_success_description": "QR 코드가 성공적으로 저장되었습니다.",
+  "lbl_qr_save_failed_description": "QR 코드 내보내기에 실패했습니다.",
+  "lbl_qr_save_dialog_title": "QR 코드 저장",
+  "lbl_qr_save_success_title": "성공",
+  "lbl_qr_save_failed_title": "오류"
 };
 static const Map<String,dynamic> _es = {
   "lbl_app_name": "Pila Dev",
@@ -1146,7 +1231,24 @@ static const Map<String,dynamic> _es = {
   "lbl_code2image_limit_reached": "Límite alcanzado / Los fragmentos de código están restringidos a un máximo de 40 líneas. Se han eliminado las líneas sobrantes.",
   "lbl_pin": "Anclar herramienta",
   "lbl_unpin": "Desanclar herramienta",
-  "nav_code_to_image": "Código a imagen"
+  "nav_code_to_image": "Código a imagen",
+  "lbl_tooltip_duplicate_tool": "Esta herramienta ya está abierta en el otro panel. Solo se puede abrir una instancia a la vez.",
+  "lbl_code2image_limit_reached_title": "Límite alcanzado",
+  "lbl_code2image_limit_reached_description": "Los fragmentos de código están restringidos a un máximo de 40 líneas. Se han eliminado las líneas sobrantes.",
+  "lbl_code2image_save_fail_title": "Error",
+  "lbl_code2image_save_fail_empty_description": "Por favor, introduzca algún código primero.",
+  "lbl_code2image_save_dialog_title": "Guardar imagen del fragmento",
+  "lbl_code2image_save_success_title": "Éxito",
+  "lbl_code2image_save_success_description": "¡Imagen guardada con éxito!",
+  "lbl_code2image_save_fail_export_description": "Error al exportar",
+  "lbl_base64_process_error_title": "Error",
+  "lbl_base64_process_error_description": "Error al procesar el archivo de imagen.",
+  "lbl_qr_download_started": "Descarga de código QR iniciada.",
+  "lbl_qr_save_success_description": "Código QR guardado con éxito.",
+  "lbl_qr_save_failed_description": "Error al exportar el código QR.",
+  "lbl_qr_save_dialog_title": "Guardar código QR",
+  "lbl_qr_save_success_title": "Éxito",
+  "lbl_qr_save_failed_title": "Error"
 };
 static const Map<String,dynamic> _zh_Hant = {
   "lbl_app_name": "DevStack",
@@ -1335,7 +1437,24 @@ static const Map<String,dynamic> _zh_Hant = {
   "lbl_code2image_limit_reached": "達到限制 / 程式碼片段最多限制為 40 行，多餘的行數已被移除。",
   "lbl_pin": "釘選工具",
   "lbl_unpin": "取消釘選工具",
-  "nav_code_to_image": "程式碼轉圖片"
+  "nav_code_to_image": "程式碼轉圖片",
+  "lbl_tooltip_duplicate_tool": "此工具已在另一個窗格中開啟。一次只能開啟一個實例。",
+  "lbl_code2image_limit_reached_title": "已達上限",
+  "lbl_code2image_limit_reached_description": "程式碼片段最多限制為 40 行。超出的行數已被移除。",
+  "lbl_code2image_save_fail_title": "錯誤",
+  "lbl_code2image_save_fail_empty_description": "請先輸入一些程式碼。",
+  "lbl_code2image_save_dialog_title": "儲存程式碼圖片",
+  "lbl_code2image_save_success_title": "成功",
+  "lbl_code2image_save_success_description": "圖片儲存成功！",
+  "lbl_code2image_save_fail_export_description": "匯出失敗",
+  "lbl_base64_process_error_title": "錯誤",
+  "lbl_base64_process_error_description": "處理圖片檔案失敗。",
+  "lbl_qr_download_started": "QR Code 下載已開始。",
+  "lbl_qr_save_success_description": "QR Code 儲存成功！",
+  "lbl_qr_save_failed_description": "匯出 QR Code 失敗。",
+  "lbl_qr_save_dialog_title": "儲存 QR Code",
+  "lbl_qr_save_success_title": "成功",
+  "lbl_qr_save_failed_title": "錯誤"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ja": _ja, "en": _en, "zh_Hans": _zh_Hans, "fr": _fr, "ko": _ko, "es": _es, "zh_Hant": _zh_Hant};
 }

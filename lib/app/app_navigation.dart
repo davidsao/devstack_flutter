@@ -135,7 +135,8 @@ extension NavigationExtension on Nav {
       Nav.colorPicker: IconKeys.colorPicker,
       Nav.markdown: IconKeys.markdown,
       Nav.textInspector: IconKeys.textInspector,
-      Nav.codeToImage: IconKeys.textInspector,
+      Nav.codeToImage: IconKeys.codeToImage,
+      Nav.settings: IconKeys.settings,
     }[this];
   }
 
@@ -163,6 +164,7 @@ extension NavigationExtension on Nav {
       Nav.markdown: LocaleKeys.nav_markdown.localize(),
       Nav.textInspector: LocaleKeys.nav_text_inspector.localize(),
       Nav.codeToImage: LocaleKeys.nav_code_to_image.localize(),
+      Nav.settings: LocaleKeys.lbl_settings_title.localize(),
     }[this];
   }
 

@@ -3,12 +3,17 @@ import 'dart:ui' as ui;
 
 import 'package:cross_file/cross_file.dart';
 import 'package:devstack/index.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
+
+import '../../../generated/locale_keys.g.dart';
 
 class QrGeneratorState extends ViewState {
   final correctionLevel = QrErrorCorrectLevel.H.obs;
@@ -105,26 +110,46 @@ class QrGeneratorController extends BaseController<QrGeneratorState> {
       // 3. Save the file
       if (kIsWeb) {
         // On web, XFile translates saveTo() into a browser download prompt
-        final xFile =
-            XFile.fromData(bytes, name: 'qrcode.png', mimeType: 'image/png');
+        final xFile = XFile.fromData(
+          bytes,
+          name:
+              'qrcode_${DateFormat('yyyy_MM_dd_hh_mm_ss').format(DateTime.now().toLocal())}.png',
+          mimeType: 'image/png',
+        );
         await xFile.saveTo(''); // The path argument is ignored on Web
-        Get.snackbar('Success', 'QR Code download started.');
+        showTopSnackBar(
+          Overlay.of(Get.overlayContext!),
+          CustomSnackBar.success(
+            message: LocaleKeys.lbl_qr_save_success_description.localize(),
+          ),
+        );
       } else {
         // Desktop / Mobile native save dialog
         String? outputFile = await FilePicker.saveFile(
-          dialogTitle: 'Save QR Code',
-          fileName: 'qrcode.png',
+          dialogTitle: LocaleKeys.lbl_qr_save_dialog_title.localize(),
+          fileName:
+              'qrcode_${DateFormat('yyyy_MM_dd_hh_mm_ss').format(DateTime.now().toLocal())}.png',
           type: FileType.image,
         );
 
         if (outputFile != null) {
           final file = File(outputFile);
           await file.writeAsBytes(bytes);
-          Get.snackbar('Success', 'QR Code saved successfully.');
+          showTopSnackBar(
+            Overlay.of(Get.overlayContext!),
+            CustomSnackBar.success(
+              message: LocaleKeys.lbl_qr_save_success_description.localize(),
+            ),
+          );
         }
       }
     } catch (e) {
-      Get.snackbar('Error', 'Failed to export QR Code: $e');
+      showTopSnackBar(
+        Overlay.of(Get.overlayContext!),
+        CustomSnackBar.error(
+          message: LocaleKeys.lbl_qr_save_failed_description.localize(),
+        ),
+      );
     }
   }
 }

@@ -104,6 +104,17 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
           ),
         ),
       );
+      menuItems.add(
+        InkWell(
+          onTap: () async {
+            app.next(Nav.settings);
+          },
+          child: SizedBox(
+            height: 36, // Slightly taller to stand out as a top-level item
+            child: _navItem(context, Nav.settings, false),
+          ),
+        ),
+      );
       // Add a small divider or spacing before the categories start
       menuItems.add(const SizedBox(height: 8));
     }
@@ -206,20 +217,27 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: filteredItems.map((nav) {
-                    final bool isActive = app.state.currentTools.value == nav;
+                    final bool isActive = app.state.currentTools.value == nav ||
+                        app.state.currentToolsRight.value == nav;
+
+                    // NEW: Check if the tool is locked in the other pane
+                    final bool isEnabled = app.canOpenTool(nav);
 
                     return InkWell(
-                      onTap: () async {
-                        app.openTool(nav);
-                        // app.state.currentTools.value = nav;
-                        if (isMobile) {
-                          app.state.isMenuExpanded.value = false;
-                        }
-                        await HapticFeedback.heavyImpact();
-                      },
+                      // Disable taps if locked
+                      onTap: isEnabled
+                          ? () async {
+                              app.openTool(nav);
+                              if (isMobile) {
+                                app.state.isMenuExpanded.value = false;
+                              }
+                              await HapticFeedback.heavyImpact();
+                            }
+                          : null,
                       child: SizedBox(
                         height: 32,
-                        child: _navItem(context, nav, isActive),
+                        // Pass the enabled state down to the visual builder
+                        child: _navItem(context, nav, isActive, isEnabled),
                       ),
                     );
                   }).toList(),
@@ -256,33 +274,46 @@ class HomeSideMenu extends BaseView<HomeController, HomeState> {
     );
   }
 
-  Widget _navItem(BuildContext context, Nav nav, bool active) {
+  // NEW: Added isEnabled parameter
+  Widget _navItem(BuildContext context, Nav nav, bool active,
+      [bool isEnabled = true]) {
     Color itemColor = active
         ? Theme.of(context).colorScheme.primary
         : (Theme.of(context).textTheme.bodyMedium?.color ?? AppColors.black)
             .withAlpha(200);
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppDimens.paddingText),
-      scrollDirection: Axis.horizontal,
-      physics: const NeverScrollableScrollPhysics(),
-      child: Row(
-        children: [
-          AppImage(
-            nav.getIcon ?? "",
-            size: 18,
-            fit: BoxFit.scaleDown,
-            color: itemColor,
-          ),
-          Text(
-            nav.getName ?? '',
-            style: AppTextStyles.b3.copyWith(
-              fontWeight: active ? FontWeight.bold : FontWeight.w500,
+    return Opacity(
+      // Dim the item if it is locked out by the other pane
+      opacity: isEnabled ? 1.0 : 0.3,
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(AppDimens.paddingText),
+        scrollDirection: Axis.horizontal,
+        physics: const NeverScrollableScrollPhysics(),
+        child: Row(
+          children: [
+            AppImage(
+              nav.getIcon ?? "",
+              size: 18,
+              fit: BoxFit.scaleDown,
               color: itemColor,
             ),
-            maxLines: 2,
-          ).paddingSymmetric(horizontal: AppDimens.paddingTiny),
-        ],
+            Text(
+              nav.getName ?? '',
+              style: AppTextStyles.b3.copyWith(
+                fontWeight: active ? FontWeight.bold : FontWeight.w500,
+                color: itemColor,
+                // Add an italic strike or just keep it simple with the opacity
+              ),
+              maxLines: 2,
+            ).paddingSymmetric(horizontal: AppDimens.paddingTiny),
+
+            // Optional: Add a tiny lock icon to make it clearer why it's disabled
+            if (!isEnabled) ...[
+              kGapTiny,
+              Icon(Icons.lock_outline, size: 12, color: itemColor),
+            ]
+          ],
+        ),
       ),
     );
   }

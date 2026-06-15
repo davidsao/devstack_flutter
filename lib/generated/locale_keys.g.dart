@@ -190,5 +190,22 @@ abstract class  LocaleKeys {
   static const lbl_pin = 'lbl_pin';
   static const lbl_unpin = 'lbl_unpin';
   static const nav_code_to_image = 'nav_code_to_image';
+  static const lbl_tooltip_duplicate_tool = 'lbl_tooltip_duplicate_tool';
+  static const lbl_code2image_limit_reached_title = 'lbl_code2image_limit_reached_title';
+  static const lbl_code2image_limit_reached_description = 'lbl_code2image_limit_reached_description';
+  static const lbl_code2image_save_fail_title = 'lbl_code2image_save_fail_title';
+  static const lbl_code2image_save_fail_empty_description = 'lbl_code2image_save_fail_empty_description';
+  static const lbl_code2image_save_dialog_title = 'lbl_code2image_save_dialog_title';
+  static const lbl_code2image_save_success_title = 'lbl_code2image_save_success_title';
+  static const lbl_code2image_save_success_description = 'lbl_code2image_save_success_description';
+  static const lbl_code2image_save_fail_export_description = 'lbl_code2image_save_fail_export_description';
+  static const lbl_base64_process_error_title = 'lbl_base64_process_error_title';
+  static const lbl_base64_process_error_description = 'lbl_base64_process_error_description';
+  static const lbl_qr_download_started = 'lbl_qr_download_started';
+  static const lbl_qr_save_success_description = 'lbl_qr_save_success_description';
+  static const lbl_qr_save_failed_description = 'lbl_qr_save_failed_description';
+  static const lbl_qr_save_dialog_title = 'lbl_qr_save_dialog_title';
+  static const lbl_qr_save_success_title = 'lbl_qr_save_success_title';
+  static const lbl_qr_save_failed_title = 'lbl_qr_save_failed_title';
 
 }

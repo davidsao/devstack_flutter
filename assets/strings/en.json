@@ -185,5 +185,22 @@
   "lbl_code2image_limit_reached": "Limit Reached / Code snippets are restricted to at most 40 lines. Overflowing lines have been removed.",
   "lbl_pin": "Pin tool",
   "lbl_unpin": "Unpin tool",
-  "nav_code_to_image": "Code to Image"
+  "nav_code_to_image": "Code to Image",
+  "lbl_tooltip_duplicate_tool": "This tool is already open in the other pane. Only one instance can be open at a time.",
+  "lbl_code2image_limit_reached_title": "Limit Reached",
+  "lbl_code2image_limit_reached_description": "Code snippets are restricted to at most 40 lines. Overflowing lines have been removed.",
+  "lbl_code2image_save_fail_title": "Error",
+  "lbl_code2image_save_fail_empty_description": "Please enter some code first.",
+  "lbl_code2image_save_dialog_title": "Save Snippet Image",
+  "lbl_code2image_save_success_title": "Success",
+  "lbl_code2image_save_success_description": "Image saved successfully!",
+  "lbl_code2image_save_fail_export_description": "Export Failed",
+  "lbl_base64_process_error_title": "Error",
+  "lbl_base64_process_error_description": "Failed to process image file.",
+  "lbl_qr_download_started": "QR Code download started.",
+  "lbl_qr_save_success_description": "QR Code saved successfully.",
+  "lbl_qr_save_failed_description": "Failed to export QR Code.",
+  "lbl_qr_save_dialog_title": "Save QR Code",
+  "lbl_qr_save_success_title": "Success",
+  "lbl_qr_save_failed_title": "Error"
 }

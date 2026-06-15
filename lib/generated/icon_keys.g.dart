@@ -12,6 +12,7 @@ class IconKeys {
 	static String close = "$_path/icon_close.svg";
 	static String codeBlock = "$_path/icon_code_block.svg";
 	static String codeInline = "$_path/icon_code_inline.svg";
+	static String codeToImage = "$_path/icon_code_to_image.svg";
 	static String colorPicker = "$_path/icon_color_picker.svg";
 	static String date = "$_path/icon_date.svg";
 	static String dropDown = "$_path/icon_drop_down.svg";
@@ -33,6 +34,8 @@ class IconKeys {
 	static String redo = "$_path/icon_redo.svg";
 	static String regex = "$_path/icon_regex.svg";
 	static String settings = "$_path/icon_settings.svg";
+	static String splitScreenActive = "$_path/icon_split_screen_active.svg";
+	static String splitScreen = "$_path/icon_split_screen.svg";
 	static String sql = "$_path/icon_sql.svg";
 	static String textBold = "$_path/icon_text_bold.svg";
 	static String textInspector = "$_path/icon_text_inspector.svg";

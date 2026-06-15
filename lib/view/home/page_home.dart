@@ -10,20 +10,15 @@ import '../../generated/locale_keys.g.dart';
 class HomePage extends BaseView<HomeController, HomeState> {
   HomePage({super.key, super.viewTag});
 
-  final ScrollController _tabScrollController = ScrollController();
+  // Now we need two scroll controllers!
+  final ScrollController _tabScrollControllerLeft = ScrollController();
+  final ScrollController _tabScrollControllerRight = ScrollController();
 
   @override
   Widget view(BuildContext context) {
-    // 1. Get current screen width
     final screenWidth = MediaQuery.sizeOf(context).width;
-    final isMobile = screenWidth < 800;
+    final isMobile = screenWidth < 1024;
 
-    // The macOS window controls take up roughly 28 pixels of height.
-    final double desktopOffset = isMobile ? 0.0 : 32.0;
-    final double safeTopPadding =
-        MediaQuery.paddingOf(context).top + desktopOffset;
-
-    // 2. Safely trigger the responsive check after the current build phase completes
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.updateResponsiveState(screenWidth);
     });
@@ -35,6 +30,7 @@ class HomePage extends BaseView<HomeController, HomeState> {
       body: Stack(
         fit: StackFit.expand,
         children: [
+          // Background Gradient
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -52,10 +48,8 @@ class HomePage extends BaseView<HomeController, HomeState> {
               opacity: 0.02,
               child: AppImage(
                 IconKeys.bg,
-                size: min(
-                      MediaQuery.sizeOf(context).height,
-                      MediaQuery.sizeOf(context).width,
-                    ) *
+                size: min(MediaQuery.sizeOf(context).height,
+                        MediaQuery.sizeOf(context).width) *
                     0.5,
                 color: Theme.of(context).brightness == Brightness.dark
                     ? Colors.white
@@ -64,40 +58,67 @@ class HomePage extends BaseView<HomeController, HomeState> {
             ),
           ),
 
-          // 1. Main Content Area
+          // 1. MAIN CONTENT AREA
           Obx(() {
-            final activeNav = app.state.currentTools.value;
+            final double safeTopPadding =
+                app.state.platform.value.fullSafeTopPadding(context);
+            final activeNavLeft = app.state.currentTools.value;
+            final activeNavRight = app.state.currentToolsRight.value;
+            final isSplit = app.state.isSplitScreen.value && !isMobile;
+
             return AnimatedContainer(
               duration: 500.milliseconds,
               curve: Curves.easeOutQuint,
               margin: EdgeInsets.only(
                 left: app.state.isMenuExpanded.value && !isMobile ? 224.0 : 0.0,
-                top: safeTopPadding +
-                    (app.state.isMenuExpanded.value && !isMobile
-                        ? AppDimens.marginTiny
-                        : 44.0),
+                top: safeTopPadding + 44.0,
               ),
-              child: Column(
+              child: Row(
                 children: [
-                  // --- THE TOOL CONTENT ---
                   Expanded(
-                    child: activeNav.getWidget(null),
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTapDown: (_) => app.state.activePane.value = 'left',
+                      child: ActivePaneProvider(
+                        pane: 'left',
+                        child: Column(
+                          children: [
+                            Expanded(child: activeNavLeft.getWidget(null))
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
+                  if (isSplit) ...[
+                    Container(width: 1, color: Theme.of(context).dividerColor),
+                    Expanded(
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTapDown: (_) => app.state.activePane.value = 'right',
+                        child: ActivePaneProvider(
+                          pane: 'right',
+                          child: Column(
+                            children: [
+                              Expanded(child: activeNavRight.getWidget(null))
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ]
                 ],
               ),
             );
           }),
 
-          // 2. Mobile Scrim (Dark overlay so users can tap outside the menu to close it)
+          // 2. Mobile Scrim
           if (isMobile)
             Obx(() {
               if (app.state.isMenuExpanded.value) {
                 return Positioned.fill(
                   child: GestureDetector(
                     onTap: () => app.state.isMenuExpanded.value = false,
-                    child: Container(
-                      color: Colors.black.withOpacity(0.4),
-                    ),
+                    child: Container(color: Colors.black.withAlpha(104)),
                   ),
                 );
               }
@@ -106,6 +127,8 @@ class HomePage extends BaseView<HomeController, HomeState> {
 
           // 3. Side Menu
           Obx(() {
+            final double safeTopPadding =
+                app.state.platform.value.fullSafeTopPadding(context);
             return AnimatedPositioned(
               duration: 500.milliseconds,
               curve: Curves.easeOutQuint,
@@ -118,17 +141,25 @@ class HomePage extends BaseView<HomeController, HomeState> {
             );
           }),
 
-          // 4. Toggle Button
+          // 4. Toggle Button & Split Screen Control
           Obx(() {
+            final double safeTopPadding =
+                app.state.platform.value.fullSafeTopPadding(context);
             return Positioned(
               top: safeTopPadding + AppDimens.marginSmaller,
-              left: (app.state.isIpad.value && isMobile ? 64.0 : 0.0) +
+              left: app.state.platform.value
+                      .toggleButtonLeftOffset(isMobile: isMobile) +
                   AppDimens.marginSmaller,
               right: AppDimens.marginSmaller,
               child: Stack(
                 children: [
                   Row(
                     children: [
+                      if (isMobile)
+                        SizedBox(
+                          width: 40,
+                          height: 40,
+                        ),
                       const Spacer(),
                       if (isMobile ||
                           (!app.state.isMenuExpanded.value &&
@@ -150,15 +181,12 @@ class HomePage extends BaseView<HomeController, HomeState> {
                             boxShadow: AppColors.cardShadow(context),
                           ),
                           child: InkWell(
-                            onTap: () {
-                              app.state.currentTools.value = Nav.allTools;
-                            },
-                            child: AppImage(
-                              IconKeys.home,
-                              size: AppDimens.iconSmall,
-                              color: AppColors.grey,
-                              fit: BoxFit.scaleDown,
-                            ),
+                            onTap: () =>
+                                app.state.currentTools.value = Nav.allTools,
+                            child: AppImage(IconKeys.home,
+                                size: AppDimens.iconSmall,
+                                color: AppColors.grey,
+                                fit: BoxFit.scaleDown),
                           ),
                         ),
                     ],
@@ -168,7 +196,9 @@ class HomePage extends BaseView<HomeController, HomeState> {
                       AnimatedContainer(
                         duration: 400.milliseconds,
                         curve: Curves.easeOutCubic,
-                        width: app.state.isMenuExpanded.value ? 200 : 40,
+                        width: app.state.isMenuExpanded.value
+                            ? 204
+                            : 40, // Slightly wider to fit the new button
                         height: 40,
                         decoration: BoxDecoration(
                           borderRadius:
@@ -180,55 +210,50 @@ class HomePage extends BaseView<HomeController, HomeState> {
                           scrollDirection: Axis.horizontal,
                           child: Row(
                             children: [
-                              if (app.state.isMenuExpanded.value)
-                                kGapSmall
-                              else
-                                kGapTiny,
+                              kGapTiny,
                               InkWell(
-                                onTap: () {
-                                  app.state.isMenuExpanded.toggle();
-                                },
+                                onTap: () => app.state.isMenuExpanded.toggle(),
                                 child: Icon(
-                                  app.state.isMenuExpanded.value
-                                      ? Icons.menu_open
-                                      : Icons.menu,
-                                  size: AppDimens.iconSmall,
-                                  color: AppColors.grey,
-                                ),
+                                    app.state.isMenuExpanded.value
+                                        ? Icons.menu_open
+                                        : Icons.menu,
+                                    size: AppDimens.iconSmall,
+                                    color: AppColors.grey),
                               ),
                               if (app.state.isMenuExpanded.value) ...[
                                 kGapTiny,
                                 InkWell(
                                   onTap: () {
                                     app.state.currentTools.value = Nav.allTools;
-                                    // Auto-close menu on mobile when tapping logo
                                     if (isMobile) {
                                       app.state.isMenuExpanded.value = false;
                                     }
                                   },
                                   child: SizedBox(
-                                    width: 104,
+                                    width: 124,
                                     child: Text(
-                                      LocaleKeys.lbl_app_name.localize(),
-                                      style: AppTextStyles.h4.bold,
-                                      textAlign: TextAlign.center,
-                                    ),
+                                        LocaleKeys.lbl_app_name.localize(),
+                                        style: AppTextStyles.h4.bold,
+                                        textAlign: TextAlign.center),
                                   ),
                                 ),
                                 kGapTiny,
-                                InkWell(
-                                  onTap: () {
-                                    app.next(Nav.settings);
-                                    if (isMobile) {
-                                      app.state.isMenuExpanded.value = false;
-                                    }
-                                  },
-                                  child: AppImage(
-                                    IconKeys.settings,
-                                    size: AppDimens.iconSmall,
-                                    color: AppColors.grey,
+                                // THE NEW SPLIT SCREEN BUTTON!
+                                if (!isMobile) ...[
+                                  InkWell(
+                                    onTap: () => app.toggleSplitScreen(),
+                                    child: AppImage(
+                                      app.state.isSplitScreen.value
+                                          ? IconKeys.splitScreenActive
+                                          : IconKeys.splitScreen,
+                                      size: AppDimens.iconSmall,
+                                      color: app.state.isSplitScreen.value
+                                          ? AppColors.primary
+                                          : AppColors.grey,
+                                    ),
                                   ),
-                                ),
+                                  kGapTiny,
+                                ],
                               ],
                             ],
                           ),
@@ -242,21 +267,39 @@ class HomePage extends BaseView<HomeController, HomeState> {
             );
           }),
 
-          // 5. The Tab Bar
+          // 5. The Tab Bars
           if (!isMobile)
             Obx(() {
-              return AnimatedPositioned(
-                duration: 500.milliseconds,
-                curve: Curves.easeOutQuint,
-                // Properly offset below macOS traffic lights
-                top: MediaQuery.paddingOf(context).top,
-                right: AppDimens.paddingMedium,
-                // CRITICAL FIX: Dynamically adjust width constraints based on menu/mobile state!
-                left: (app.state.isMenuExpanded.value && !isMobile)
-                    ? 240.0
-                    : 64.0,
-                height: 44.0,
-                child: _tabBar,
+              final double safeTopPadding =
+                  app.state.platform.value.fullSafeTopPadding(context);
+              final isSplit = app.state.isSplitScreen.value;
+              final contentLeftOffset =
+                  app.state.isMenuExpanded.value ? 224.0 : 0.0;
+              final trueCenter =
+                  contentLeftOffset + (screenWidth - contentLeftOffset) / 2;
+              final leftTabStart =
+                  app.state.isMenuExpanded.value ? 224.0 : 64.0;
+
+              return Stack(
+                children: [
+                  Positioned(
+                    top: safeTopPadding + AppDimens.marginTiny,
+                    left: leftTabStart + AppDimens.marginSmall,
+                    right: isSplit
+                        ? (screenWidth - trueCenter) + AppDimens.marginSmall
+                        : AppDimens.paddingMedium,
+                    height: 48.0,
+                    child: _buildTabBar(context, 'left'),
+                  ),
+                  if (isSplit)
+                    Positioned(
+                      top: safeTopPadding + AppDimens.marginTiny,
+                      left: trueCenter + AppDimens.marginSmall,
+                      right: AppDimens.paddingMedium,
+                      height: 48.0,
+                      child: _buildTabBar(context, 'right'),
+                    ),
+                ],
               );
             }),
         ],
@@ -264,19 +307,26 @@ class HomePage extends BaseView<HomeController, HomeState> {
     );
   }
 
-  Widget get _tabBar {
+  // --- REUSABLE TAB BAR BUILDER ---
+  Widget _buildTabBar(BuildContext context, String pane) {
     return Obx(() {
-      final activeNav = app.state.currentTools.value;
-      final openTabs = app.state.openTabs;
+      final isLeft = pane == 'left';
+      final activeNav = isLeft
+          ? app.state.currentTools.value
+          : app.state.currentToolsRight.value;
+      final openTabs = isLeft ? app.state.openTabs : app.state.openTabsRight;
+      final isActivePane = app.state.activePane.value == pane;
+      final scrollController =
+          isLeft ? _tabScrollControllerLeft : _tabScrollControllerRight;
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (_tabScrollController.hasClients &&
+        if (scrollController.hasClients &&
             openTabs.isNotEmpty &&
             activeNav == openTabs.last) {
           Future.delayed(const Duration(milliseconds: 50), () {
-            if (_tabScrollController.hasClients) {
-              _tabScrollController.animateTo(
-                _tabScrollController.position.maxScrollExtent,
+            if (scrollController.hasClients) {
+              scrollController.animateTo(
+                scrollController.position.maxScrollExtent,
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.easeOutQuint,
               );
@@ -285,101 +335,133 @@ class HomePage extends BaseView<HomeController, HomeState> {
         }
       });
 
-      return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppDimens.radiusSmall),
-          color: Colors.transparent,
-          boxShadow: AppColors.textfieldShadow(context),
-        ),
-        clipBehavior: Clip.hardEdge,
-        child: ListView.separated(
-          controller: _tabScrollController,
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppDimens.paddingText,
+      return GestureDetector(
+        onTapDown: (_) => app.state.activePane.value = pane,
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: isActivePane
+                  ? Theme.of(context).primaryColor.withAlpha(120)
+                  : Colors.transparent,
+              width: 2,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+            borderRadius: BorderRadius.circular(AppDimens.radiusSmall),
+            color: Colors.transparent,
+            boxShadow: AppColors.textfieldShadow(context),
           ),
-          scrollDirection: Axis.horizontal,
-          itemCount: app.state.openTabs.length,
-          separatorBuilder: (context, index) {
-            return Container(
-              width: 1,
-              margin: const EdgeInsets.symmetric(
-                vertical: AppDimens.marginTiny,
-                horizontal: 2,
-              ),
-              color: AppColors.divider.withAlpha(128),
-            );
-          },
-          itemBuilder: (context, index) {
-            final tabTool = app.state.openTabs[index];
-            final isActive = activeNav == tabTool;
+          clipBehavior: Clip.hardEdge,
+          child: ReorderableListView.builder(
+            buildDefaultDragHandles: false,
+            scrollController: scrollController,
+            padding:
+                const EdgeInsets.symmetric(horizontal: AppDimens.paddingText),
+            scrollDirection: Axis.horizontal,
+            itemCount: openTabs.length,
+            onReorder: (oldIndex, newIndex) {
+              if (oldIndex == 0) return;
+              if (newIndex == 0) newIndex = 1;
+              if (oldIndex < newIndex) newIndex -= 1;
 
-            return GestureDetector(
-              onTap: () => app.openTool(tabTool),
-              child: Container(
-                margin: const EdgeInsets.symmetric(
-                  vertical: AppDimens.marginText,
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppDimens.paddingSmaller,
-                ),
-                decoration: BoxDecoration(
-                  color: isActive
-                      ? Theme.of(context).colorScheme.surface
-                      : Colors.transparent,
-                  boxShadow: isActive ? AppColors.cardShadow(context) : null,
-                  borderRadius: BorderRadius.circular(AppDimens.radiusSmaller),
-                  border: Border(
-                    bottom: BorderSide(
-                      color: isActive ? AppColors.primary : Colors.transparent,
-                      width: 2,
+              final item = openTabs.removeAt(oldIndex);
+              openTabs.insert(newIndex, item);
+            },
+            proxyDecorator: (child, index, animation) =>
+                Material(color: Colors.transparent, child: child),
+            itemBuilder: (context, index) {
+              final tabTool = openTabs[index];
+              final isActive = activeNav == tabTool;
+
+              Widget tabContent = GestureDetector(
+                onTap: () => app.openTool(tabTool, targetPane: pane),
+                child: Container(
+                  height: 44,
+                  margin: const EdgeInsets.symmetric(
+                      vertical: AppDimens.marginText),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: AppDimens.paddingSmaller),
+                  decoration: BoxDecoration(
+                    color: isActive
+                        ? Theme.of(context).colorScheme.surface
+                        : Colors.transparent,
+                    boxShadow: isActive ? AppColors.cardShadow(context) : null,
+                    borderRadius:
+                        BorderRadius.circular(AppDimens.radiusSmaller),
+                    border: Border(
+                      bottom: BorderSide(
+                        color:
+                            isActive ? AppColors.primary : Colors.transparent,
+                        width: 2,
+                      ),
                     ),
                   ),
-                ),
-                child: Row(
-                  children: [
-                    if (tabTool.getIcon != null) ...[
-                      AppImage(
-                        tabTool.getIcon!,
-                        size: 14,
-                        color: isActive
-                            ? Theme.of(context).colorScheme.primary
-                            : (Theme.of(context).textTheme.bodyMedium?.color ??
-                                    AppColors.black)
-                                .withAlpha(200),
-                      ),
-                      kGapSmaller,
-                    ],
-                    Text(
-                      tabTool.getName ?? "Tool",
-                      style: AppTextStyles.b2.copyWith(
-                        color: isActive
-                            ? Theme.of(context).colorScheme.primary
-                            : (Theme.of(context).textTheme.bodyMedium?.color ??
-                                    AppColors.black)
-                                .withAlpha(200),
-                        fontWeight:
-                            isActive ? FontWeight.bold : FontWeight.normal,
-                      ),
-                    ),
-                    kGapText,
-                    // Close button (hide for the All Tools dashboard)
-                    if (tabTool != Nav.allTools) ...[
-                      kGapTiny,
-                      InkWell(
-                        onTap: () => app.closeTool(tabTool),
-                        borderRadius: BorderRadius.circular(12),
-                        child: Icon(
-                          Icons.close,
+                  child: Row(
+                    children: [
+                      if (tabTool.getIcon != null) ...[
+                        AppImage(
+                          tabTool.getIcon!,
                           size: 14,
-                          color: AppColors.grey,
+                          color: isActive
+                              ? Theme.of(context).colorScheme.primary
+                              : (Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.color ??
+                                      AppColors.black)
+                                  .withAlpha(200),
+                        ),
+                        kGapSmaller,
+                      ],
+                      Text(
+                        tabTool.getName ?? "Tool",
+                        style: AppTextStyles.b2.copyWith(
+                          color: isActive
+                              ? Theme.of(context).colorScheme.primary
+                              : (Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.color ??
+                                      AppColors.black)
+                                  .withAlpha(200),
+                          fontWeight:
+                              isActive ? FontWeight.bold : FontWeight.normal,
                         ),
                       ),
+                      kGapText,
+                      if (tabTool != Nav.allTools) ...[
+                        kGapTiny,
+                        InkWell(
+                          onTap: () => app.closeTool(tabTool, pane: pane),
+                          borderRadius: BorderRadius.circular(12),
+                          child: Icon(Icons.close,
+                              size: 14, color: AppColors.grey),
+                        ),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+
+              if (tabTool != Nav.allTools) {
+                tabContent = ReorderableDragStartListener(
+                    index: index, child: tabContent);
+              }
+
+              return Row(
+                key: ValueKey(tabTool),
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  tabContent,
+                  if (index < openTabs.length - 1)
+                    Container(
+                        width: 1,
+                        margin: const EdgeInsets.symmetric(
+                            vertical: AppDimens.marginTiny, horizontal: 2),
+                        color: AppColors.divider.withAlpha(128)),
+                ],
+              );
+            },
+          ),
         ),
       );
     });

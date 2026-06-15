@@ -16,14 +16,12 @@ class ResponsiveSplitLayout extends StatelessWidget {
     this.firstFlex = 1,
     this.secondFlex = 1,
     this.secondChildrenScrollable = false,
-    this.breakpoint = 1024.0,
+    this.breakpoint = 800.0,
   });
 
   @override
   Widget build(BuildContext context) {
-    final isDesktop = MediaQuery.sizeOf(context).width >= breakpoint;
-
-    // 1. Detect if the software keyboard is visible on the screen
+    // Keep MediaQuery ONLY for the keyboard inset
     final isKeyboardVisible = MediaQuery.viewInsetsOf(context).bottom > 0;
 
     // Build the core column for the second children list
@@ -32,7 +30,6 @@ class ResponsiveSplitLayout extends StatelessWidget {
       children: secondChildren,
     );
 
-    // IMPLEMENTATION: If true, wrap the column in a scroll container
     if (secondChildrenScrollable) {
       secondContent = SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -40,32 +37,35 @@ class ResponsiveSplitLayout extends StatelessWidget {
       );
     }
 
-    return Flex(
-      direction: isDesktop ? Axis.horizontal : Axis.vertical,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        // LEFT / TOP PANEL
-        Expanded(
-          flex: firstFlex,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: firstChildren,
-          ),
-        ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isDesktop = constraints.maxWidth >= breakpoint;
 
-        // 2. Hide the bottom panel on mobile when the keyboard is open.
-        // This gives the text field 100% of the remaining screen space.
-        if (isDesktop || !isKeyboardVisible) ...[
-          // Dynamic adaptive spacing between the two panels
-          kGapSmall,
+        return Flex(
+          direction: isDesktop ? Axis.horizontal : Axis.vertical,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // LEFT / TOP PANEL
+            Expanded(
+              flex: firstFlex,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: firstChildren,
+              ),
+            ),
 
-          // RIGHT / BOTTOM PANEL
-          Expanded(
-            flex: secondFlex,
-            child: secondContent,
-          ),
-        ],
-      ],
+            // Hide the bottom panel on mobile when the keyboard is open.
+            if (isDesktop || !isKeyboardVisible) ...[
+              kGapSmall,
+              // RIGHT / BOTTOM PANEL
+              Expanded(
+                flex: secondFlex,
+                child: secondContent,
+              ),
+            ],
+          ],
+        );
+      },
     );
   }
 }

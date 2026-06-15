@@ -9,6 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart' as path;
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
+
+import '../../../generated/locale_keys.g.dart';
 
 class Base64ImageController extends BaseController<Base64ImageState> {
   @override
@@ -49,7 +53,12 @@ class Base64ImageController extends BaseController<Base64ImageState> {
         outputController.text = "data:image/$extension;base64,$rawBase64";
       }
     } catch (e) {
-      Get.snackbar("Error", "Failed to process image file: $e");
+      showTopSnackBar(
+        Overlay.of(Get.overlayContext!),
+        CustomSnackBar.error(
+          message: LocaleKeys.lbl_base64_process_error_description.localize(),
+        ),
+      );
     }
   }
 
@@ -65,7 +74,12 @@ class Base64ImageController extends BaseController<Base64ImageState> {
       state.base64Output.value = "data:image/$extension;base64,$rawBase64";
       outputController.text = "data:image/$extension;base64,$rawBase64";
     } catch (e) {
-      Get.snackbar("Error", "Failed to process image file: $e");
+      showTopSnackBar(
+        Overlay.of(Get.overlayContext!),
+        CustomSnackBar.error(
+          message: LocaleKeys.lbl_base64_process_error_description.localize(),
+        ),
+      );
     }
   }
 
