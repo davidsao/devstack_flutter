@@ -16,7 +16,7 @@ extension DevicePlatformExtension on DevicePlatform {
   double get windowControlOffset {
     switch (this) {
       case DevicePlatform.macos:
-        return 32.0;
+        return 36.0;
       default:
         return 0.0;
     }

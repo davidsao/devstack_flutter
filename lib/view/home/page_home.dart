@@ -134,7 +134,7 @@ class HomePage extends BaseView<HomeController, HomeState> {
               curve: Curves.easeOutQuint,
               left: app.state.isMenuExpanded.value ? 0.0 : -224.0,
               width: 224.0,
-              top: AppDimens.marginSmaller + kToolbarHeight + safeTopPadding,
+              top: kToolbarHeight + safeTopPadding,
               bottom: MediaQuery.paddingOf(context).bottom +
                   AppDimens.marginSmaller,
               child: HomeSideMenu(),
@@ -146,7 +146,7 @@ class HomePage extends BaseView<HomeController, HomeState> {
             final double safeTopPadding =
                 app.state.platform.value.fullSafeTopPadding(context);
             return Positioned(
-              top: safeTopPadding + AppDimens.marginSmaller,
+              top: safeTopPadding,
               left: app.state.platform.value
                       .toggleButtonLeftOffset(isMobile: isMobile) +
                   AppDimens.marginSmaller,
@@ -283,7 +283,7 @@ class HomePage extends BaseView<HomeController, HomeState> {
               return Stack(
                 children: [
                   Positioned(
-                    top: safeTopPadding + AppDimens.marginTiny,
+                    top: safeTopPadding,
                     left: leftTabStart + AppDimens.marginSmall,
                     right: isSplit
                         ? (screenWidth - trueCenter) + AppDimens.marginSmall
@@ -293,7 +293,7 @@ class HomePage extends BaseView<HomeController, HomeState> {
                   ),
                   if (isSplit)
                     Positioned(
-                      top: safeTopPadding + AppDimens.marginTiny,
+                      top: safeTopPadding,
                       left: trueCenter + AppDimens.marginSmall,
                       right: AppDimens.paddingMedium,
                       height: 48.0,

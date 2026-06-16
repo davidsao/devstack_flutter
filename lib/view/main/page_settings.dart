@@ -187,15 +187,7 @@ class SettingsPage
                             width: double.infinity,
                             child: OutlinedButton.icon(
                               onPressed: () {
-                                showLicensePage(
-                                  context: context,
-                                  applicationName:
-                                      LocaleKeys.lbl_app_name.localize(),
-                                  applicationVersion: state.appVersion.value,
-                                  applicationLegalese:
-                                      '© 2026 DevStack Flutter. '
-                                      '${LocaleKeys.lbl_settings_all_rights_reserved.localize()}',
-                                );
+                                app.navigate(Nav.license);
                               },
                               icon: const Icon(Icons.description_outlined,
                                   size: 18),

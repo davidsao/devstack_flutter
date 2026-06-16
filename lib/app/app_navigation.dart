@@ -9,6 +9,7 @@ enum Nav {
   home,
   allTools,
   settings,
+  license,
   converterDate,
   converterJsonYaml,
   converterNumberBase,
@@ -61,6 +62,8 @@ extension NavigationExtension on Nav {
           viewTag: viewTag,
           bindingCreator: () => SettingsBinding(tag: null),
         );
+      case Nav.license:
+        return CustomLicensePage(viewTag: viewTag);
       case Nav.converterDate:
         return DateConverterPage(viewTag: viewTag);
       case Nav.converterJsonYaml:
@@ -110,6 +113,8 @@ extension NavigationExtension on Nav {
 
   AppBindings? getBindings(String? tag) {
     switch (this) {
+      case Nav.license:
+        return CustomLicenseBinding(tag: tag);
       default:
         return null;
     }
