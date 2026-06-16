@@ -28,7 +28,7 @@ abstract class BaseBottomSheetView<T extends BaseController<S>,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(AppDimens.radiusSmall),
             ).copyWith(color: AppColors.disable),
-          ).marginOnly(top: AppDimens.paddingTiny),
+          ).marginOnly(top: AppDimens.paddingSmaller),
       ],
     );
   }

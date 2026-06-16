@@ -208,33 +208,36 @@ abstract class BaseController<S extends ViewState>
     Object? itemId,
   }) async {
     return Get.bottomSheet(
-      PopScope(
-        canPop: dismissible == true,
-        child: (heightFactor != null)
-            ? SizedBox(
-                height: Get.height * heightFactor,
-                child: nav.getWidget(tag),
-              )
-            : Container(
-                constraints: BoxConstraints(
-                  maxWidth: Get.width,
-                  maxHeight: Get.height * 0.90,
-                  minHeight: 0,
-                ),
-                child: Wrap(children: [nav.getWidget(tag)]),
-              ),
-      ),
+      Builder(builder: (context) {
+        ThemeData data = Theme.of(context);
+        return Theme(
+          data: data,
+          child: PopScope(
+            canPop: dismissible == true,
+            child: (heightFactor != null)
+                ? SizedBox(
+                    height: Get.height * heightFactor,
+                    child: nav.getWidget(tag),
+                  )
+                : Container(
+                    constraints: BoxConstraints(
+                      maxWidth: Get.width,
+                      maxHeight: Get.height * 0.90,
+                      minHeight: 0,
+                    ),
+                    child: Wrap(children: [nav.getWidget(tag)]),
+                  ),
+          ),
+        );
+      }),
       persistent: false,
       elevation: 0,
       isScrollControlled: true,
       enableDrag: swipeToDismiss == true,
       isDismissible: dismissible == true,
-      backgroundColor: backgroundColor,
+      backgroundColor: Colors.transparent,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(AppDimens.radiusExtraLarge),
-          topRight: Radius.circular(AppDimens.radiusExtraLarge),
-        ),
+        borderRadius: BorderRadius.zero,
       ),
       clipBehavior: Clip.hardEdge,
       settings: RouteSettings(name: nav.screenName, arguments: null),

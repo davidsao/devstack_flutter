@@ -51,6 +51,8 @@ class SettingsController extends BaseController<SettingsState> {
     _appManager.setThemeMode(modeStr); // Save preference
 
     _updateStatusBar(mode);
+
+    app.back();
   }
 
   void _updateStatusBar(ThemeMode mode) {

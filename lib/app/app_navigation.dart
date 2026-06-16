@@ -57,7 +57,10 @@ extension NavigationExtension on Nav {
       case Nav.allTools:
         return AllToolsPage(viewTag: viewTag);
       case Nav.settings:
-        return SettingsPage(viewTag: viewTag);
+        return SettingsPage(
+          viewTag: viewTag,
+          bindingCreator: () => SettingsBinding(tag: null),
+        );
       case Nav.converterDate:
         return DateConverterPage(viewTag: viewTag);
       case Nav.converterJsonYaml:
