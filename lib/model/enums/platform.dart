@@ -17,6 +17,8 @@ extension DevicePlatformExtension on DevicePlatform {
     switch (this) {
       case DevicePlatform.macos:
         return 36.0;
+      case DevicePlatform.windows:
+        return 8.0;
       default:
         return 0.0;
     }
