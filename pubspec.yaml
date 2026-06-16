@@ -2,7 +2,7 @@ name: devstack
 description: "A fork of DevToys written in Flutter"
 publish_to: 'none'
 
-version: 1.2.0+6
+version: 1.2.0+7
 
 environment:
   sdk: ">=3.6.2 <4.0.0"
