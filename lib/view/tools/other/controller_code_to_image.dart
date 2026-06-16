@@ -6,8 +6,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../generated/locale_keys.g.dart';
 
@@ -128,7 +126,7 @@ class CodeToImageController extends BaseController<CodeToImageState> {
     super.onClose();
   }
 
-  void updateCode(String text) {
+  void updateCode(String text, BuildContext context) {
     final lines = text.split('\n');
     String newText = text;
 
@@ -144,13 +142,13 @@ class CodeToImageController extends BaseController<CodeToImageState> {
             TextSelection.collapsed(offset: newText.length);
       }
 
-      showTopSnackBar(
-        Overlay.of(Get.overlayContext!),
-        CustomSnackBar.info(
-          message:
-              LocaleKeys.lbl_code2image_limit_reached_description.localize(),
-        ),
-      );
+      if (context.mounted == true) {
+        SlidingAlert.show(
+          context: context,
+          text: LocaleKeys.lbl_code2image_limit_reached_description.localize(),
+          typeInfo: TypeInfo.warning,
+        );
+      }
     }
 
     state.inputText.value = newText;
@@ -166,10 +164,12 @@ class CodeToImageController extends BaseController<CodeToImageState> {
 
     if (lower.contains('<?php')) return 'php';
     if (lower.contains('<html') || lower.contains('</div>')) return 'html';
-    if (code.contains('import \'package:') || code.contains('Widget build('))
+    if (code.contains('import \'package:') || code.contains('Widget build(')) {
       return 'dart';
-    if (code.contains('interface ') && code.contains('type '))
+    }
+    if (code.contains('interface ') && code.contains('type ')) {
       return 'typescript';
+    }
     if (code.contains('def ') && code.contains(':')) return 'python';
     if (code.contains('#include <iostream>')) return 'cpp';
     if (code.contains('#include')) return 'c';
@@ -178,29 +178,32 @@ class CodeToImageController extends BaseController<CodeToImageState> {
     if (code.contains('fn main()') || code.contains('println!')) return 'rust';
     if (lower.contains('select ') && lower.contains('from ')) return 'sql';
     if (code.contains('FROM ') && code.contains('RUN ')) return 'dockerfile';
-    if (code.trim().startsWith('{') || code.trim().startsWith('['))
+    if (code.trim().startsWith('{') || code.trim().startsWith('[')) {
       return 'json';
+    }
     if (code.contains('fun ') && code.contains('val ')) return 'kotlin';
     if (code.contains('public static void main')) return 'java';
     if (code.contains('import UIKit') || code.contains('let ')) return 'swift';
     if (code.contains('console.log') ||
         code.contains('const ') ||
-        code.contains('let ')) return 'javascript';
+        code.contains('let ')) {
+      return 'javascript';
+    }
     if (lower.contains('color:') ||
         lower.contains('margin:') ||
-        lower.contains('padding:')) return 'css';
+        lower.contains('padding:')) {
+      return 'css';
+    }
 
     return 'dart';
   }
 
-  Future<void> exportImage() async {
-    if (state.inputText.value.isEmpty) {
-      showTopSnackBar(
-        Overlay.of(Get.overlayContext!),
-        CustomSnackBar.error(
-          message:
-              LocaleKeys.lbl_code2image_save_fail_empty_description.localize(),
-        ),
+  Future<void> exportImage(BuildContext context) async {
+    if (state.inputText.value.isEmpty && context.mounted == true) {
+      SlidingAlert.show(
+        context: context,
+        text: LocaleKeys.lbl_code2image_save_fail_empty_description.localize(),
+        typeInfo: TypeInfo.error,
       );
       return;
     }
@@ -222,23 +225,25 @@ class CodeToImageController extends BaseController<CodeToImageState> {
         if (outputFile != null) {
           final file = File(outputFile);
           await file.writeAsBytes(imageBytes);
-          showTopSnackBar(
-            Overlay.of(Get.overlayContext!),
-            CustomSnackBar.success(
-              message:
+          if (context.mounted == true) {
+            SlidingAlert.show(
+              context: context,
+              text:
                   LocaleKeys.lbl_code2image_save_success_description.localize(),
-            ),
-          );
+              typeInfo: TypeInfo.success,
+            );
+          }
         }
       }
     } catch (e) {
-      showTopSnackBar(
-        Overlay.of(Get.overlayContext!),
-        CustomSnackBar.error(
-          message:
+      if (context.mounted == true) {
+        SlidingAlert.show(
+          context: context,
+          text:
               LocaleKeys.lbl_code2image_save_fail_export_description.localize(),
-        ),
-      );
+          typeInfo: TypeInfo.error,
+        );
+      }
     }
   }
 }

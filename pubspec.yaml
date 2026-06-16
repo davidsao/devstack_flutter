@@ -46,7 +46,7 @@ dependencies:
   flutter_markdown_plus: ^1.0.7
   screenshot: ^3.0.0
   flutter_highlight: ^0.7.0
-  top_snackbar_flutter: ^3.3.0
+  overlay_support: ^2.1.0
 
 dev_dependencies:
   flutter_test:

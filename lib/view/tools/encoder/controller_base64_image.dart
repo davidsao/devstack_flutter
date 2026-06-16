@@ -9,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart' as path;
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../generated/locale_keys.g.dart';
 
@@ -27,14 +25,14 @@ class Base64ImageController extends BaseController<Base64ImageState> {
     clearAll();
   }
 
-  void handleDrop(DropDoneDetails details) {
+  void handleDrop(DropDoneDetails details, BuildContext context) {
     if (details.files.isNotEmpty) {
-      handleDroppedFile(details.files.first);
+      handleDroppedFile(details.files.first, context);
     }
   }
 
   // ENCODE: Browse device and parse selected file to Base64
-  Future<void> pickImage() async {
+  Future<void> pickImage(BuildContext context) async {
     try {
       FilePickerResult? result = await FilePicker.pickFiles(
         type: FileType.image,
@@ -53,16 +51,17 @@ class Base64ImageController extends BaseController<Base64ImageState> {
         outputController.text = "data:image/$extension;base64,$rawBase64";
       }
     } catch (e) {
-      showTopSnackBar(
-        Overlay.of(Get.overlayContext!),
-        CustomSnackBar.error(
-          message: LocaleKeys.lbl_base64_process_error_description.localize(),
-        ),
-      );
+      if (context.mounted) {
+        SlidingAlert.show(
+          context: context,
+          text: LocaleKeys.lbl_base64_process_error_description.localize(),
+          typeInfo: TypeInfo.error,
+        );
+      }
     }
   }
 
-  void handleDroppedFile(XFile result) async {
+  void handleDroppedFile(XFile result, BuildContext context) async {
     try {
       Uint8List fileBytes = await result.readAsBytes();
       state.imageBytes.value = fileBytes;
@@ -74,12 +73,13 @@ class Base64ImageController extends BaseController<Base64ImageState> {
       state.base64Output.value = "data:image/$extension;base64,$rawBase64";
       outputController.text = "data:image/$extension;base64,$rawBase64";
     } catch (e) {
-      showTopSnackBar(
-        Overlay.of(Get.overlayContext!),
-        CustomSnackBar.error(
-          message: LocaleKeys.lbl_base64_process_error_description.localize(),
-        ),
-      );
+      if (context.mounted) {
+        SlidingAlert.show(
+          context: context,
+          text: LocaleKeys.lbl_base64_process_error_description.localize(),
+          typeInfo: TypeInfo.error,
+        );
+      }
     }
   }
 

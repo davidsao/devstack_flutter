@@ -68,13 +68,15 @@ class QrGeneratorPage
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildSectionTitle(LocaleKeys.lbl_qr_qr_code.localize()),
-              AppButton(controller.exportQrCode,
-                  style: AppButtonStyle.primary(size: AppButtonStyleSize.small),
-                  child: Row(
-                    children: [
-                      Text(LocaleKeys.btn_export.localize()),
-                    ],
-                  )),
+              AppButton(
+                () => controller.exportQrCode(context),
+                style: AppButtonStyle.primary(size: AppButtonStyleSize.small),
+                child: Row(
+                  children: [
+                    Text(LocaleKeys.btn_export.localize()),
+                  ],
+                ),
+              ),
             ],
           ),
           Expanded(

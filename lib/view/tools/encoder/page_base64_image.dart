@@ -161,7 +161,9 @@ class Base64ImagePage
           child: Column(
             children: [
               DropTarget(
-                onDragDone: controller.handleDrop,
+                onDragDone: (detail) {
+                  controller.handleDrop(detail, context);
+                },
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -196,7 +198,7 @@ class Base64ImagePage
                       ),
                       kGapSmall,
                       ElevatedButton.icon(
-                        onPressed: controller.pickImage,
+                        onPressed: () => controller.pickImage(context),
                         icon: AppImage(
                           IconKeys.attach,
                           size: AppDimens.iconSmaller,

@@ -50,7 +50,9 @@ class CodeToImagePage
         Expanded(
           child: CustomTextField(
             controller: controller.inputController,
-            onChanged: controller.updateCode,
+            onChanged: (String text) {
+              controller.updateCode(text, context);
+            },
             isEditable: true,
             maxLines: 50,
           ),
@@ -147,7 +149,7 @@ class CodeToImagePage
               style: AppTextStyles.b2.bold,
             ),
             AppButton(
-              controller.exportImage,
+              () => controller.exportImage(context),
               leading: const Icon(Icons.download_rounded),
               style: AppButtonStyle.primary(
                 size: AppButtonStyleSize.small,

@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 
@@ -100,139 +101,137 @@ class _MainAppState extends State<MainApp> {
       brightness: Brightness.dark,
     );
 
-    return GetMaterialApp(
-      home: widget.home ?? HomePage(),
-      localizationsDelegates: [...localize],
-      navigatorObservers: [routeObserver],
-      routingCallback: (routing) {
-        routing?.route?.settings.name?.replaceAll("/", "") ?? "";
-      },
-      supportedLocales: widget.values.supportLanguages.map((e) => e.locale),
-      locale: context.locale,
-      debugShowMaterialGrid: false,
-      debugShowCheckedModeBanner: false,
-      themeMode: initialThemeMode,
-      theme: ThemeData.from(colorScheme: lightColorScheme, useMaterial3: true)
-          .copyWith(
-        scaffoldBackgroundColor: AppColors.background,
-        highlightColor: AppColors.black.shade100.withAlpha(50),
-        splashColor: AppColors.black.shade100.withAlpha(50),
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-            backgroundColor: Colors.transparent,
-            foregroundColor: AppColors.black,
-            minimumSize: Size.zero,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            textStyle: AppTextStyles.b1,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-        ),
-        iconTheme: IconThemeData(
-          color: AppColors.primary.shade800,
-        ),
-        inputDecorationTheme: InputDecorationThemeData(
-          fillColor: AppColors.grey.shade50,
-        ),
-        bottomSheetTheme: const BottomSheetThemeData(
-          backgroundColor: Colors.transparent,
-          modalBarrierColor: Colors.transparent,
-          elevation: 0,
-        ),
-        dropdownMenuTheme: DropdownMenuThemeData(
-          inputDecorationTheme: InputDecorationThemeData(
-            fillColor: Colors.white,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
-              borderSide: BorderSide(
-                color: AppColors.grey.shade50,
+    return OverlaySupport(
+      child: GetMaterialApp(
+        home: widget.home ?? HomePage(),
+        localizationsDelegates: [...localize],
+        navigatorObservers: [routeObserver],
+        routingCallback: (routing) {
+          routing?.route?.settings.name?.replaceAll("/", "") ?? "";
+        },
+        supportedLocales: widget.values.supportLanguages.map((e) => e.locale),
+        locale: context.locale,
+        debugShowMaterialGrid: false,
+        debugShowCheckedModeBanner: false,
+        themeMode: initialThemeMode,
+        theme: ThemeData.from(colorScheme: lightColorScheme, useMaterial3: true)
+            .copyWith(
+          scaffoldBackgroundColor: AppColors.background,
+          highlightColor: AppColors.black.shade100.withAlpha(50),
+          splashColor: AppColors.black.shade100.withAlpha(50),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+              backgroundColor: Colors.transparent,
+              foregroundColor: AppColors.black,
+              minimumSize: Size.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              textStyle: AppTextStyles.b1,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
           ),
-        ),
-        dividerTheme: DividerTheme.of(
-          context,
-        ).copyWith(color: AppColors.black.shade200, thickness: 1, space: 0),
-        checkboxTheme: CheckboxTheme.of(context).copyWith(
-          side: BorderSide(color: AppColors.black.shade400, width: 1),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
+          iconTheme: IconThemeData(
+            color: AppColors.primary.shade800,
           ),
-          checkColor: WidgetStateProperty.resolveWith<Color>(
-            (states) => Colors.white,
+          inputDecorationTheme: InputDecorationThemeData(
+            fillColor: AppColors.grey.shade50,
+          ),
+          bottomSheetTheme: const BottomSheetThemeData(
+            backgroundColor: Colors.transparent,
+            modalBarrierColor: Colors.transparent,
+            elevation: 0,
+          ),
+          dropdownMenuTheme: DropdownMenuThemeData(
+            inputDecorationTheme: InputDecorationThemeData(
+              fillColor: Colors.white,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
+                borderSide: BorderSide(
+                  color: AppColors.grey.shade50,
+                ),
+              ),
+            ),
+          ),
+          dividerTheme: DividerTheme.of(
+            context,
+          ).copyWith(color: AppColors.black.shade200, thickness: 1, space: 0),
+          checkboxTheme: CheckboxTheme.of(context).copyWith(
+            side: BorderSide(color: AppColors.black.shade400, width: 1),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(4)),
+            ),
+            checkColor: WidgetStateProperty.resolveWith<Color>(
+              (states) => Colors.white,
+            ),
+          ),
+          radioTheme: RadioTheme.of(context).copyWith(
+            fillColor: WidgetStateProperty.resolveWith((states) {
+              return states.contains(WidgetState.selected)
+                  ? AppColors.secondary
+                  : AppColors.black.shade500;
+            }),
+          ),
+          sliderTheme: SliderTheme.of(context).copyWith(
+            activeTrackColor: AppColors.secondary,
+            inactiveTrackColor: AppColors.black.shade200,
+            thumbColor: AppColors.secondary,
+            overlayColor: AppColors.secondary.withAlpha(50),
+            trackHeight: 4,
+            thumbShape: _RoundSliderThumbShape(
+              AppColors.secondary,
+              enabledThumbRadius: 6.0,
+              strokeRadius: 8.0,
+            ),
+            overlayShape: const RoundSliderOverlayShape(overlayRadius: 16),
           ),
         ),
-        radioTheme: RadioTheme.of(context).copyWith(
-          fillColor: WidgetStateProperty.resolveWith((states) {
-            return states.contains(WidgetState.selected)
-                ? AppColors.secondary
-                : AppColors.black.shade500;
-          }),
-        ),
-        sliderTheme: SliderTheme.of(context).copyWith(
-          activeTrackColor: AppColors.secondary,
-          inactiveTrackColor: AppColors.black.shade200,
-          thumbColor: AppColors.secondary,
-          overlayColor: AppColors.secondary.withAlpha(50),
-          trackHeight: 4,
-          thumbShape: _RoundSliderThumbShape(
-            AppColors.secondary,
-            enabledThumbRadius: 6.0,
-            strokeRadius: 8.0,
+        darkTheme:
+            ThemeData.from(colorScheme: darkColorScheme, useMaterial3: true)
+                .copyWith(
+          scaffoldBackgroundColor: AppColors.black.shade900, // Dark background
+          highlightColor: Colors.white.withAlpha(20),
+          splashColor: Colors.white.withAlpha(20),
+          dividerTheme: DividerTheme.of(context)
+              .copyWith(color: AppColors.grey.shade700, thickness: 1, space: 0),
+          checkboxTheme: CheckboxTheme.of(context).copyWith(
+            side: BorderSide(color: Colors.white, width: 1),
           ),
-          overlayShape: const RoundSliderOverlayShape(overlayRadius: 16),
-        ),
-      ),
-      darkTheme:
-          ThemeData.from(colorScheme: darkColorScheme, useMaterial3: true)
-              .copyWith(
-        scaffoldBackgroundColor: AppColors.black.shade900, // Dark background
-        highlightColor: Colors.white.withAlpha(20),
-        splashColor: Colors.white.withAlpha(20),
-        dividerTheme: DividerTheme.of(context)
-            .copyWith(color: AppColors.grey.shade700, thickness: 1, space: 0),
-        checkboxTheme: CheckboxTheme.of(context).copyWith(
-          side: BorderSide(color: Colors.white, width: 1),
-        ),
-        iconTheme: IconThemeData(
-          color: AppColors.primary.shade100,
-        ),
-        inputDecorationTheme: InputDecorationThemeData(
-          fillColor: AppColors.grey.shade700,
-        ),
-        dropdownMenuTheme: DropdownMenuThemeData(
+          iconTheme: IconThemeData(
+            color: AppColors.primary.shade100,
+          ),
           inputDecorationTheme: InputDecorationThemeData(
             fillColor: AppColors.grey.shade700,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
-              borderSide: BorderSide(
-                color: AppColors.grey.shade900,
+          ),
+          dropdownMenuTheme: DropdownMenuThemeData(
+            inputDecorationTheme: InputDecorationThemeData(
+              fillColor: AppColors.grey.shade700,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
+                borderSide: BorderSide(
+                  color: AppColors.grey.shade900,
+                ),
               ),
             ),
           ),
         ),
-      ),
-      builder: (context, child) {
-        final mediaQueryData = MediaQuery.of(context);
-        // final scale = mediaQueryData.textScaler.clamp(
-        //   minScaleFactor: 1.0,
-        //   maxScaleFactor: 1.0,
-        // );
-        return KeyboardDismissOnTap(
-          child: MediaQuery(
-            data: mediaQueryData.copyWith(textScaler: TextScaler.noScaling),
-            child: AnnotatedRegion<SystemUiOverlayStyle>(
-              value: SystemUiOverlayStyle.dark.copyWith(
-                systemNavigationBarColor: AppColors.black.withAlpha(1),
-                systemNavigationBarIconBrightness: Brightness.dark,
+        builder: (context, child) {
+          final mediaQueryData = MediaQuery.of(context);
+          return KeyboardDismissOnTap(
+            child: MediaQuery(
+              data: mediaQueryData.copyWith(textScaler: TextScaler.noScaling),
+              child: AnnotatedRegion<SystemUiOverlayStyle>(
+                value: SystemUiOverlayStyle.dark.copyWith(
+                  systemNavigationBarColor: AppColors.black.withAlpha(1),
+                  systemNavigationBarIconBrightness: Brightness.dark,
+                ),
+                child: child!,
               ),
-              child: child!,
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

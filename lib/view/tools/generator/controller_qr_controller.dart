@@ -10,8 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../generated/locale_keys.g.dart';
 
@@ -88,7 +86,7 @@ class QrGeneratorController extends BaseController<QrGeneratorState> {
 
   // --- EXPORT ---
 
-  Future<void> exportQrCode() async {
+  Future<void> exportQrCode(BuildContext context) async {
     if (state.qrData.value.isEmpty) return;
 
     try {
@@ -117,12 +115,13 @@ class QrGeneratorController extends BaseController<QrGeneratorState> {
           mimeType: 'image/png',
         );
         await xFile.saveTo(''); // The path argument is ignored on Web
-        showTopSnackBar(
-          Overlay.of(Get.overlayContext!),
-          CustomSnackBar.success(
-            message: LocaleKeys.lbl_qr_save_success_description.localize(),
-          ),
-        );
+        if (context.mounted == true) {
+          SlidingAlert.show(
+            context: context,
+            text: LocaleKeys.lbl_qr_save_success_description.localize(),
+            typeInfo: TypeInfo.success,
+          );
+        }
       } else {
         // Desktop / Mobile native save dialog
         String? outputFile = await FilePicker.saveFile(
@@ -135,21 +134,23 @@ class QrGeneratorController extends BaseController<QrGeneratorState> {
         if (outputFile != null) {
           final file = File(outputFile);
           await file.writeAsBytes(bytes);
-          showTopSnackBar(
-            Overlay.of(Get.overlayContext!),
-            CustomSnackBar.success(
-              message: LocaleKeys.lbl_qr_save_success_description.localize(),
-            ),
-          );
+          if (context.mounted == true) {
+            SlidingAlert.show(
+              context: context,
+              text: LocaleKeys.lbl_qr_save_success_description.localize(),
+              typeInfo: TypeInfo.success,
+            );
+          }
         }
       }
     } catch (e) {
-      showTopSnackBar(
-        Overlay.of(Get.overlayContext!),
-        CustomSnackBar.error(
-          message: LocaleKeys.lbl_qr_save_failed_description.localize(),
-        ),
-      );
+      if (context.mounted == true) {
+        SlidingAlert.show(
+          context: context,
+          text: LocaleKeys.lbl_qr_save_failed_description.localize(),
+          typeInfo: TypeInfo.error,
+        );
+      }
     }
   }
 }
