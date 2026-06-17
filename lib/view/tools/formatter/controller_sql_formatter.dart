@@ -3,13 +3,16 @@ import 'dart:convert';
 import 'package:devstack/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_js/flutter_js.dart';
+
+// Ensure your new js_service.dart is exported in your index.dart,
+// or import it directly here if needed!
 
 class SqlFormatterController extends BaseController<SqlFormatterState> {
   final inputController = TextEditingController();
   final outputController = TextEditingController();
 
-  late JavascriptRuntime _jsRuntime;
+  // 1. Swap JavascriptRuntime for your new cross-platform JsService
+  late JsService _jsRuntime;
   bool _isJsReady = false;
 
   @override
@@ -22,25 +25,24 @@ class SqlFormatterController extends BaseController<SqlFormatterState> {
   }
 
   Future<void> _initJsEngine() async {
-    // 1. Initialize the JS runtime
-    _jsRuntime = getJavascriptRuntime();
+    // 2. Initialize using the conditional routing function
+    _jsRuntime = getJsService();
 
     try {
       // Polyfill browser globals. Headless JS engines don't have 'window'
       // by default, which the UMD library needs to attach its exports to.
       _jsRuntime.evaluate("var window = global = globalThis = this;");
 
-      // 2. Load the sql-formatter JS file from your assets
+      // Load the sql-formatter JS file from your assets
       final jsCode =
           await rootBundle.loadString('assets/js/sql-formatter.min.js');
 
-      // 3. Evaluate the library into the runtime.
+      // Evaluate the library into the runtime.
       final result = _jsRuntime.evaluate(jsCode);
 
-      // Optional safety check: ensure the library evaluated without syntax errors
-      if (result.isError) {
-        outputController.text =
-            'Failed to parse JS library:\n${result.stringResult}';
+      // 3. Check for errors using the new String-based error handling
+      if (result.startsWith('Error:')) {
+        outputController.text = 'Failed to parse JS library:\n$result';
         return;
       }
 
@@ -79,22 +81,30 @@ class SqlFormatterController extends BaseController<SqlFormatterState> {
       // Safely escape the Dart string into a valid JS string using jsonEncode
       final safeSqlString = jsonEncode(text);
 
-      // Inject the string into a JS variable, then run the formatter
+      // Inject the string into a JS variable
       _jsRuntime.evaluate("var currentSql = $safeSqlString;");
 
+      // 4. Wrap execution in a JS try/catch to gracefully handle bad SQL syntax
       final jsEvalResult = _jsRuntime.evaluate("""
-        sqlFormatter.format(currentSql, { 
-          language: 'sql',           // Can be changed to 'postgresql', 'mysql', etc.
-          keywordCase: 'upper',
-          linesBetweenQueries: 2 
-        });
+        try {
+          sqlFormatter.format(currentSql, { 
+            language: 'sql',           // Can be changed to 'postgresql', 'mysql', etc.
+            keywordCase: 'upper',
+            linesBetweenQueries: 2 
+          });
+        } catch (err) {
+          "ERROR: " + err.message;
+        }
       """);
 
-      if (jsEvalResult.isError) {
+      // 5. Handle the plain String results
+      if (jsEvalResult.startsWith('Error:')) {
+        outputController.text = 'JS Engine Error:\n$jsEvalResult';
+      } else if (jsEvalResult.startsWith('ERROR: ')) {
         outputController.text =
-            'Formatting Error:\n${jsEvalResult.stringResult}';
+            'Syntax Error:\n${jsEvalResult.replaceFirst('ERROR: ', '')}';
       } else {
-        outputController.text = jsEvalResult.stringResult;
+        outputController.text = jsEvalResult;
       }
     } catch (e) {
       outputController.text = 'Error executing formatter:\n$e';

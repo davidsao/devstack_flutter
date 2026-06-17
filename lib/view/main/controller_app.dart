@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:devstack/index.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
@@ -127,7 +128,9 @@ class AppController extends BaseController<AppState> {
   Future<DevicePlatform> _checkPlatform() async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     // Ensure we are on iOS before checking iOS-specific info
-    if (GetPlatform.isIOS) {
+    if (kIsWeb) {
+      return DevicePlatform.web;
+    } else if (GetPlatform.isIOS) {
       IosDeviceInfo info = await deviceInfo.iosInfo;
       if (info.model.toLowerCase().contains('ipad')) {
         return DevicePlatform.ipados;

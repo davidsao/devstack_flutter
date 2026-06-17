@@ -6,3 +6,4 @@ export 'page_json_formatter.dart';
 export 'page_minifier.dart';
 export 'page_sql_formatter.dart';
 export 'page_xml_formatter.dart';
+export 'services/index.dart';

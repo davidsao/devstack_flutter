@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:devstack/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_js/flutter_js.dart';
 import 'package:get/get.dart';
 
 class MinifierState extends ViewState {
@@ -14,7 +13,7 @@ class MinifierController extends BaseController<MinifierState> {
   final inputController = TextEditingController();
   final outputController = TextEditingController();
 
-  late JavascriptRuntime _jsRuntime;
+  late JsService _jsRuntime;
   bool _isJsReady = false;
 
   @override
@@ -32,7 +31,7 @@ class MinifierController extends BaseController<MinifierState> {
   }
 
   Future<void> _initJsEngine() async {
-    _jsRuntime = getJavascriptRuntime();
+    _jsRuntime = getJsService();
 
     try {
       // Polyfill browser globals for the UMD library
@@ -40,11 +39,13 @@ class MinifierController extends BaseController<MinifierState> {
 
       // Load Terser from your assets
       final jsCode = await rootBundle.loadString('assets/js/terser.min.js');
+
+      // result is now just a plain String!
       final result = _jsRuntime.evaluate(jsCode);
 
-      if (result.isError) {
-        outputController.text =
-            'Failed to parse Terser JS library:\n${result.stringResult}';
+      // Check if our wrapper caught an error
+      if (result.startsWith('Error:')) {
+        outputController.text = 'Failed to parse Terser JS library:\n$result';
         return;
       }
 
@@ -111,7 +112,7 @@ class MinifierController extends BaseController<MinifierState> {
       _jsRuntime.evaluate("var currentJs = $safeJsString;");
 
       // Run Terser.
-      // Note: Terser exposes itself globally. We capture errors or the minified code.
+      // jsEvalResult is now a plain String!
       final jsEvalResult = _jsRuntime.evaluate("""
         try {
           var result = Terser.minify(currentJs);
@@ -125,18 +126,18 @@ class MinifierController extends BaseController<MinifierState> {
         }
       """);
 
-      if (jsEvalResult.isError) {
+      // Check if our Dart wrapper caught an engine-level error
+      if (jsEvalResult.startsWith('Error:')) {
+        outputController.text = 'JS Engine Error:\n$jsEvalResult';
+      }
+      // Check if the JS try/catch block above caught a syntax error in the user's code
+      else if (jsEvalResult.startsWith('ERROR: ')) {
         outputController.text =
-            'JS Engine Error:\n${jsEvalResult.stringResult}';
-      } else {
-        final resultStr = jsEvalResult.stringResult;
-        if (resultStr.startsWith('ERROR: ')) {
-          outputController.text =
-              'Minification Error:\n${resultStr.replaceFirst('ERROR: ', '')}';
-        } else {
-          outputController.text =
-              resultStr; // The beautiful, fully mangled code!
-        }
+            'Minification Error:\n${jsEvalResult.replaceFirst('ERROR: ', '')}';
+      }
+      // If no errors, output the minified code
+      else {
+        outputController.text = jsEvalResult;
       }
     } catch (e) {
       outputController.text = 'Error executing Terser:\n$e';

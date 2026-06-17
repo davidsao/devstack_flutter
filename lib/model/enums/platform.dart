@@ -7,7 +7,7 @@ enum DevicePlatform {
   ipados,
   macos,
   windows,
-  // web,
+  web,
 }
 
 extension DevicePlatformExtension on DevicePlatform {
@@ -27,6 +27,7 @@ extension DevicePlatformExtension on DevicePlatform {
   /// Calculates the total safe top padding by combining the hardware notch/status bar
   /// with any required OS-specific window control offsets.
   double fullSafeTopPadding(BuildContext context) {
+    if (this == DevicePlatform.web) return 12.0;
     return MediaQuery.paddingOf(context).top + windowControlOffset;
   }
 
