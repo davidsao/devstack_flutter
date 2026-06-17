@@ -18,6 +18,7 @@ extension DevicePlatformExtension on DevicePlatform {
       case DevicePlatform.macos:
         return 36.0;
       case DevicePlatform.windows:
+      case DevicePlatform.android:
         return 8.0;
       default:
         return 0.0;

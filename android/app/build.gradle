@@ -53,22 +53,15 @@ android {
         jvmTarget = '17'
     }
 
-    flavorDimensions "flavor"
+    flavorDimensions "default"
     productFlavors {
         dev {
-            dimension "flavor"
+            dimension "default"
             applicationIdSuffix ".dev"
-        }
-        qa {
-            dimension "flavor"
-            applicationIdSuffix ".qa"
-        }
-        uat {
-            dimension "flavor"
-            applicationIdSuffix ".uat"
+            versionNameSuffix "-dev"
         }
         prod {
-            dimension "flavor"
+            dimension "default"
         }
     }
 
